@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
+import FormControl from '@material-ui/core/FormControl'
 
 const dummyCart = [
   {name: 'weed1', price: 200, qty: 1},
@@ -175,7 +176,8 @@ function checkoutMenu(props) {
 const mapState = state => {
   return {
     user: state.user,
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    cart: state.cart
   }
 }
 
