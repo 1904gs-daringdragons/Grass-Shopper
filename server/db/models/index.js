@@ -4,9 +4,10 @@ const Product = require('./product')
 const Cart = require('./cart')
 
 Order.belongsTo(User)
-User.hasMandy(Order)
+User.hasMany(Order)
 
 Cart.belongsTo(User)
+
 User.hasOne(Cart)
 
 /**
