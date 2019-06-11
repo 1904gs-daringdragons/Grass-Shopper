@@ -33,11 +33,8 @@ describe('Cart routes', () => {
 
     it('updates a cart', async () => {
       let cody = await User.create(codyUser)
-      await request(app)
-        .post('/api/cart')
-        .send({userId: cody.id})
-        .expect(204)
-
+      const newCart = await Cart.create()
+      await newCart.setUser(cody)
       await request(app)
         .put('/api/cart')
         .send({userId: cody.id, products: {p1: 10, p2: 3}})
