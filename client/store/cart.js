@@ -6,14 +6,27 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const DELETE_FROM_CART = 'DELETE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
 
-export const addProductOrChangeQty = (productId, qty) => {
-  return {type: ADD_TO_CART, productId, qty}
+export const addProduct = (product, qty) => {
+  return {type: ADD_TO_CART, product, qty}
 }
 export const removeProduct = productId => {
   return {type: DELETE_FROM_CART, productId}
 }
 const emptyCart = () => {
   return {type: EMPTY_CART}
+}
+
+export const addProductThunk = (productId, qty) => {
+  return async dispatch => {
+    try {
+      const product = await axios.get(`/api/products/${productId}`)
+      console.log(product)
+      dispatch(addProduct(product, qty))
+    } catch (error) {
+      //Error Handling
+      console.log(error)
+    }
+  }
 }
 
 export const submitOrderThunk = order => {
@@ -33,9 +46,9 @@ export default function(cart = initCart, action) {
   switch (action.type) {
     case ADD_TO_CART:
       if (newCart[action.productId]) {
-        newCart[action.productId] += action.qty
+        newCart[action.productId].quantity += action.qty
       } else {
-        newCart[action.productId] = action.qty
+        newCart[action.productId] = {...action.product, quantity: action.qty}
       }
       break
     case DELETE_FROM_CART:

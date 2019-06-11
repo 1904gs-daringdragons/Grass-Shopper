@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ProductCard from './product-card'
 // import AddCampus from './AddCampus';
-import {addProductOrChangeQty} from '../store/cart'
+import {addProductThunk} from '../store/cart'
 
 class DisconnectedProductList extends Component {
   constructor(props) {
@@ -79,7 +79,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getAllProducts: () => dispatch(getProductsThunk()),
-  addToCart: (id, qty) => dispatch(addProductOrChangeQty(id, qty))
+  addToCart: (id, qty) => dispatch(addProductThunk(id, qty))
 })
 
 export default connect(mapState, mapDispatch)(DisconnectedProductList)
