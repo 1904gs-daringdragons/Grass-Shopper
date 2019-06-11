@@ -32,20 +32,17 @@ export default function(cart = initCart, action) {
   const newCart = Object.assign({}, cart) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
   switch (action.type) {
     case ADD_TO_CART:
-      if (qty) {
-        newCart[action.productId] = action.qty
-      } else if (newCart[action.productId]) {
-        ++newCart[action.productId]
+      if (newCart[action.productId]) {
+        newCart[action.productId] += action.qty
       } else {
-        newCart[action.productId] = 1
+        newCart[action.productId] = action.qty
       }
       break
     case DELETE_FROM_CART:
       delete newCart[action.productId]
       break
     case EMPTY_CART:
-      state = initCart
-      break
+      return initCart
     default:
       break
   }
