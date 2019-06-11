@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {addProductOrChnageQty, removeProduct, submitOrderThunk} from './cart'
+import {addProductOrChangeQty, removeProduct, submitOrderThunk} from './cart'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
@@ -26,9 +26,9 @@ describe('cart actions and thunks', () => {
 
   describe('add product', () => {
     it('adds a key value pair to the cart with a qty', () => {
-      store.dispatch(addProductOrChnageQty(1, 5))
-      store.dispatch(addProductOrChnageQty(2, 4))
-      store.dispatch(addProductOrChnageQty(3, 3))
+      store.dispatch(addProductOrChangeQty(1, 5))
+      store.dispatch(addProductOrChangeQty(2, 4))
+      store.dispatch(addProductOrChangeQty(3, 3))
       const actions = store.getActions()
       expect(actions.length).to.be.equal(3)
     })
@@ -36,10 +36,10 @@ describe('cart actions and thunks', () => {
 
   describe('changing qty', () => {
     it('updates the quautity in the store', () => {
-      store.dispatch(addProductOrChnageQty(34))
+      store.dispatch(addProductOrChangeQty(34))
       let actions = store.getActions()
       expect(actions.length).to.be.equal(1)
-      store.dispatch(addProductOrChnageQty(34, 10))
+      store.dispatch(addProductOrChangeQty(34, 10))
       actions = store.getActions()
       expect(actions.length).to.be.equal(2)
       expect(actions[0].productId).to.be.equal(34)
@@ -49,9 +49,9 @@ describe('cart actions and thunks', () => {
 
   describe('successful order submit', () => {
     it('empties the cart', async () => {
-      store.dispatch(addProductOrChnageQty(3, 4))
-      store.dispatch(addProductOrChnageQty(56, 3))
-      store.dispatch(addProductOrChnageQty(10, 2))
+      store.dispatch(addProductOrChangeQty(3, 4))
+      store.dispatch(addProductOrChangeQty(56, 3))
+      store.dispatch(addProductOrChangeQty(10, 2))
       mockAxios.onPut('/api/orders').replyOnce(204)
       await store.dispatch(submitOrderThunk({}))
       const actions = store.getActions()
@@ -61,9 +61,9 @@ describe('cart actions and thunks', () => {
 
   describe('failed order submit', () => {
     it('doesnt empty the cart', async () => {
-      store.dispatch(addProductOrChnageQty(3, 4))
-      store.dispatch(addProductOrChnageQty(56, 3))
-      store.dispatch(addProductOrChnageQty(10, 2))
+      store.dispatch(addProductOrChangeQty(3, 4))
+      store.dispatch(addProductOrChangeQty(56, 3))
+      store.dispatch(addProductOrChangeQty(10, 2))
       mockAxios.onPut('/api/orders').replyOnce(500)
       await store.dispatch(submitOrderThunk({}))
       const actions = store.getActions()
