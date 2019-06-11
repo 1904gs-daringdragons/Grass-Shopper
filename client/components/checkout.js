@@ -37,139 +37,166 @@ const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
 const TAX_RATE = 0.07
 
-function checkoutMenu(props) {
-  const classes = useStyles()
-  if (props.isLoggedIn) {
-    const recipientName = props.user.firstName
-    const confirmationEmail = props.user.email
-    const userId = props.user.id
-    const beforeTax = invoiceSubtotal
-    const tax = invoiceTaxes
-    const price = invoiceTotal
-    return (
-      <Container maxWidth="md">
-        <Paper>
-          <Grid container alignItems="flex-end" justify="flex-end">
-            <form className={classes.container} autoComplete="on">
-              <TextFeild
-                id="address"
-                label="Address"
-                className={classes.textFeild}
-                //     value={values.address}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="city"
-                label="City"
-                className={classes.textFeild}
-                //     value={values.city}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="state"
-                label="State"
-                className={classes.textFeild}
-                //    value={values.state}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="zipcode"
-                label="Zipcode"
-                className={classes.textFeild}
-                //     value={values.zipcode}
-                margin="normal"
-                variant="outlined"
-              />
+class checkoutMenu extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      reciepientName,
+      confirmationEmail,
+      price,
+      address,
+      city,
+      state,
+      zipcode,
+      userId
+    }
+  }
 
-              <Button
-                variant="contained"
-                className={classes.button}
-                color="primary"
-                type="submit"
-              >
-                Submit Order
-              </Button>
-            </form>
-          </Grid>
-        </Paper>
-      </Container>
-    )
-  } else {
-    const beforeTax = invoiceSubtotal
-    const tax = invoiceTaxes
-    const price = invoiceTotal
-    return (
-      <Container maxWidth="md">
-        <Paper>
-          <Grid container alignItems="flex-end" justify="flex-end">
-            <form className={classes.container} autoComplete="on">
-              <Grid item />
-              <TextField
-                id="outlined-email-input"
-                label="Email"
-                className={classes.textField}
-                type="email"
-                name="email"
-                autoComplete="email"
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="reciepientName"
-                label="Name"
-                className={classes.textFeild}
-                //     value={values.reciepientName}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="address"
-                label="Address"
-                className={classes.textFeild}
-                //     value={values.address}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="city"
-                label="City"
-                className={classes.textFeild}
-                //     value={values.city}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="state"
-                label="State"
-                className={classes.textFeild}
-                //      value={values.state}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextFeild
-                id="zipcode"
-                label="Zipcode"
-                className={classes.textFeild}
-                //     value={values.zipcode}
-                margin="normal"
-                variant="outlined"
-              />
-              <Button
-                variant="contained"
-                className={classes.button}
-                color="primary"
-                type="submit"
-              >
-                Submit Order
-              </Button>
-            </form>
-          </Grid>
-        </Paper>
-      </Container>
-    )
+  changeHandler(e) {
+    const feildName = e.target.id
+    const newVal = e.target.value
+    const message = {}
+    message[feildName] = newVal
+    this.setState(message)
+  }
+
+  render() {
+    const classes = useStyles()
+    if (props.isLoggedIn) {
+      this.setState({recipientName: props.user.firstName})
+      this.setState({confirmationEmail: props.user.email})
+      this.setState({userId: props.user.id})
+      const beforeTax = invoiceSubtotal
+      const tax = invoiceTaxes
+      const price = invoiceTotal
+      this.setState({price})
+      return (
+        <Container maxWidth="md">
+          <Paper>
+            <Grid container alignItems="flex-end" justify="flex-end">
+              <form className={classes.container} autoComplete="on">
+                <TextFeild
+                  id="address"
+                  label="Address"
+                  className={classes.textFeild}
+                  value={this.state.address}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="city"
+                  label="City"
+                  className={classes.textFeild}
+                  value={this.state.city}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="state"
+                  label="State"
+                  className={classes.textFeild}
+                  value={this.state.state}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="zipcode"
+                  label="Zipcode"
+                  className={classes.textFeild}
+                  value={this.state.zipcode}
+                  margin="normal"
+                  variant="outlined"
+                />
+
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  color="primary"
+                  type="submit"
+                >
+                  Submit Order
+                </Button>
+              </form>
+            </Grid>
+          </Paper>
+        </Container>
+      )
+    } else {
+      const beforeTax = invoiceSubtotal
+      const tax = invoiceTaxes
+      const price = invoiceTotal
+      this.setState({price})
+      return (
+        <Container maxWidth="md">
+          <Paper>
+            <Grid container alignItems="flex-end" justify="flex-end">
+              <form className={classes.container} autoComplete="on">
+                <Grid item />
+                <TextField
+                  id="outlined-email-input"
+                  label="Email"
+                  className={classes.textField}
+                  value={this.state.confirmationEmail}
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="reciepientName"
+                  label="Name"
+                  className={classes.textFeild}
+                  value={this.state.reciepientName}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="address"
+                  label="Address"
+                  className={classes.textFeild}
+                  value={this.state.address}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="city"
+                  label="City"
+                  className={classes.textFeild}
+                  value={this.state.city}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="state"
+                  label="State"
+                  className={classes.textFeild}
+                  value={this.state.state}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextFeild
+                  id="zipcode"
+                  label="Zipcode"
+                  className={classes.textFeild}
+                  value={this.state.zipcode}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <Button
+                  variant="contained"
+                  className={classes.button}
+                  color="primary"
+                  type="submit"
+                >
+                  Submit Order
+                </Button>
+              </form>
+            </Grid>
+          </Paper>
+        </Container>
+      )
+    }
   }
 }
 
