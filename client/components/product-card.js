@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import {Link} from 'react-router-dom'
 
 const ProductCard = props => {
+  const {addToCart} = props
   return (
     <Card>
       <Link to={`/products/${props.product.id}`}>
@@ -29,14 +30,14 @@ const ProductCard = props => {
             Product Details
           </Button>
         </Link>
-        {/* <Button
-					size="small"
-					color="primary"
-					// onClick={() => props.addToCart(props.product.id)}
-					variant="contained"
-				>
-					Delete
-				</Button> */}
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => addToCart(props.product.id, 1)}
+          variant="contained"
+        >
+          Add to Cart ;)
+        </Button>
       </CardActions>
     </Card>
   )
