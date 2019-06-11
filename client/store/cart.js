@@ -19,10 +19,8 @@ const emptyCart = () => {
 export const submitOrderThunk = order => {
   return async dispatch => {
     try {
-      const res = await axios.put('/api/order', order) //TODO: update when route exissts
-      if (res.success) {
-        dispatch(emptyCart())
-      }
+      await axios.put('/api/order', order)
+      dispatch(emptyCart())
     } catch (error) {
       //Error Handling
       console.log(error)
