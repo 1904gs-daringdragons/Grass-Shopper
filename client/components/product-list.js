@@ -38,7 +38,7 @@ class DisconnectedProductList extends Component {
 						color="primary"
 						variant="contained"
 					>
-						+ Add Campus
+						+ Add to Cart
 					</Button> */}
           <div id="products" className="container">
             <Grid container spacing={10} style={{padding: 24}}>

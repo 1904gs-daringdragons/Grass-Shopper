@@ -14,9 +14,15 @@ describe('User routes', () => {
   describe('/api/users/', () => {
     const codysEmail = 'cody@puppybook.com'
 
+    // This spec was changed to include firstName and lastName,
+    // but we should also address the fact that they were failing
+    // when not given this info.
+
     beforeEach(() => {
       return User.create({
-        email: codysEmail
+        email: codysEmail,
+        firstName: 'Cody',
+        lastName: 'Pug'
       })
     })
 
