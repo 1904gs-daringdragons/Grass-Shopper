@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import Container from '@material-ui/core/Container'
 
 import {addProductOrChangeQty} from '../store/cart'
 
@@ -57,11 +58,11 @@ const invoiceSubtotal = subtotal(rows)
 const invoiceTaxes = TAX_RATE * invoiceSubtotal
 const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
-class SpanningTable extends React.Component {
-  render() {
-    const classes = useStyles()
+function SpanningTable(props) {
+  const classes = useStyles()
 
-    return (
+  return (
+    <Container maxWidth="md">
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
@@ -73,9 +74,9 @@ class SpanningTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyCart.map(row => (
-              <TableRow key={row.desc}>
-                <TableCell>{row.desc}</TableCell>
+            {dummyCart.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.name}</TableCell>
                 <TableCell align="right">{row.qty}</TableCell>
                 <TableCell align="right">{row.unit}</TableCell>
                 <TableCell align="right">{ccyFormat(row.price)}</TableCell>
@@ -101,8 +102,8 @@ class SpanningTable extends React.Component {
           </TableBody>
         </Table>
       </Paper>
-    )
-  }
+    </Container>
+  )
 }
 
 const mapToState = state => ({
