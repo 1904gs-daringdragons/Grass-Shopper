@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
+import Button from '@material-ui/core/Button'
 
 import {addProductOrChangeQty} from '../store/cart'
 
@@ -101,6 +102,15 @@ function SpanningTable(props) {
               <TableCell colSpan={2}>Total</TableCell>
               <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
             </TableRow>
+            <Container alignItems="right">
+              <Button
+                variant="contained"
+                className={classes.button}
+                color="primary"
+              >
+                Check Out
+              </Button>
+            </Container>
           </TableBody>
         </Table>
       </Paper>

@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function PrimarySearchAppBar() {
+function Navbar(props) {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
@@ -144,6 +144,7 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={props.handleClick}>Logout</MenuItem>
     </Menu>
   )
 
@@ -166,14 +167,18 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem> */}
-      <MenuItem>
-        <IconButton aria-label="Go to Cart" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <ShoppingCart />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
+      {props.isLoggedIn ? (
+        <MenuItem>
+          <IconButton aria-label="Go to Cart" color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <ShoppingCart />
+            </Badge>
+          </IconButton>
+          <p>Cart</p>
+        </MenuItem>
+      ) : (
+        ''
+      )}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="Account of current user"
@@ -213,13 +218,19 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </Badge>
             </IconButton> */}
-            <IconButton aria-label="Go To Cart" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <Link to="/cart">
-                  <ShoppingCart />
-                </Link>
-              </Badge>
-            </IconButton>
+
+            {props.isLoggedIn ? (
+              <IconButton aria-label="Go To Cart" color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <Link to="/cart">
+                    <ShoppingCart />
+                  </Link>
+                </Badge>
+              </IconButton>
+            ) : (
+              ''
+            )}
+
             <IconButton
               edge="end"
               aria-label="Account of current user"
@@ -249,3 +260,19 @@ export default function PrimarySearchAppBar() {
     </div>
   )
 }
+
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.user.id
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    handleClick() {
+      dispatch(logout())
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Navbar)
