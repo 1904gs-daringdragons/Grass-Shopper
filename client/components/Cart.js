@@ -8,6 +8,9 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import Container from '@material-ui/core/Container'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 
 import {addProductOrChangeQty} from '../store/cart'
 
@@ -44,7 +47,7 @@ function createRow(desc, qty, unit) {
 }
 
 function subtotal(items) {
-  return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
+  return items.map(({price, qty}) => price * qty).reduce((sum, i) => sum + i, 0)
 }
 
 const rows = [
@@ -57,11 +60,11 @@ const invoiceSubtotal = subtotal(rows)
 const invoiceTaxes = TAX_RATE * invoiceSubtotal
 const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
-class SpanningTable extends React.Component {
-  render() {
-    const classes = useStyles()
+function SpanningTable(props) {
+  const classes = useStyles()
 
-    return (
+  return (
+    <Container maxWidth="md">
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
@@ -73,12 +76,14 @@ class SpanningTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyCart.map(row => (
-              <TableRow key={row.desc}>
-                <TableCell>{row.desc}</TableCell>
+            {dummyCart.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.name}</TableCell>
                 <TableCell align="right">{row.qty}</TableCell>
-                <TableCell align="right">{row.unit}</TableCell>
-                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">
+                  {ccyFormat(priceRow(row.qty, row.price))}
+                </TableCell>
               </TableRow>
             ))}
 
@@ -100,9 +105,19 @@ class SpanningTable extends React.Component {
             </TableRow>
           </TableBody>
         </Table>
+        <Grid container alignItems="flex-end" justify="flex-end">
+          <Button
+            m={2}
+            variant="contained"
+            className={classes.button}
+            color="primary"
+          >
+            Check Out
+          </Button>
+        </Grid>
       </Paper>
-    )
-  }
+    </Container>
+  )
 }
 
 const mapToState = state => ({
