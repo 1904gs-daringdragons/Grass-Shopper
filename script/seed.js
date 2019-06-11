@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product, Order, Cart} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -12,6 +12,24 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
+  const products = await Promise.all([
+    Product.create({
+      name: 'Green Cannabis',
+      price: 65.25,
+      imageUrl:
+        'https://cdn.psychologytoday.com/sites/default/files/styles/thumbnail/public/field_blog_entry_images/Cannabis_Plant%20052216%20033117.jpg?itok=Jxlt9yKX&cache=oi7cwb',
+      description: 'It has a great smell and is known all around the world.'
+    }),
+    Product.create({
+      name: 'Sour Diesel',
+      price: 54.99,
+      imageUrl:
+        'https://zenpype.com/wp-content/uploads/2018/10/recreational-cannabis1-192x192.jpg',
+      description:
+        'Favorite of hollywood heart-throb Vin Diesel, this herb does have a somewhat sour taste, but it is not intended to be eaten as is.'
+    })
+  ])
+  console.log(`seeded ${products.length} products`)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }

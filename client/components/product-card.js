@@ -6,8 +6,11 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {Link} from 'react-router-dom'
+import {TextField} from '@material-ui/core'
+import {mergeClasses} from '@material-ui/styles'
 
 const ProductCard = props => {
+  const {addToCart} = props
   return (
     <Card>
       <Link to={`/products/${props.product.id}`}>
@@ -29,14 +32,28 @@ const ProductCard = props => {
             Product Details
           </Button>
         </Link>
-        {/* <Button
-					size="small"
-					color="primary"
-					// onClick={() => props.addToCart(props.product.id)}
-					variant="contained"
-				>
-					Delete
-				</Button> */}
+        <Button
+          size="small"
+          color="primary"
+          onClick={() =>
+            addToCart(
+              props.product.id,
+              +document.getElementById(`qty-${props.product.id}`).value
+            )
+          }
+          variant="contained"
+        >
+          Add to Cart ;)
+        </Button>
+        <TextField
+          label="Quantity"
+          id={`qty-${props.product.id}`}
+          type="number"
+          margin="normal"
+          defaultValue="1"
+          min="1"
+          max="10"
+        />
       </CardActions>
     </Card>
   )
