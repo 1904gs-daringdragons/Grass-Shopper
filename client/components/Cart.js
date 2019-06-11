@@ -45,7 +45,7 @@ function createRow(desc, qty, unit) {
 }
 
 function subtotal(items) {
-  return items.map(({price}) => price).reduce((sum, i) => sum + i, 0)
+  return items.map(({price, qty}) => price * qty).reduce((sum, i) => sum + i, 0)
 }
 
 const rows = [
@@ -78,8 +78,10 @@ function SpanningTable(props) {
               <TableRow key={index}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell align="right">{row.qty}</TableCell>
-                <TableCell align="right">{row.unit}</TableCell>
-                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">
+                  {ccyFormat(priceRow(row.qty, row.price))}
+                </TableCell>
               </TableRow>
             ))}
 

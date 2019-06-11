@@ -201,7 +201,9 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Grace Toker
+            <Link to="/home">
+              <span style={{color: 'white'}}>Grace Toker</span>
+            </Link>
           </Typography>
 
           <div className={classes.grow} />
@@ -213,7 +215,9 @@ export default function PrimarySearchAppBar() {
             </IconButton> */}
             <IconButton aria-label="Go To Cart" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <ShoppingCart />
+                <Link to="/cart">
+                  <ShoppingCart />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton
