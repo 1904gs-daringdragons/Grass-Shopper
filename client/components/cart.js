@@ -50,13 +50,7 @@ function subtotal(items) {
   return items.map(({price, qty}) => price * qty).reduce((sum, i) => sum + i, 0)
 }
 
-const rows = [
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99)
-]
-
-const invoiceSubtotal = subtotal(rows)
+const invoiceSubtotal = subtotal(dummyCart)
 const invoiceTaxes = TAX_RATE * invoiceSubtotal
 const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
@@ -107,10 +101,12 @@ function SpanningTable(props) {
         </Table>
         <Grid container alignItems="flex-end" justify="flex-end">
           <Button
-            m={2}
             variant="contained"
             className={classes.button}
             color="primary"
+            onClick={() => {
+              props.history.push('/checkout')
+            }}
           >
             Check Out
           </Button>
