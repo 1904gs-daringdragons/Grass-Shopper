@@ -12,7 +12,6 @@ router.post('/', async (req, res, next) => {
       state,
       zipcode
     } = req.body
-    console.log(req.body)
     await Order.create({
       recipientName,
       conformationEmail,
