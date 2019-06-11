@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order, User} = require('../db/models')
 
 router.post('/', async (req, res, next) => {
   try {
@@ -10,9 +10,10 @@ router.post('/', async (req, res, next) => {
       address,
       city,
       state,
-      zipcode
+      zipcode,
+      userId
     } = req.body
-    await Order.create({
+    const order = await Order.create({
       recipientName,
       conformationEmail,
       price,
@@ -21,6 +22,8 @@ router.post('/', async (req, res, next) => {
       state,
       zipcode
     })
+    const user = await User.findOne({where: {id: userId}})
+    await order.setUser(user)
     res.status(204).send()
   } catch (error) {
     next(error)

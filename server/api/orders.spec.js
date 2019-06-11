@@ -2,6 +2,7 @@ const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
+const User = db.model('user')
 
 describe('order routes', () => {
   beforeEach(() => {
@@ -16,10 +17,19 @@ describe('order routes', () => {
       address: '123 fake st',
       city: 'townsville',
       state: 'utah',
-      zipcode: 55555
+      zipcode: 55555,
+      userId: 1
+    }
+
+    const codyUser = {
+      email: 'cody@puppybook.com',
+      firstName: 'cody',
+      lastName: 'pug'
     }
 
     it('saves a submitted order to the db', async () => {
+      await User.create(codyUser)
+
       await request(app)
         .post('/api/orders')
         .send(dummyOrder)
