@@ -171,7 +171,9 @@ function Navbar(props) {
         <MenuItem>
           <IconButton aria-label="Go to Cart" color="inherit">
             <Badge badgeContent={11} color="secondary">
-              <ShoppingCart />
+              <Link to="/cart">
+                <ShoppingCart />
+              </Link>
             </Badge>
           </IconButton>
           <p>Cart</p>

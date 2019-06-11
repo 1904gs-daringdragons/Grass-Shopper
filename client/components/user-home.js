@@ -7,24 +7,18 @@ import {logout} from '../store'
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email} = props
+  const {email, firstName} = props.user
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
-      <a href="#" onClick={props.handleClick}>
-        Logout
-      </a>
+      <h3>like, whats up, {email}</h3>
     </div>
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
-    email: state.user.email
+    user: state.user
   }
 }
 
