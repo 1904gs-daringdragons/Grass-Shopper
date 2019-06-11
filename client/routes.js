@@ -19,18 +19,10 @@ class Routes extends Component {
     return (
       <Switch>
         <Route path="/products" component={Products} />
-        {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={Products} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/checkout" component={Checkout} />
-          </Switch>
-        )}
-        {/* Displays our Login component as a fallback */}
+        <Route path="/cart" component={Cart} />
+        <Route path="/checkout" component={Checkout} />
         <Route component={Products} />
       </Switch>
     )

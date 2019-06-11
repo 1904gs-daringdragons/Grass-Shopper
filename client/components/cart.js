@@ -47,77 +47,89 @@ function createRow(desc, qty, unit) {
 }
 
 function subtotal(items) {
-  return items.map(({price, qty}) => price * qty).reduce((sum, i) => sum + i, 0)
+  return items
+    .map(({price, quantity}) => price * quantity)
+    .reduce((sum, i) => sum + i, 0)
 }
-
-const invoiceSubtotal = subtotal(dummyCart)
-const invoiceTaxes = TAX_RATE * invoiceSubtotal
-const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
 function SpanningTable(props) {
   const classes = useStyles()
 
-  return (
-    <Container maxWidth="md">
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Desc</TableCell>
-              <TableCell align="right">Qty.</TableCell>
-              <TableCell align="right">Unit Price</TableCell>
-              <TableCell align="right">Total</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {dummyCart.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell align="right">{row.qty}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
+  console.log(Object.values(props.cart))
+  if (
+    Object.keys(props.cart).length !== 0 &&
+    props.cart.constructor === Object
+  ) {
+    console.log(subtotal(Object.values(props.cart)))
+    const invoiceSubtotal = subtotal(Object.values(props.cart))
+    const invoiceTaxes = TAX_RATE * invoiceSubtotal
+    const invoiceTotal = invoiceTaxes + invoiceSubtotal
+
+    return (
+      <Container maxWidth="md">
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Desc</TableCell>
+                <TableCell align="right">Qty.</TableCell>
+                <TableCell align="right">Unit Price</TableCell>
+                <TableCell align="right">Total</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.values(props.cart).map(row => (
+                <TableRow key={row.id}>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell align="right">{row.qty}</TableCell>
+                  <TableCell align="right">{row.price}</TableCell>
+                  <TableCell align="right">
+                    {ccyFormat(priceRow(row.quantity, row.price))}
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              <TableRow>
+                <TableCell rowSpan={3} />
+                <TableCell colSpan={2}>Subtotal</TableCell>
                 <TableCell align="right">
-                  {ccyFormat(priceRow(row.qty, row.price))}
+                  {ccyFormat(invoiceSubtotal)}
                 </TableCell>
               </TableRow>
-            ))}
-
-            <TableRow>
-              <TableCell rowSpan={3} />
-              <TableCell colSpan={2}>Subtotal</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Tax</TableCell>
-              <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-                0
-              )} %`}</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={2}>Total</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-        <Grid container alignItems="flex-end" justify="flex-end">
-          <Button
-            variant="contained"
-            className={classes.button}
-            color="primary"
-            onClick={() => {
-              props.history.push('/checkout')
-            }}
-          >
-            Check Out
-          </Button>
-        </Grid>
-      </Paper>
-    </Container>
-  )
+              <TableRow>
+                <TableCell>Tax</TableCell>
+                <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+                  0
+                )} %`}</TableCell>
+                <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={2}>Total</TableCell>
+                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Grid container alignItems="flex-end" justify="flex-end">
+            <Button
+              variant="contained"
+              className={classes.button}
+              color="primary"
+              onClick={() => {
+                props.history.push('/checkout')
+              }}
+            >
+              Check Out
+            </Button>
+          </Grid>
+        </Paper>
+      </Container>
+    )
+  } else {
+    return <div>Loading...</div>
+  }
 }
 
 const mapToState = state => ({
-  user: state.user,
   cart: state.cart
 })
 

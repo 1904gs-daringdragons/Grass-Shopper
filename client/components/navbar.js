@@ -174,7 +174,10 @@ function Navbar(props) {
             )}
 
             <IconButton aria-label="Go To Cart" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge
+                badgeContent={Object.values(props.cart).length}
+                color="secondary"
+              >
                 <Link to="/cart">
                   <ShoppingCart />
                 </Link>
@@ -214,7 +217,8 @@ function Navbar(props) {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    currentUser: state.user
+    currentUser: state.user,
+    cart: state.cart
   }
 }
 

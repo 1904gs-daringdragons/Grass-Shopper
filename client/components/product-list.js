@@ -17,7 +17,6 @@ class DisconnectedProductList extends Component {
     // this.handleOpen = this.handleOpen.bind(this);
   }
   componentDidMount() {
-    console.log('mounting')
     this.props.getAllProducts()
   }
   // handleOpen() {
@@ -29,7 +28,6 @@ class DisconnectedProductList extends Component {
   // }
   render() {
     if (this.props.products[0]) {
-      console.log(this.props)
       return (
         <div>
           {/* <Button
