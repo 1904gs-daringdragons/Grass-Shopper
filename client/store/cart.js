@@ -6,7 +6,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const DELETE_FROM_CART = 'DELETE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
 
-export const addProductOrChnageQty = (productId, qty) => {
+export const addProductOrChangeQty = (productId, qty) => {
   return {type: ADD_TO_CART, productId, qty}
 }
 export const removeProduct = productId => {
@@ -19,10 +19,8 @@ const emptyCart = () => {
 export const submitOrderThunk = order => {
   return async dispatch => {
     try {
-      const res = await axios.put('/api/order', order) //TODO: update when route exissts
-      if (res.success) {
-        dispatch(emptyCart())
-      }
+      await axios.put('/api/orders', order)
+      dispatch(emptyCart())
     } catch (error) {
       //Error Handling
       console.log(error)
@@ -34,7 +32,13 @@ export default function(cart = initCart, action) {
   const newCart = Object.assign({}, cart) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
   switch (action.type) {
     case ADD_TO_CART:
-      newCart[action.productId] = action.qty || 1
+      if (qty) {
+        newCart[action.productId] = action.qty
+      } else if (newCart[action.productId]) {
+        ++newCart[action.productId]
+      } else {
+        newCart[action.productId] = 1
+      }
       break
     case DELETE_FROM_CART:
       delete newCart[action.productId]
