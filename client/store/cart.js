@@ -19,7 +19,7 @@ const emptyCart = () => {
 export const submitOrderThunk = order => {
   return async dispatch => {
     try {
-      await axios.put('/api/order', order)
+      await axios.put('/api/orders', order)
       dispatch(emptyCart())
     } catch (error) {
       //Error Handling
