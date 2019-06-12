@@ -1,34 +1,46 @@
 const router = require('express').Router()
-const {Order, User} = require('../db/models')
+const {Order, User, LineItem, Product} = require('../db/models')
 
 router.post('/', async (req, res, next) => {
   try {
     const {
       recipientName,
       confirmationEmail,
-      price,
       address,
       city,
       state,
       zipcode,
-      userId
+      userId,
+      cart
     } = req.body
     let test = 0
     if (req.user) {
       test = req.user.id
     }
     if (userId === test) {
-      const order = await Order.create({
-        recipientName,
-        confirmationEmail,
-        price,
-        address,
-        city,
-        state,
-        zipcode
-      })
+      const confirmationNumber = (Date.now() * zipcode) % 1000000000
       const user = await User.findOne({where: {id: userId}})
-      await order.setUser(user)
+      for (let product in cart) {
+        const curProduct = await Product.findOne({
+          where: {
+            id: cart[product].id
+          }
+        })
+        const itemPrice = curProduct.price
+        const lineItem = await LineItem.create({
+          recipientName,
+          confirmationEmail,
+          itemPrice,
+          address,
+          city,
+          state,
+          zipcode,
+          confirmationNumber
+        })
+        await lineItem.setUser(user)
+        await lineItem.setProduct(curProduct)
+      }
+
       res.status(204).send()
     } else {
       res.status(403).send('ACCESS DENIED')
