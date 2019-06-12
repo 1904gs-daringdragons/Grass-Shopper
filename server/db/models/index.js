@@ -1,14 +1,11 @@
 const User = require('./user')
-const Order = require('./order')
 const Product = require('./product')
-const Cart = require('./cart')
+const LineItem = require('./lineItem')
 
-Order.belongsTo(User)
-User.hasMany(Order)
-
-Cart.belongsTo(User)
-
-User.hasOne(Cart)
+LineItem.belongsTo(Product)
+LineItem.belongsTo(User)
+User.hasMany(LineItem)
+Product.hasMany(LineItem)
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -25,7 +22,6 @@ User.hasOne(Cart)
  */
 module.exports = {
   User,
-  Order,
   Product,
-  Cart
+  LineItem
 }

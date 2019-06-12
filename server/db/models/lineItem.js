@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Order = db.define('order', {
+const LineItem = db.define('lineitem', {
   orderStatus: {
     type: Sequelize.ENUM,
     values: ['CREATED', 'PROCESSING', 'CANCELLED', 'SHIPPED', 'COMPLETED'],
@@ -14,11 +14,15 @@ const Order = db.define('order', {
   confirmationEmail: {
     type: Sequelize.STRING
   },
-  price: {
-    type: Sequelize.DECIMAL(10, 2),
+  confirmationNumber: {
+    type: Sequelize.INTEGER
+  },
+  itemPrice: {
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      isDecimal: true
+      isInt: true,
+      min: 0
     }
   },
   address: {
@@ -51,4 +55,4 @@ const Order = db.define('order', {
   }
 })
 
-module.exports = Order
+module.exports = LineItem

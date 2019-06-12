@@ -25,7 +25,8 @@ class checkoutMenu extends React.Component {
       address: '',
       city: '',
       state: '',
-      zipcode: ''
+      zipcode: '',
+      cart: this.props.cart
     }
   }
 
