@@ -101,6 +101,7 @@ function SpanningTable(props) {
 
               <TableRow>
                 <TableCell rowSpan={3} />
+                <TableCell rowSpan={3} />
                 <TableCell colSpan={2}>Subtotal</TableCell>
                 <TableCell align="right">
                   {ccyFormat(invoiceSubtotal)}
