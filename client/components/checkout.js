@@ -52,9 +52,9 @@ class checkoutMenu extends React.Component {
     const invoiceSubtotal = subtotal(Object.values(this.props.cart))
     const TAX_RATE = 0.07
     console.log(this.props.cart)
-    const invoiceTaxes = TAX_RATE * invoiceSubtotal
-    const invoiceTotal = invoiceTaxes + invoiceSubtotal
-    this.setState({price: invoiceTotal})
+    this.invoiceTaxes = TAX_RATE * invoiceSubtotal
+    this.invoiceTotal = this.invoiceTaxes + invoiceSubtotal
+    this.setState({price: this.invoiceTotal})
   }
 
   changeHandler(e) {
@@ -75,7 +75,7 @@ class checkoutMenu extends React.Component {
     return (
       <Container maxWidth="md">
         <Paper>
-          {invoiceTotal}
+          {this.invoiceTotal || 0}
           {this.props.isLoggedIn ? (
             ''
           ) : (
