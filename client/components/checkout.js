@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
-import FormControl from '@material-ui/core/FormControl'
 
 const dummyCart = [
   {name: 'weed1', price: 200, qty: 1},
@@ -37,100 +36,71 @@ const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
 const TAX_RATE = 0.07
 
-const checkoutMenu = props => {
-  /* 
-    constructor(props) {
+class checkoutMenu extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
-      reciepientName: "",
-      confirmationEmail: "",
-      price: 0,
-      address: "",
-      city: "",
-      state: "",
-      zipcode: "",
-      userId: 0
+      address: '',
+      city: '',
+      state: '',
+      zipcode: ''
     }
-    this.changeHandler = this.changeHandler.bind(this)
   }
 
   changeHandler(e) {
-    const feildName = e.target.id
-    const newVal = e.target.value
-    const message = {}
-    message[feildName] = newVal
-    this.setState(message)
+    const mssg = {}
+    const val = e.target.value
+    mssg[e.target.id] = val
+    this.setState({input: val})
   }
-*/
-  // render() {
-  const classes = useStyles()
-  //   if (this.props.isLoggedIn) {
-  //      const recipientName = this.props.user.firstName
-  //      const confirmationEmail = this.props.user.email
-  //     const userId = this.props.user.id
-  const beforeTax = invoiceSubtotal
-  const tax = invoiceTaxes
-  const price = invoiceTotal
-  //    this.setState({price})
-  return (
-    <Container maxWidth="md">
-      <Paper>
-        <Grid container alignItems="flex-end" justify="flex-end">
-          <form className={classes.container}>
-            <TextFeild
-              id="address"
-              label="Address"
-              //                 className={classes.textFeild}
-              //                  onChange={(e) => this.changeHandler(e)}
-              //                 value={this.state.address}
-              margin="normal"
-              variant="outlined"
-            />
-            <TextFeild
-              id="city"
-              label="City"
-              //                 className={classes.textFeild}
-              //                onChange={(e) => this.changeHandler(e)}
 
-              //                 value={this.state.city}
-              margin="normal"
-              variant="outlined"
-            />
-            <TextFeild
-              id="state"
-              label="State"
-              //                className={classes.textFeild}
-              //                onChange={(e) => this.changeHandler(e)}
-
-              //                value={this.state.state}
-              margin="normal"
-              variant="outlined"
-            />
-            <TextFeild
-              id="zipcode"
-              label="Zipcode"
-              className={classes.textFeild}
-              //              onChange={(e) => this.changeHandler(e)}
-              //              value={this.state.zipcode}
-              margin="normal"
-              variant="outlined"
-            />
-
-            <Button
-              variant="contained"
-              className={classes.button}
-              color="primary"
-              type="submit"
-            >
-              Submit Order
-            </Button>
-          </form>
-        </Grid>
-      </Paper>
-    </Container>
-  )
-  //   }
-  // }
+  render() {
+    return (
+      <Container maxWidth="md">
+        <Paper>
+          <Grid container justify="center" spacing={3}>
+            <Grid item xs={6}>
+              <TextFeild
+                id="address"
+                value={this.state.input}
+                label="Address"
+                variant="outlined"
+                onChange={e => this.changeHandler(e)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextFeild
+                id="city"
+                value={this.state.input}
+                label="City"
+                variant="outlined"
+                onChange={e => this.changeHandler(e)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextFeild
+                id="state"
+                value={this.state.input}
+                label="State"
+                variant="outlined"
+                onChange={e => this.changeHandler(e)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextFeild
+                id="zipcode"
+                value={this.state.input}
+                label="Zipcode"
+                variant="outlined"
+                onChange={e => this.changeHandler(e)}
+              />
+            </Grid>
+          </Grid>
+          <Button>Submit Order</Button>
+        </Paper>
+      </Container>
+    )
+  }
 }
 
 const mapState = state => {
