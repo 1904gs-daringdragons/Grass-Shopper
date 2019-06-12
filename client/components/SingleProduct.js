@@ -9,13 +9,13 @@ const SingleProduct = props => {
 
   return (
     <div>
-      <hi>{props.product.name}</hi>
+      <h1>ok</h1>
     </div>
   )
 }
 
 const mapState = state => ({
-  product: state.product.selectedProduct
+  product: state.products.selectedProduct
 })
 
 const mapDisp = dispatch => ({
