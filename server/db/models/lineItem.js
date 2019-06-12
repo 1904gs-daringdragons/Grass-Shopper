@@ -14,6 +14,9 @@ const LineItem = db.define('lineitem', {
   confirmationEmail: {
     type: Sequelize.STRING
   },
+  confirmationNumber: {
+    type: Sequelize.INTEGER
+  },
   itemPrice: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -49,9 +52,6 @@ const LineItem = db.define('lineitem', {
     validate: {
       notEmpty: true
     }
-  },
-  productId: {
-    type: Sequelize.INTEGER
   }
 })
 
