@@ -49,9 +49,9 @@ class checkoutMenu extends React.Component {
 
   changeHandler(e) {
     const mssg = {}
-    const val = e.target.value
-    mssg[e.target.id] = val
-    this.setState({input: val})
+    const {value, id} = e.target
+    mssg[id] = value
+    this.setState(mssg)
   }
 
   render() {
@@ -62,7 +62,7 @@ class checkoutMenu extends React.Component {
             <Grid item xs={6}>
               <TextFeild
                 id="address"
-                value={this.state.input}
+                value={this.state.address}
                 label="Address"
                 variant="outlined"
                 onChange={e => this.changeHandler(e)}
@@ -71,7 +71,7 @@ class checkoutMenu extends React.Component {
             <Grid item xs={6}>
               <TextFeild
                 id="city"
-                value={this.state.input}
+                value={this.state.city}
                 label="City"
                 variant="outlined"
                 onChange={e => this.changeHandler(e)}
@@ -80,7 +80,7 @@ class checkoutMenu extends React.Component {
             <Grid item xs={6}>
               <TextFeild
                 id="state"
-                value={this.state.input}
+                value={this.state.state}
                 label="State"
                 variant="outlined"
                 onChange={e => this.changeHandler(e)}
@@ -89,7 +89,7 @@ class checkoutMenu extends React.Component {
             <Grid item xs={6}>
               <TextFeild
                 id="zipcode"
-                value={this.state.input}
+                value={this.state.zipcode}
                 label="Zipcode"
                 variant="outlined"
                 onChange={e => this.changeHandler(e)}
