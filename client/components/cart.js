@@ -15,12 +15,6 @@ import Grid from '@material-ui/core/Grid'
 
 import {changeQuantity, removeProduct} from '../store/cart'
 
-const dummyCart = [
-  {name: 'weed1', price: 200, qty: 1},
-  {name: 'weed2', price: 300, qty: 2},
-  {name: 'weed3', price: 400, qty: 3},
-  {name: 'weed4', price: 500, qty: 4}
-]
 const TAX_RATE = 0.07
 
 const useStyles = makeStyles(theme => ({
@@ -40,11 +34,6 @@ function ccyFormat(num) {
 
 function priceRow(qty, unit) {
   return qty * unit
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit)
-  return {desc, qty, unit, price}
 }
 
 function subtotal(items) {

@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {Link} from 'react-router-dom'
 import {TextField} from '@material-ui/core'
-import {mergeClasses} from '@material-ui/styles'
 
 const ProductCard = props => {
   const {addToCart} = props

@@ -2,43 +2,17 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getProductsThunk} from '../store/product'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import ProductCard from './product-card'
-// import AddCampus from './AddCampus';
 import {addProductThunk} from '../store/cart'
 
 class DisconnectedProductList extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      open: false
-    }
-    // this.handleClose = this.handleClose.bind(this);
-    // this.handleOpen = this.handleOpen.bind(this);
-  }
   componentDidMount() {
     this.props.getAllProducts()
   }
-  // handleOpen() {
-  // 	this.setState({ open: true });
-  // }
-
-  // handleClose() {
-  // 	this.setState({ open: false });
-  // }
   render() {
     if (this.props.products[0]) {
       return (
         <div>
-          {/* <Button
-						onClick={this.handleOpen}
-						style={{ marginTop: 24, marginLeft: 24 }}
-						size="large"
-						color="primary"
-						variant="contained"
-					>
-						+ Add to Cart
-					</Button> */}
           <div id="products" className="container">
             <Grid container spacing={10} style={{padding: 24}}>
               {this.props.products.map(product => {
@@ -55,14 +29,6 @@ class DisconnectedProductList extends Component {
               })}
             </Grid>
           </div>
-          {/* <div>
-						<AddCampus
-							products={this.props.products}
-							handleClose={this.handleClose}
-							open={this.state.open}
-							addNewCampus={this.props.addNewCampus}
-						/>
-					</div> */}
         </div>
       )
     } else {
