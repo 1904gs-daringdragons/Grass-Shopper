@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+
 // const dummyCart = [
 //   {name: 'weed1', price: 200, qty: 1},
 //   {name: 'weed2', price: 300, qty: 2},
@@ -74,87 +76,111 @@ class checkoutMenu extends React.Component {
 
     return (
       <Container maxWidth="md">
-        <Paper>
-          {this.invoiceTotal || 0}
-          {this.props.isLoggedIn ? (
-            ''
-          ) : (
+        <ValidatorForm onSubmit={() => this.clickHandler()}>
+          <Paper>
+            {this.invoiceTotal || 0}
+            {this.props.isLoggedIn ? (
+              ''
+            ) : (
+              <Grid container justify="center" spacing={3}>
+                <Grid item xs={6}>
+                  <TextValidator
+                    required
+                    id="recipientName"
+                    value={this.state.recipientName}
+                    label="Name"
+                    variant="outlined"
+                    onChange={e => this.changeHandler(e)}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextValidator
+                    // required
+                    id="confirmationEmail"
+                    value={this.state.confirmationEmail}
+                    label="Email"
+                    variant="outlined"
+                    onChange={e => this.changeHandler(e)}
+                    validators={['required', 'isEmail']}
+                    errorMessages={[
+                      'this field is required',
+                      'email is not valid'
+                    ]}
+                  />
+                </Grid>
+              </Grid>
+            )}
             <Grid container justify="center" spacing={3}>
               <Grid item xs={6}>
-                <TextField
+                <TextValidator
                   required
-                  id="recipientName"
-                  value={this.state.recipientName}
-                  label="Name"
+                  id="address"
+                  value={this.state.address}
+                  label="Address"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
+                  validators={['required']}
+                  errorMessages={['this field is required']}
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
+                <TextValidator
                   required
-                  id="confirmationEmail"
-                  value={this.state.confirmationEmail}
-                  label="Email"
+                  id="city"
+                  value={this.state.city}
+                  label="City"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
+                  validators={['required']}
+                  errorMessages={['this field is required']}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextValidator
+                  required
+                  id="state"
+                  value={this.state.state}
+                  label="State"
+                  variant="outlined"
+                  onChange={e => this.changeHandler(e)}
+                  validators={['required']}
+                  errorMessages={['this field is required']}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextValidator
+                  required
+                  id="zipcode"
+                  value={this.state.zipcode}
+                  label="Zipcode"
+                  variant="outlined"
+                  onChange={e => this.changeHandler(e)}
+                  validators={[
+                    'required',
+                    'matchRegexp:^[0-9]{5}(?:-[0-9]{4})?$'
+                  ]}
+                  errorMessages={[
+                    'this field is required',
+                    'Must be valid Zipcode'
+                  ]}
                 />
               </Grid>
             </Grid>
-          )}
-          <Grid container justify="center" spacing={3}>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="address"
-                value={this.state.address}
-                label="Address"
-                variant="outlined"
-                onChange={e => this.changeHandler(e)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="city"
-                value={this.state.city}
-                label="City"
-                variant="outlined"
-                onChange={e => this.changeHandler(e)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="state"
-                value={this.state.state}
-                label="State"
-                variant="outlined"
-                onChange={e => this.changeHandler(e)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="zipcode"
-                value={this.state.zipcode}
-                label="Zipcode"
-                variant="outlined"
-                onChange={e => this.changeHandler(e)}
-              />
-            </Grid>
-          </Grid>
 
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => this.clickHandler()}
-            disabled={!formCompleted}
-            // {formCompleted ? '' : disabled}
-          >
-            Submit Order
-          </Button>
-        </Paper>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              // onClick={() => this.clickHandler()}
+              // disabled={!formCompleted}
+              // {formCompleted ? '' : disabled}
+            >
+              Submit Order
+            </Button>
+          </Paper>
+        </ValidatorForm>
       </Container>
     )
   }
