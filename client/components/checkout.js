@@ -34,7 +34,20 @@ class checkoutMenu extends React.Component {
     const TAX_RATE = 0.07
     this.invoiceTaxes = TAX_RATE * invoiceSubtotal
     this.invoiceTotal = this.invoiceTaxes + invoiceSubtotal
-    this.setState({price: this.invoiceTotal})
+    let uid = 0
+    let cEmail = ''
+    let fName = ''
+    if (this.props.user.id) {
+      uid = this.props.user.id
+      cEmail = this.props.user.email
+      fName = this.props.user.firstName
+    }
+    this.setState({
+      price: this.invoiceTotal,
+      userId: uid,
+      confirmationEmail: cEmail,
+      reciepientName: fName
+    })
   }
 
   changeHandler(e) {
@@ -54,7 +67,6 @@ class checkoutMenu extends React.Component {
       <Container maxWidth="md">
         <ValidatorForm onSubmit={() => this.clickHandler()}>
           <Paper>
-            {this.invoiceTotal || 0}
             {this.props.isLoggedIn ? (
               ''
             ) : (

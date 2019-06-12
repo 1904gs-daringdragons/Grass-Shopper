@@ -13,18 +13,26 @@ router.post('/', async (req, res, next) => {
       zipcode,
       userId
     } = req.body
-    const order = await Order.create({
-      recipientName,
-      conformationEmail,
-      price,
-      address,
-      city,
-      state,
-      zipcode
-    })
-    const user = await User.findOne({where: {id: userId}})
-    await order.setUser(user)
-    res.status(204).send()
+    let test = 0
+    if (req.user) {
+      test = req.user.id
+    }
+    if (userId === test) {
+      const order = await Order.create({
+        recipientName,
+        conformationEmail,
+        price,
+        address,
+        city,
+        state,
+        zipcode
+      })
+      const user = await User.findOne({where: {id: userId}})
+      await order.setUser(user)
+      res.status(204).send()
+    } else {
+      rest.status(403).send('ACCESS DENIED')
+    }
   } catch (error) {
     next(error)
   }
