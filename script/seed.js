@@ -32,14 +32,14 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'Green Cannabis',
-      price: 65.25,
+      price: 6525,
       imageUrl:
         'https://cdn.psychologytoday.com/sites/default/files/styles/thumbnail/public/field_blog_entry_images/Cannabis_Plant%20052216%20033117.jpg?itok=Jxlt9yKX&cache=oi7cwb',
       description: 'It has a great smell and is known all around the world.'
     }),
     Product.create({
       name: 'Sour Diesel',
-      price: 54.99,
+      price: 5499,
       imageUrl:
         'https://zenpype.com/wp-content/uploads/2018/10/recreational-cannabis1-192x192.jpg',
       description:
@@ -47,7 +47,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Cannabis Seeds',
-      price: 31.17,
+      price: 3117,
       imageUrl:
         'https://blog.seedsman.com/wp-content/uploads/2016/08/cannabis-seeds-150x150.jpg',
       description:
@@ -55,7 +55,7 @@ async function seed() {
     }),
     Product.create({
       name: "Chong's Choice THC Strips",
-      price: 15.0,
+      price: 1500,
       imageUrl:
         'http://chongschoice.com/wp-content/uploads/2016/04/WEB_PRODUCTS_THC_STRIP_SQUARE-300x300.jpg',
       description:
@@ -63,28 +63,28 @@ async function seed() {
     }),
     Product.create({
       name: 'Weed Pills',
-      price: 0.99,
+      price: 99,
       imageUrl:
         'https://honestmarijuana.com/wp-content/uploads/2015/11/THC-Pills_7.jpg',
       description: 'The modern triumph of Big Pharma.'
     }),
     Product.create({
       name: 'Glass Bowl',
-      price: 12.5,
+      price: 125,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/31XQeDNFlOL._SL500_AC_SS350_.jpg',
       description: "This bowl is perfect for tokin' buds."
     }),
     Product.create({
       name: 'Ditch Weed',
-      price: 0.01,
+      price: 1,
       imageUrl:
         'http://3dsmolier.com/media/cache/27/67/27675a2e615569f7cbf50b5d263d753f.jpg',
       description: 'A very affordable cannabis product. Worth every penny.'
     }),
     Product.create({
       name: 'Cosmic Brownies 12-pack',
-      price: 2.99,
+      price: 299,
       imageUrl:
         'https://lifemadesimplebakes.com/wp-content/uploads/2014/03/cosmic-brownies-150x150.jpg',
       description:
@@ -92,7 +92,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Pet Caterpillar',
-      price: 17.5,
+      price: 175,
       imageUrl:
         'https://s3-us-west-2.amazonaws.com/maven-user-photos/theweedblog/growing/j42BVlIoHUKAYygyplotlQ/RVlG9C2GV0eaUijtrdNymA',
       description:

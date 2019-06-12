@@ -68,6 +68,8 @@ export default function(cart = initCart, action) {
       if (newCart[action.product.id]) {
         newCart[action.product.id].quantity += action.qty
       } else {
+        const {price} = action.product
+        action.product.price = price / 100
         newCart[action.product.id] = {...action.product, quantity: action.qty}
       }
       localStorage.setItem('localCart', JSON.stringify(newCart))
