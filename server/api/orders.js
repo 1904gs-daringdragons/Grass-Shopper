@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
       await order.setUser(user)
       res.status(204).send()
     } else {
-      rest.status(403).send('ACCESS DENIED')
+      res.status(403).send('ACCESS DENIED')
     }
   } catch (error) {
     next(error)
