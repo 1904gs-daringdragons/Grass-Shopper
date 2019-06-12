@@ -1,39 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {submitOrderThunk} from '../store'
-import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import {makeStyles} from '@material-ui/core/styles'
 
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
-
-// const dummyCart = [
-//   {name: 'weed1', price: 200, qty: 1},
-//   {name: 'weed2', price: 300, qty: 2},
-//   {name: 'weed3', price: 400, qty: 3},
-//   {name: 'weed4', price: 500, qty: 4}
-// ]
 
 function subtotal(items) {
   return items
     .map(({price, quantity}) => price * quantity)
     .reduce((sum, i) => sum + i, 0)
 }
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-    overflowX: 'auto'
-  },
-  table: {
-    minWidth: 700
-  }
-}))
-// const TAX_RATE = 0.07
 
 class checkoutMenu extends React.Component {
   constructor(props) {
@@ -53,7 +32,6 @@ class checkoutMenu extends React.Component {
   componentDidMount() {
     const invoiceSubtotal = subtotal(Object.values(this.props.cart))
     const TAX_RATE = 0.07
-    console.log(this.props.cart)
     this.invoiceTaxes = TAX_RATE * invoiceSubtotal
     this.invoiceTotal = this.invoiceTaxes + invoiceSubtotal
     this.setState({price: this.invoiceTotal})
@@ -72,8 +50,6 @@ class checkoutMenu extends React.Component {
   }
 
   render() {
-    let formCompleted = false
-
     return (
       <Container maxWidth="md">
         <ValidatorForm onSubmit={() => this.clickHandler()}>
