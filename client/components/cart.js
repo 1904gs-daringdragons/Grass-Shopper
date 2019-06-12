@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 
-import {addProductOrChangeQty} from '../store/cart'
+import {addProductThunk} from '../store/cart'
 
 const dummyCart = [
   {name: 'weed1', price: 200, qty: 1},
@@ -123,8 +123,7 @@ const mapToState = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeQty: (productId, qty) =>
-      dispatch(addProductOrChangeQty(productId, qty))
+    changeQty: (productId, qty) => dispatch(addProductThunk(productId, qty))
   }
 }
 
