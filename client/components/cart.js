@@ -7,12 +7,13 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 
-import {addProductThunk} from '../store/cart'
+import {changeQuantity, removeProduct} from '../store/cart'
 
 const dummyCart = [
   {name: 'weed1', price: 200, qty: 1},
@@ -55,15 +56,16 @@ function subtotal(items) {
 function SpanningTable(props) {
   const classes = useStyles()
 
-  console.log(Object.values(props.cart))
   if (
     Object.keys(props.cart).length !== 0 &&
     props.cart.constructor === Object
   ) {
-    console.log(subtotal(Object.values(props.cart)))
     const invoiceSubtotal = subtotal(Object.values(props.cart))
     const invoiceTaxes = TAX_RATE * invoiceSubtotal
     const invoiceTotal = invoiceTaxes + invoiceSubtotal
+    const handleChange = event => {
+      props.changeQty(+event.target.id, +event.target.value)
+    }
 
     return (
       <Container maxWidth="md">
@@ -71,7 +73,8 @@ function SpanningTable(props) {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>Desc</TableCell>
+                <TableCell>Item</TableCell>
+                <TableCell />
                 <TableCell align="right">Qty.</TableCell>
                 <TableCell align="right">Unit Price</TableCell>
                 <TableCell align="right">Total</TableCell>
@@ -81,7 +84,25 @@ function SpanningTable(props) {
               {Object.values(props.cart).map(row => (
                 <TableRow key={row.id}>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.qty}</TableCell>
+                  <TableCell>
+                    <Button
+                      color="primary"
+                      className={classes.button}
+                      onClick={() => props.removeProduct(row.id)}
+                    >
+                      Remove
+                    </Button>
+                  </TableCell>
+                  <TableCell align="right">
+                    <TextField
+                      id={`${row.id}`}
+                      type="number"
+                      margin="normal"
+                      defaultValue={`${row.quantity}`}
+                      inputProps={{min: '1', step: '1'}}
+                      onChange={handleChange}
+                    />
+                  </TableCell>
                   <TableCell align="right">{row.price}</TableCell>
                   <TableCell align="right">
                     {ccyFormat(priceRow(row.quantity, row.price))}
@@ -135,7 +156,8 @@ const mapToState = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeQty: (productId, qty) => dispatch(addProductThunk(productId, qty))
+    changeQty: (productId, qty) => dispatch(changeQuantity(productId, qty)),
+    removeProduct: productId => dispatch(removeProduct(productId))
   }
 }
 

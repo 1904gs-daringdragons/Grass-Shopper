@@ -5,6 +5,7 @@ const initCart = {}
 const ADD_TO_CART = 'ADD_TO_CART'
 const DELETE_FROM_CART = 'DELETE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
+const CHANGE_QUANTITY = 'CHANGE_QUANTIY'
 
 export const addProduct = (product, qty) => {
   return {type: ADD_TO_CART, product, qty}
@@ -12,8 +13,11 @@ export const addProduct = (product, qty) => {
 export const removeProduct = productId => {
   return {type: DELETE_FROM_CART, productId}
 }
-const emptyCart = () => {
+export const emptyCart = () => {
   return {type: EMPTY_CART}
+}
+export const changeQuantity = (productId, qty) => {
+  return {type: CHANGE_QUANTITY, productId, qty}
 }
 
 export const addProductThunk = (productId, qty) => {
@@ -41,7 +45,7 @@ export const submitOrderThunk = order => {
 }
 
 export default function(cart = initCart, action) {
-  const newCart = Object.assign({}, cart) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
+  const newCart = JSON.parse(JSON.stringify(cart)) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
   switch (action.type) {
     case ADD_TO_CART:
       if (newCart[action.product.id]) {
@@ -55,6 +59,12 @@ export default function(cart = initCart, action) {
       break
     case EMPTY_CART:
       return initCart
+    case CHANGE_QUANTITY:
+      newCart[action.productId] = {
+        ...newCart[action.productId],
+        quantity: action.qty
+      }
+      break
     default:
       break
   }
