@@ -4,7 +4,6 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log(req.user)
     if (req.user.isAdmin) {
       const users = await User.findAll({
         // explicitly select only the id and email fields - even though
