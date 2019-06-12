@@ -175,7 +175,10 @@ function Navbar(props) {
 
             <IconButton aria-label="Go To Cart" color="inherit">
               <Badge
-                badgeContent={Object.values(props.cart).length}
+                badgeContent={Object.values(props.cart).reduce(
+                  (accum, item) => accum + item.quantity,
+                  0
+                )}
                 color="secondary"
               >
                 <Link to="/cart">
