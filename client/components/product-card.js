@@ -51,8 +51,7 @@ const ProductCard = props => {
           type="number"
           margin="normal"
           defaultValue="1"
-          min="1"
-          max="10"
+          inputProps={{min: '1', step: '1'}}
         />
       </CardActions>
     </Card>
