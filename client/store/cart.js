@@ -6,6 +6,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const DELETE_FROM_CART = 'DELETE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTIY'
+const GET_CART = 'GET_CART'
 
 export const addProduct = (product, qty) => {
   return {type: ADD_TO_CART, product, qty}
@@ -18,6 +19,10 @@ export const emptyCart = () => {
 }
 export const changeQuantity = (productId, qty) => {
   return {type: CHANGE_QUANTITY, productId, qty}
+}
+
+export const getCart = cart => {
+  return {type: GET_CART, cart}
 }
 
 export const addProductThunk = (productId, qty) => {
@@ -44,6 +49,18 @@ export const submitOrderThunk = order => {
   }
 }
 
+export const getCartThunk = userId => {
+  return dispatch => {
+    try {
+      let cart = {}
+      if (!userId) cart = JSON.parse(localStorage.getItem('localCart'))
+      dispatch(getCart(cart))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export default function(cart = initCart, action) {
   const newCart = JSON.parse(JSON.stringify(cart)) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
   switch (action.type) {
@@ -53,18 +70,24 @@ export default function(cart = initCart, action) {
       } else {
         newCart[action.product.id] = {...action.product, quantity: action.qty}
       }
+      localStorage.setItem('localCart', JSON.stringify(newCart))
       break
     case DELETE_FROM_CART:
       delete newCart[action.productId]
+      localStorage.setItem('localCart', JSON.stringify(newCart))
       break
     case EMPTY_CART:
+      localStorage.setItem('localCart', {})
       return initCart
     case CHANGE_QUANTITY:
       newCart[action.productId] = {
         ...newCart[action.productId],
         quantity: action.qty
       }
+      localStorage.setItem('localCart', JSON.stringify(newCart))
       break
+    case GET_CART:
+      return {...action.cart}
     default:
       break
   }
