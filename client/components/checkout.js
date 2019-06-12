@@ -8,15 +8,17 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 
-const dummyCart = [
-  {name: 'weed1', price: 200, qty: 1},
-  {name: 'weed2', price: 300, qty: 2},
-  {name: 'weed3', price: 400, qty: 3},
-  {name: 'weed4', price: 500, qty: 4}
-]
+// const dummyCart = [
+//   {name: 'weed1', price: 200, qty: 1},
+//   {name: 'weed2', price: 300, qty: 2},
+//   {name: 'weed3', price: 400, qty: 3},
+//   {name: 'weed4', price: 500, qty: 4}
+// ]
 
 function subtotal(items) {
-  return items.map(({price, qty}) => price * qty).reduce((sum, i) => sum + i, 0)
+  return items
+    .map(({price, quantity}) => price * quantity)
+    .reduce((sum, i) => sum + i, 0)
 }
 
 const useStyles = makeStyles(theme => ({
@@ -29,11 +31,7 @@ const useStyles = makeStyles(theme => ({
     minWidth: 700
   }
 }))
-const TAX_RATE = 0.07
-
-const invoiceSubtotal = subtotal(dummyCart)
-const invoiceTaxes = TAX_RATE * invoiceSubtotal
-const invoiceTotal = invoiceTaxes + invoiceSubtotal
+// const TAX_RATE = 0.07
 
 class checkoutMenu extends React.Component {
   constructor(props) {
@@ -41,13 +39,22 @@ class checkoutMenu extends React.Component {
     this.state = {
       recipientName: '',
       confirmationEmail: '',
-      price: invoiceTotal,
+      price: 0,
       userId: 0,
       address: '',
       city: '',
       state: '',
       zipcode: ''
     }
+  }
+
+  componentDidMount() {
+    const invoiceSubtotal = subtotal(Object.values(this.props.cart))
+    const TAX_RATE = 0.07
+    console.log(this.props.cart)
+    const invoiceTaxes = TAX_RATE * invoiceSubtotal
+    const invoiceTotal = invoiceTaxes + invoiceSubtotal
+    this.setState({price: invoiceTotal})
   }
 
   changeHandler(e) {
@@ -57,12 +64,14 @@ class checkoutMenu extends React.Component {
     this.setState(mssg)
   }
 
-  async clickHandler() {
+  clickHandler() {
     this.props.handleClick(this.state)
     this.props.history.push('./home')
   }
 
   render() {
+    let formCompleted = false
+
     return (
       <Container maxWidth="md">
         <Paper>
@@ -73,6 +82,7 @@ class checkoutMenu extends React.Component {
             <Grid container justify="center" spacing={3}>
               <Grid item xs={6}>
                 <TextFeild
+                  required
                   id="recipientName"
                   value={this.state.recipientName}
                   label="Name"
@@ -82,6 +92,7 @@ class checkoutMenu extends React.Component {
               </Grid>
               <Grid item xs={6}>
                 <TextFeild
+                  required
                   id="confirmationEmail"
                   value={this.state.confirmationEmail}
                   label="Email"
@@ -94,6 +105,7 @@ class checkoutMenu extends React.Component {
           <Grid container justify="center" spacing={3}>
             <Grid item xs={6}>
               <TextFeild
+                required
                 id="address"
                 value={this.state.address}
                 label="Address"
@@ -103,6 +115,7 @@ class checkoutMenu extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <TextFeild
+                required
                 id="city"
                 value={this.state.city}
                 label="City"
@@ -112,6 +125,7 @@ class checkoutMenu extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <TextFeild
+                required
                 id="state"
                 value={this.state.state}
                 label="State"
@@ -121,6 +135,7 @@ class checkoutMenu extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <TextFeild
+                required
                 id="zipcode"
                 value={this.state.zipcode}
                 label="Zipcode"
@@ -129,7 +144,16 @@ class checkoutMenu extends React.Component {
               />
             </Grid>
           </Grid>
-          <Button onClick={() => this.clickHandler()}>Submit Order</Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.clickHandler()}
+            disabled={!formCompleted}
+            // {formCompleted ? '' : disabled}
+          >
+            Submit Order
+          </Button>
         </Paper>
       </Container>
     )
