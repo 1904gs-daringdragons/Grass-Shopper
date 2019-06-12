@@ -35,7 +35,11 @@ export const addProductThunk = (productId, qty) => {
 export const submitOrderThunk = order => {
   return async dispatch => {
     try {
-      await axios.put('/api/orders', order)
+      await axios.post('/api/orders', order)
+      // When posting an order to the db, maybe
+      // we should get a return of the order ID
+      // that was just posted. A confrmation #
+      // or something other than a 204. -NB
       dispatch(emptyCart())
     } catch (error) {
       //Error Handling
