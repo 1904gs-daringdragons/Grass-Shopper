@@ -1,5 +1,7 @@
 const {expect} = require('chai')
 const request = require('supertest')
+const session = require('supertest-session')
+
 const db = require('../db')
 const app = require('../index')
 const User = db.model('user')
@@ -18,7 +20,7 @@ describe('order routes', () => {
       city: 'townsville',
       state: 'utah',
       zipcode: 55555,
-      userId: 1
+      userId: 0
     }
 
     const codyUser = {
