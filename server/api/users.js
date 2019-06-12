@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
       })
       res.json(users)
     } else {
-      res.status(500).send('Access Denied')
+      res.status(403).send('Access Denied')
     }
   } catch (error) {
     res.json('ACCESS DENIED')
