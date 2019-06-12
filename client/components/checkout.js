@@ -46,7 +46,7 @@ class checkoutMenu extends React.Component {
       price: this.invoiceTotal,
       userId: uid,
       confirmationEmail: cEmail,
-      reciepientName: fName
+      recipientName: fName
     })
   }
 

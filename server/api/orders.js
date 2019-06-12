@@ -5,7 +5,7 @@ router.post('/', async (req, res, next) => {
   try {
     const {
       recipientName,
-      conformationEmail,
+      confirmationEmail,
       price,
       address,
       city,
@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
     if (userId === test) {
       const order = await Order.create({
         recipientName,
-        conformationEmail,
+        confirmationEmail,
         price,
         address,
         city,
