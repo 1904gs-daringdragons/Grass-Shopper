@@ -29,17 +29,20 @@ const useStyles = makeStyles(theme => ({
     minWidth: 700
   }
 }))
+const TAX_RATE = 0.07
 
 const invoiceSubtotal = subtotal(dummyCart)
 const invoiceTaxes = TAX_RATE * invoiceSubtotal
 const invoiceTotal = invoiceTaxes + invoiceSubtotal
 
-const TAX_RATE = 0.07
-
 class checkoutMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      recipientName: '',
+      confirmationEmail: '',
+      price: invoiceTotal,
+      userId: 0,
       address: '',
       city: '',
       state: '',
@@ -54,10 +57,40 @@ class checkoutMenu extends React.Component {
     this.setState(mssg)
   }
 
+  async clickHandler() {
+    this.props.handleClick(this.state)
+    this.props.history.push('./home')
+  }
+
   render() {
     return (
       <Container maxWidth="md">
         <Paper>
+          {invoiceTotal}
+          {this.props.isLoggedIn ? (
+            ''
+          ) : (
+            <Grid container justify="center" spacing={3}>
+              <Grid item xs={6}>
+                <TextFeild
+                  id="recipientName"
+                  value={this.state.recipientName}
+                  label="Name"
+                  variant="outlined"
+                  onChange={e => this.changeHandler(e)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextFeild
+                  id="confirmationEmail"
+                  value={this.state.confirmationEmail}
+                  label="Email"
+                  variant="outlined"
+                  onChange={e => this.changeHandler(e)}
+                />
+              </Grid>
+            </Grid>
+          )}
           <Grid container justify="center" spacing={3}>
             <Grid item xs={6}>
               <TextFeild
@@ -96,7 +129,7 @@ class checkoutMenu extends React.Component {
               />
             </Grid>
           </Grid>
-          <Button>Submit Order</Button>
+          <Button onClick={() => this.clickHandler()}>Submit Order</Button>
         </Paper>
       </Container>
     )

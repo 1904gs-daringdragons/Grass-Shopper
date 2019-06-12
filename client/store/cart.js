@@ -31,7 +31,7 @@ export const addProductThunk = (productId, qty) => {
 export const submitOrderThunk = order => {
   return async dispatch => {
     try {
-      await axios.put('/api/orders', order)
+      await axios.post('/api/orders', order)
       dispatch(emptyCart())
     } catch (error) {
       //Error Handling
