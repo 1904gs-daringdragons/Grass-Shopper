@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {submitOrderThunk} from '../store'
-import TextFeild from '@material-ui/core/TextField'
+import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
@@ -81,7 +81,7 @@ class checkoutMenu extends React.Component {
           ) : (
             <Grid container justify="center" spacing={3}>
               <Grid item xs={6}>
-                <TextFeild
+                <TextField
                   required
                   id="recipientName"
                   value={this.state.recipientName}
@@ -91,7 +91,7 @@ class checkoutMenu extends React.Component {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextFeild
+                <TextField
                   required
                   id="confirmationEmail"
                   value={this.state.confirmationEmail}
@@ -104,7 +104,7 @@ class checkoutMenu extends React.Component {
           )}
           <Grid container justify="center" spacing={3}>
             <Grid item xs={6}>
-              <TextFeild
+              <TextField
                 required
                 id="address"
                 value={this.state.address}
@@ -114,7 +114,7 @@ class checkoutMenu extends React.Component {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextFeild
+              <TextField
                 required
                 id="city"
                 value={this.state.city}
@@ -124,7 +124,7 @@ class checkoutMenu extends React.Component {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextFeild
+              <TextField
                 required
                 id="state"
                 value={this.state.state}
@@ -134,7 +134,7 @@ class checkoutMenu extends React.Component {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextFeild
+              <TextField
                 required
                 id="zipcode"
                 value={this.state.zipcode}
