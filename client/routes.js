@@ -10,7 +10,7 @@ import {me, getCartThunk} from './store'
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData()
+    this.props.loadInitialData(this.props.uid)
   }
 
   render() {
@@ -36,15 +36,16 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    uid: state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData() {
+    loadInitialData(uid = 0) {
       dispatch(me())
-      dispatch(getCartThunk())
+      dispatch(getCartThunk(uid))
     }
   }
 }

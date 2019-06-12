@@ -5,7 +5,7 @@ const initCart = {}
 const ADD_TO_CART = 'ADD_TO_CART'
 const DELETE_FROM_CART = 'DELETE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
-const CHANGE_QUANTITY = 'CHANGE_QUANTIY'
+const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 const GET_CART = 'GET_CART'
 
 export const addProduct = (product, qty) => {
@@ -25,10 +25,12 @@ export const getCart = cart => {
   return {type: GET_CART, cart}
 }
 
-export const addProductThunk = (productId, qty) => {
+export const addProductThunk = (productId, qty, userId) => {
   return async dispatch => {
     try {
       const product = await axios.get(`/api/products/${productId}`)
+      // await axios.put('/api/cart', {data: {userId, productId}})
+      await axios({url: '/api/cart', method: 'PUT', data: {userId, productId}})
       dispatch(addProduct(product.data, qty))
     } catch (error) {
       //Error Handling
@@ -50,10 +52,11 @@ export const submitOrderThunk = order => {
 }
 
 export const getCartThunk = userId => {
-  return dispatch => {
+  return async dispatch => {
     try {
       let cart = {}
       if (!userId) cart = JSON.parse(localStorage.getItem('localCart'))
+      if (userId) cart = await axios.get(`/api/cart/${userId}`)
       dispatch(getCart(cart))
     } catch (error) {
       console.log(error)

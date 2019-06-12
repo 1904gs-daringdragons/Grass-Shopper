@@ -4,7 +4,14 @@ const db = require('../db')
 const LineItem = db.define('lineitem', {
   orderStatus: {
     type: Sequelize.ENUM,
-    values: ['CREATED', 'PROCESSING', 'CANCELLED', 'SHIPPED', 'COMPLETED'],
+    values: [
+      'CART',
+      'CREATED',
+      'PROCESSING',
+      'CANCELLED',
+      'SHIPPED',
+      'COMPLETED'
+    ],
     defaultValue: 'CREATED',
     allowNull: false
   },
@@ -18,37 +25,37 @@ const LineItem = db.define('lineitem', {
     type: Sequelize.INTEGER
   },
   itemPrice: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    validate: {
-      isInt: true,
-      min: 0
-    }
+    type: Sequelize.INTEGER
+    // allowNull: false,
+    // validate: {
+    //   isInt: true,
+    //   min: 0
+    // }
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
     }
   },
   city: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
     }
   },
   state: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
     }
   },
   zipcode: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
     }

@@ -22,6 +22,7 @@ class DisconnectedProductList extends Component {
                       <ProductCard
                         product={product}
                         addToCart={this.props.addToCart}
+                        userId={this.props.user.id}
                       />
                     }
                   </Grid>
@@ -38,12 +39,13 @@ class DisconnectedProductList extends Component {
 }
 
 const mapState = state => ({
-  products: state.products
+  products: state.products,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({
   getAllProducts: () => dispatch(getProductsThunk()),
-  addToCart: (id, qty) => dispatch(addProductThunk(id, qty))
+  addToCart: (id, qty, userId = 0) => dispatch(addProductThunk(id, qty, userId))
 })
 
 export default connect(mapState, mapDispatch)(DisconnectedProductList)

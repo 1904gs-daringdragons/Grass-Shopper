@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom'
 import {TextField} from '@material-ui/core'
 
 const ProductCard = props => {
+  console.log(props.userId)
   const {addToCart} = props
   return (
     <Card>
@@ -37,7 +38,8 @@ const ProductCard = props => {
           onClick={() =>
             addToCart(
               props.product.id,
-              +document.getElementById(`qty-${props.product.id}`).value
+              +document.getElementById(`qty-${props.product.id}`).value,
+              props.userId
             )
           }
           variant="contained"
