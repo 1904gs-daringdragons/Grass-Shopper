@@ -19,7 +19,7 @@ class SingleProduct extends Component {
   render() {
     return (
       <div>
-        <Card>
+        <Card className="SinglePage">
           <CardMedia
             style={{height: 0, paddingTop: '56.25%'}}
             image={this.props.product.imageUrl}
