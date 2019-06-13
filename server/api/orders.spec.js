@@ -35,5 +35,7 @@ describe('order routes', () => {
         .send(dummyOrder)
         .expect(204)
     })
+
+    it('saves a registered user order to the db', async () => {})
   })
 })
