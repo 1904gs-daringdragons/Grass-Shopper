@@ -64,7 +64,6 @@ const mapDispatch = dispatch => {
       dispatch(me())
     },
     loadCart(uid) {
-      console.log('HIHIHI')
       dispatch(getCartThunk(uid))
     }
   }
