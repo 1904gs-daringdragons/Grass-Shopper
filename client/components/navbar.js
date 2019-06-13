@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Navbar(props) {
-  const theme = useTheme()
+  // const theme = useTheme()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
@@ -86,8 +86,10 @@ function Navbar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
+      <MenuItem onClick={handleMenuClose}>
+        <Link to="/accounts">My account</Link>
+      </MenuItem>
       <MenuItem onClick={props.handleClick}>Logout</MenuItem>
     </Menu>
   )
@@ -103,15 +105,6 @@ function Navbar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton aria-label="Show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem> */}
-      {/* {props.isLoggedIn ? () : () } */}
       <MenuItem>
         <IconButton aria-label="Go to Cart" color="inherit">
           <Badge badgeContent={11} color="secondary">
@@ -131,14 +124,16 @@ function Navbar(props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Link to="/accounts">
+          <p>My Account</p>
+        </Link>
       </MenuItem>
     </Menu>
   )
 
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed" color="primary">
+      <AppBar position="fixed" color="primary" className="navbar">
         <Toolbar>
           <IconButton
             edge="start"
@@ -156,11 +151,6 @@ function Navbar(props) {
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label="Show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
             {props.isLoggedIn ? (
               <p> Welcome, {`${props.currentUser.firstName}`}</p>
             ) : (
