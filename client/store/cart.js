@@ -70,6 +70,17 @@ export const getCartThunk = userId => {
   }
 }
 
+export const emptyCartThunk = userId => {
+  return async dispatch => {
+    try {
+      if (userId) await axios.delete(`/api/cart/${userId}`)
+      dispatch(emptyCart())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export default function(cart = initCart, action) {
   const newCart = JSON.parse(JSON.stringify(cart)) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
   switch (action.type) {

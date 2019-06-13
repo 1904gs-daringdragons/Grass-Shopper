@@ -7,11 +7,6 @@ router.put('/', async (req, res, next) => {
     const {userId, productId, qty = 1} = req.body
     if (userId) {
       if (req.user.id === userId) {
-        // const userCart = await Cart.findOne({where: {userId}})
-        // const stringCart = JSON.stringify(newCart)
-        // console.log(userCart)
-        // await userCart.update({products: stringCart})
-        // res.status(204).send()
         const user = await User.findOne({where: {id: userId}})
         const product = await Product.findOne({where: {id: productId}})
         for (let i = 0; i < qty; i++) {
@@ -33,17 +28,20 @@ router.put('/', async (req, res, next) => {
   }
 })
 
-// router.post('/', async (req, res, next) => {
-//   try {
-//     const {userId} = req.body
-//     const newCart = await Cart.create()
-//     const user = await User.findOne({where: {id: userId}})
-//     await newCart.setUser(user)
-//     res.status(204).send()
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.delete('/:uid', async (req, res, next) => {
+  try {
+    const userId = req.params.uid
+    const userCart = await LineItem.findAll({
+      where: {userId, orderStatus: 'CART'}
+    })
+    for (let i = 0; i < userCart.length; i++) {
+      userCart[i].destroy()
+      res.status(204).send()
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get('/:uid', async (req, res, next) => {
   try {
