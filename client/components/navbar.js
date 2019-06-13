@@ -138,7 +138,7 @@ function Navbar(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
           <IconButton
             edge="start"
