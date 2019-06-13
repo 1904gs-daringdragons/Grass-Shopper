@@ -29,7 +29,9 @@ export const addProductThunk = (productId, qty, userId) => {
   return async (dispatch, getState) => {
     try {
       const product = await axios.get(`/api/products/${productId}`)
-      const quantity = getState().cart[productId].quantity + qty
+      let quantity = 1
+      if (getState().cart[productId])
+        quantity = getState().cart[productId].quantity + qty
       await axios({
         url: '/api/cart',
         method: 'PUT',
