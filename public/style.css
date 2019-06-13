@@ -25,7 +25,7 @@ body {
   background-image: url(https://i.pinimg.com/originals/9c/58/1c/9c581cecd7d48348aead44f4b9d2ada6.jpg);
 }
 
-.MuiCard-root {
+.SinglePage {
   overflow: hidden;
   width: 500px;
 }
