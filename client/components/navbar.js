@@ -19,6 +19,7 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {useTheme} from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Navbar(props) {
+  const theme = useTheme()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
