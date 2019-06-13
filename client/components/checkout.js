@@ -86,7 +86,7 @@ class checkoutMenu extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                   <TextValidator
-                    // required
+                    required
                     id="confirmationEmail"
                     value={this.state.confirmationEmail}
                     label="Email"
@@ -106,7 +106,7 @@ class checkoutMenu extends React.Component {
                 <TextValidator
                   required
                   id="billingAddress"
-                  value={this.state.address}
+                  value={this.state.billingAddress}
                   label=" Billing Address"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
@@ -118,7 +118,7 @@ class checkoutMenu extends React.Component {
                 <TextValidator
                   required
                   id="billingCity"
-                  value={this.state.city}
+                  value={this.state.billingCity}
                   label="City"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
@@ -130,7 +130,7 @@ class checkoutMenu extends React.Component {
                 <TextValidator
                   required
                   id="billingState"
-                  value={this.state.state}
+                  value={this.state.billingState}
                   label="State"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
@@ -142,7 +142,7 @@ class checkoutMenu extends React.Component {
                 <TextValidator
                   required
                   id="billingZipcode"
-                  value={this.state.zipcode}
+                  value={this.state.billingZipcode}
                   label="Zipcode"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
