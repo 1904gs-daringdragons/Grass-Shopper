@@ -23,3 +23,8 @@ form div {
 body {
   margin-top: 70px;
 }
+
+.MuiCard-root {
+  overflow: hidden;
+  width: 500px;
+}
