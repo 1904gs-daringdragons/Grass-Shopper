@@ -13,7 +13,10 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 
-import {changeQuantity, removeProduct} from '../store/cart'
+import {
+  changeQuantityThunk as changeQuantity,
+  removeProduct
+} from '../store/cart'
 
 const TAX_RATE = 0.07
 
@@ -53,7 +56,7 @@ function SpanningTable(props) {
     const invoiceTaxes = TAX_RATE * invoiceSubtotal
     const invoiceTotal = invoiceTaxes + invoiceSubtotal
     const handleChange = event => {
-      props.changeQty(+event.target.id, +event.target.value)
+      props.changeQty(props.userId, +event.target.id, +event.target.value)
     }
 
     return (
@@ -141,12 +144,14 @@ function SpanningTable(props) {
 }
 
 const mapToState = state => ({
-  cart: state.cart
+  cart: state.cart,
+  userId: state.user.id || 0
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeQty: (productId, qty) => dispatch(changeQuantity(productId, qty)),
+    changeQty: (userId, productId, qty) =>
+      dispatch(changeQuantity(userId, productId, qty)),
     removeProduct: productId => dispatch(removeProduct(productId))
   }
 }

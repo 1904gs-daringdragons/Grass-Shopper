@@ -2,7 +2,6 @@ const router = require('express').Router()
 const {User, LineItem, Product} = require('../db/models')
 
 router.put('/', async (req, res, next) => {
-  console.log(req.body)
   try {
     const {userId, productId, qty = 1} = req.body
     if (userId) {
@@ -22,6 +21,38 @@ router.put('/', async (req, res, next) => {
       }
     } else {
       res.status(200).send()
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:pId', async (req, res, next) => {
+  try {
+    const {userId, qty} = req.body
+    const productId = req.params.pId
+    if (userId) {
+      if (req.user.id === userId) {
+        const user = await User.findOne({where: {id: userId}})
+        const product = await Product.findOne({where: {id: productId}})
+        const currentCart = await LineItem.findAll({
+          where: {userId, orderStatus: 'CART'}
+        })
+        if (currentCart.length < qty) {
+          for (let i = currentCart.length; i < qty; i++) {
+            const NewItem = await LineItem.create({orderStatus: 'CART'})
+            await NewItem.setUser(user)
+            await NewItem.setProduct(product)
+          }
+        }
+        if (currentCart.length > qty) {
+          for (let i = qty; i < currentCart.length; i++) {
+            const Kill = currentCart.pop()
+            await Kill.destroy()
+          }
+        }
+      }
+      res.send()
     }
   } catch (error) {
     next(error)
