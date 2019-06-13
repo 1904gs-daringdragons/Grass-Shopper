@@ -47,34 +47,34 @@ router.post('/', async (req, res, next) => {
         res.status(403).send('ACCESS DENIED')
       }
     } else if (userId === 0) {
-        const confirmationNumber = (Date.now() * zipcode) % 1000000000
-        const user = await User.findOne({where: {id: userId}})
-        const newOrder = await Order.create({
-          ...shippingAndBilling
-        })
-        let totalPrice = 0
-        for (let product in cart) {
-          if (product.id) {
-            const curProduct = await Product.findOne({
-              where: {
-                id: cart[product].id
-              }
-            })
-            totalPrice += curProduct.price
-            const itemPrice = curProduct.price
-            const quantity = curProduct.quantity
-            const lineItem = await LineItem.create({
-              quantity,
-              itemPrice
-            })
-            await lineItem.setOrder(newOrder)
-            await lineItem.setProduct(curProduct)
-          }
+      const confirmationNumber = (Date.now() * billingZipcode) % 1000000000
+      const user = await User.findOne({where: {id: userId}})
+      const newOrder = await Order.create({
+        ...shippingAndBilling
+      })
+      let totalPrice = 0
+      for (let product in cart) {
+        if (product.id) {
+          const curProduct = await Product.findOne({
+            where: {
+              id: cart[product].id
+            }
+          })
+          totalPrice += curProduct.price
+          const itemPrice = curProduct.price
+          const quantity = curProduct.quantity
+          const lineItem = await LineItem.create({
+            quantity,
+            itemPrice
+          })
+          await lineItem.setOrder(newOrder)
+          await lineItem.setProduct(curProduct)
         }
-        await newOrder.update({totalPrice})
-        await newOrder.setUser(user)
-        res.status(204).send()
       }
+      await newOrder.update({totalPrice})
+      await newOrder.setUser(user)
+      res.status(204).send()
+    }
   } catch (error) {
     next(error)
   }

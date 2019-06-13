@@ -1,6 +1,6 @@
 const User = require('./user')
 const Product = require('./product')
-const LineItem = require('./lineitem')
+const LineItem = require('./lineItem')
 const Order = require('./order')
 
 LineItem.belongsTo(Product)

@@ -16,10 +16,10 @@ describe('order routes', () => {
       recipientName: 'Eric',
       conformationEmail: 'confirm@email.email',
       price: 100.0,
-      address: '123 fake st',
-      city: 'townsville',
-      state: 'utah',
-      zipcode: 55555,
+      billingAddress: '123 fake st',
+      billingCity: 'townsville',
+      billingState: 'utah',
+      billingZipcode: 55555,
       userId: 0
     }
 
@@ -29,9 +29,7 @@ describe('order routes', () => {
       lastName: 'pug'
     }
 
-    it('saves a submitted order to the db', async () => {
-      await User.create(codyUser)
-
+    it('saves a submitted guest order to the db', async () => {
       await request(app)
         .post('/api/orders')
         .send(dummyOrder)
