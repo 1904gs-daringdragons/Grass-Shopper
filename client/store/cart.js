@@ -28,7 +28,6 @@ export const getCart = cart => {
 export const addProductThunk = (productId, qty, userId) => {
   return async (dispatch, getState) => {
     try {
-      console.log(userId)
       const product = await axios.get(`/api/products/${productId}`)
       const quantity = getState().cart[productId].quantity + qty
       await axios({
@@ -64,8 +63,6 @@ export const getCartThunk = userId => {
       if (userId) {
         const res = await axios.get(`/api/cart/${userId}`)
         cart = res.data
-        console.log('Im found a user!')
-        console.log(cart)
       }
       dispatch(getCart(cart))
     } catch (error) {
@@ -74,8 +71,8 @@ export const getCartThunk = userId => {
   }
 }
 
-export const emptyCartThunk = userId => {
-  return async dispatch => {
+export const emptyCartThunk = () => {
+  return dispatch => {
     try {
       dispatch(emptyCart())
     } catch (error) {
