@@ -85,16 +85,27 @@ export const emptyCartThunk = userId => {
   }
 }
 
+export const removeProductThunk = (userId, productId) => {
+  return async dispatch => {
+    try {
+      if (userId) await axios.delete(`/api/cart/${userId}/${productId}`)
+    } catch (error) {
+      console.log(error)
+    }
+    dispatch(removeProduct(productId))
+  }
+}
+
 export const changeQuantityThunk = (userId, productId, qty) => {
   return async dispatch => {
     try {
-      console.log('im here')
-      if (userId)
+      if (userId) {
         await axios({
           url: `/api/cart/${productId}`,
           method: 'PUT',
           data: {userId, qty}
         })
+      }
       dispatch(changeQuantity(productId, qty))
     } catch (error) {
       console.log(error)
