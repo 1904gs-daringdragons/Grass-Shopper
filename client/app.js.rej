@@ -1,0 +1,4 @@
+diff a/client/app.js b/client/app.js	(rejected hunks)
+@@ -25 +25 @@ const App = () => {
+-        <Routes style={{"position":"fixed"}} />
++        <Routes style={{position: 'fixed'}} />

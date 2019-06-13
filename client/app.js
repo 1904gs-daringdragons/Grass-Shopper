@@ -22,7 +22,7 @@ const App = () => {
     <ThemeProvider theme={greenTheme}>
       <div>
         <Navbar />
-        <Routes style={{position: 'fixed'}} />
+        <Routes />
       </div>
     </ThemeProvider>
   )
