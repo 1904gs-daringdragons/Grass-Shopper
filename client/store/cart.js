@@ -77,7 +77,6 @@ export const getCartThunk = userId => {
 export const emptyCartThunk = userId => {
   return async dispatch => {
     try {
-      if (userId) await axios.delete(`/api/cart/${userId}`)
       dispatch(emptyCart())
     } catch (error) {
       console.log(error)
