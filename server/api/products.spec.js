@@ -21,7 +21,7 @@ describe('Product routes', () => {
     beforeEach(async () => {
       newProduct = await Product.create({
         name: sunnyName,
-        price: '5.50',
+        price: '550',
         imageUrl:
           'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
         description: 'A specially made blend by Sunny'
