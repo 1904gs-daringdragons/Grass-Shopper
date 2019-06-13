@@ -1,20 +1,20 @@
 const router = require('express').Router()
-const {User, LineItem, Product} = require('../db/models')
+const {Order, LineItem, Product} = require('../db/models')
 
 router.put('/', async (req, res, next) => {
   try {
     const {userId, productId, qty = 1} = req.body
     if (userId) {
       if (req.user.id === userId) {
-        const user = await User.findOne({where: {id: userId}})
+        const order = await Order.findOne({where: {userId}})
         const product = await Product.findOne({where: {id: productId}})
-        for (let i = 0; i < qty; i++) {
-          const newLineItem = await LineItem.create({
-            orderStatus: 'CART'
-          })
-          await newLineItem.setUser(user)
-          await newLineItem.setProduct(product)
-        }
+        const newLineItem = await LineItem.create({
+          quantity: qty,
+          itemPrice: product.price
+        })
+        await newLineItem.setOrder(order)
+        await newLineItem.setProduct(product)
+
         res.status(204).send()
       } else {
         res.status(403).send('ACCESS DENIED')
@@ -33,24 +33,16 @@ router.put('/:pId', async (req, res, next) => {
     const productId = req.params.pId
     if (userId) {
       if (req.user.id === userId) {
-        const user = await User.findOne({where: {id: userId}})
-        const product = await Product.findOne({where: {id: productId}})
-        const currentCart = await LineItem.findAll({
+        const currentCart = await Order.findOne({
           where: {userId, orderStatus: 'CART'}
         })
-        if (currentCart.length < qty) {
-          for (let i = currentCart.length; i < qty; i++) {
-            const NewItem = await LineItem.create({orderStatus: 'CART'})
-            await NewItem.setUser(user)
-            await NewItem.setProduct(product)
+        const currLineItem = await LineItem.findOne({
+          where: {
+            orderId: currentCart.id,
+            productId
           }
-        }
-        if (currentCart.length > qty) {
-          for (let i = qty; i < currentCart.length; i++) {
-            const Kill = currentCart.pop()
-            await Kill.destroy()
-          }
-        }
+        })
+        currLineItem.update({quantity: qty})
       }
       res.send()
     }
@@ -59,10 +51,10 @@ router.put('/:pId', async (req, res, next) => {
   }
 })
 
-router.delete('/:uid', async (req, res, next) => {
+router.get('/:uid', async (req, res, next) => {
   try {
     const userId = req.params.uid
-    const userCart = await LineItem.findAll({
+    const order = await Order.findOne({
       where: {userId, orderStatus: 'CART'}
     })
     for (let i = 0; i < userCart.length; i++) {
@@ -94,19 +86,15 @@ router.get('/:uid', async (req, res, next) => {
   try {
     const userId = req.params.uid
     const userCart = await LineItem.findAll({
-      where: {userId, orderStatus: 'CART'}
+      where: {order: order.id}
     })
     const parsedCart = {}
     for (let i = 0; i < userCart.length; i++) {
-      const {productId} = userCart[i]
+      const {productId, quantity} = userCart[i]
       const pid = Number(productId)
-      if (parsedCart[pid]) {
-        ++parsedCart[pid].quantity
-      } else {
-        const product = await Product.findOne({where: {id: productId}})
-        const {id, name, price, imageUrl, description} = product
-        parsedCart[pid] = {id, name, price, imageUrl, description, quantity: 1}
-      }
+
+      const product = await Product.findOne({where: {id: productId}})
+      parsedCart[pid] = {...product, quantity}
     }
     res.status(200).json(parsedCart)
   } catch (error) {
