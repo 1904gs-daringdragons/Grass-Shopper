@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Navbar(props) {
-  const theme = useTheme()
+  // const theme = useTheme()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
@@ -133,7 +133,7 @@ function Navbar(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed" color="primary">
+      <AppBar position="fixed" color="primary" className="navbar">
         <Toolbar>
           <IconButton
             edge="start"
