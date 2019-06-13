@@ -150,7 +150,7 @@ function Navbar(props) {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/home">
-              <span style={{color: 'white'}}>Grace Toker</span>
+              <span style={{color: 'white'}}>Grass Shopper</span>
             </Link>
           </Typography>
 
