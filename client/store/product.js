@@ -33,6 +33,7 @@ export const getProductsThunk = () => async dispatch => {
 export const getOneProductThunk = pId => async dispatch => {
   try {
     const res = await axios.get(`/api/products/${pId}`)
+    console.log('thunk' + res.data)
     dispatch(getOneProduct(res.data))
   } catch (error) {
     console.error(error)
@@ -49,6 +50,7 @@ export default function(state = productList, action) {
       newBatchOfProducts.allProducts = action.products
       return newBatchOfProducts
     case GET_ONE_PRODUCT:
+      // return action.product
       newBatchOfProducts.selectedProduct = action.product
       return newBatchOfProducts
     default:
