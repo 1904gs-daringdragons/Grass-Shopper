@@ -39,7 +39,7 @@ class DisconnectedProductList extends Component {
 }
 
 const mapState = state => ({
-  products: state.products,
+  products: state.products.allProducts,
   user: state.user
 })
 
