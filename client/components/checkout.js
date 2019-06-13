@@ -22,10 +22,10 @@ class checkoutMenu extends React.Component {
       confirmationEmail: '',
       price: 0,
       userId: 0,
-      address: '',
-      city: '',
-      state: '',
-      zipcode: '',
+      billingAddress: '',
+      billingCity: '',
+      billingState: '',
+      billingZipcode: '',
       cart: this.props.cart
     }
   }
@@ -105,9 +105,9 @@ class checkoutMenu extends React.Component {
               <Grid item xs={6}>
                 <TextValidator
                   required
-                  id="address"
+                  id="billingAddress"
                   value={this.state.address}
-                  label="Address"
+                  label=" Billing Address"
                   variant="outlined"
                   onChange={e => this.changeHandler(e)}
                   validators={['required']}
@@ -117,7 +117,7 @@ class checkoutMenu extends React.Component {
               <Grid item xs={6}>
                 <TextValidator
                   required
-                  id="city"
+                  id="billingCity"
                   value={this.state.city}
                   label="City"
                   variant="outlined"
@@ -129,7 +129,7 @@ class checkoutMenu extends React.Component {
               <Grid item xs={6}>
                 <TextValidator
                   required
-                  id="state"
+                  id="billingState"
                   value={this.state.state}
                   label="State"
                   variant="outlined"
@@ -141,7 +141,7 @@ class checkoutMenu extends React.Component {
               <Grid item xs={6}>
                 <TextValidator
                   required
-                  id="zipcode"
+                  id="billingZipcode"
                   value={this.state.zipcode}
                   label="Zipcode"
                   variant="outlined"
@@ -158,14 +158,7 @@ class checkoutMenu extends React.Component {
               </Grid>
             </Grid>
 
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              // onClick={() => this.clickHandler()}
-              // disabled={!formCompleted}
-              // {formCompleted ? '' : disabled}
-            >
+            <Button variant="contained" color="primary" type="submit">
               Submit Order
             </Button>
           </Paper>

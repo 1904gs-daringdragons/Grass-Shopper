@@ -6,7 +6,14 @@ router.put('/', async (req, res, next) => {
     const {userId, productId, qty = 1} = req.body
     if (userId) {
       if (req.user.id === userId) {
-        const order = await Order.findOne({where: {userId}})
+        let order = await Order.findOne({where: {userId}})
+        if (!order) {
+          const user = await User.findOne({where: {id: userId}})
+          order = await Order.create({
+            orderStatus: 'CART'
+          })
+          order.setUser(user)
+        }
         const product = await Product.findOne({where: {id: productId}})
         const newLineItem = await LineItem.create({
           quantity: qty,
@@ -70,12 +77,13 @@ router.delete('/:uid/:pid', async (req, res, next) => {
   try {
     const userId = req.params.uid
     const productId = req.params.pid
-    const userCart = await LineItem.findAll({
-      where: {userId, orderStatus: 'CART', productId}
+    const order = await Order.findOne({
+      where: {userId, orderStatus: 'CART'}
     })
-    for (let i = 0; i < userCart.length; i++) {
-      userCart[i].destroy()
-    }
+    const userCart = await LineItem.findOne({
+      where: {orderId: order.id, productId}
+    })
+    userCart.destroy()
     res.status(204).send()
   } catch (error) {
     next(error)
