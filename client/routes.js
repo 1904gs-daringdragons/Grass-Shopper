@@ -21,8 +21,7 @@ class Routes extends Component {
   }
 
   render() {
-    // const {isLoggedIn} = this.props
-
+    this.props.loadCart(this.props.uid)
     return (
       <Switch>
         <Route path="/products/:pId" component={SingleProduct} />
@@ -44,7 +43,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    uid: state.user.id
   }
 }
 
@@ -52,7 +52,10 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-      dispatch(getCartThunk())
+    },
+    loadCart(uid) {
+      console.log('HIHIHI')
+      dispatch(getCartThunk(uid))
     }
   }
 }
