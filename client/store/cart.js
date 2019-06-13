@@ -28,6 +28,7 @@ export const getCart = cart => {
 export const addProductThunk = (productId, qty, userId) => {
   return async dispatch => {
     try {
+      console.log(userId)
       const product = await axios.get(`/api/products/${productId}`)
       // await axios.put('/api/cart', {data: {userId, productId}})
       await axios({url: '/api/cart', method: 'PUT', data: {userId, productId}})
@@ -56,7 +57,12 @@ export const getCartThunk = userId => {
     try {
       let cart = {}
       if (!userId) cart = JSON.parse(localStorage.getItem('localCart'))
-      if (userId) cart = await axios.get(`/api/cart/${userId}`)
+      if (userId) {
+        const res = await axios.get(`/api/cart/${userId}`)
+        cart = res.data
+        console.log('Im found a user!')
+        console.log(cart)
+      }
       dispatch(getCart(cart))
     } catch (error) {
       console.log(error)

@@ -10,12 +10,11 @@ import {me, getCartThunk} from './store'
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData(this.props.uid)
+    this.props.loadInitialData()
   }
 
   render() {
-    // const {isLoggedIn} = this.props
-
+    this.props.loadCart(this.props.uid)
     return (
       <Switch>
         <Route path="/products" component={Products} />
@@ -43,8 +42,11 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData(uid = 0) {
+    loadInitialData() {
       dispatch(me())
+    },
+    loadCart(uid) {
+      console.log('HIHIHI')
       dispatch(getCartThunk(uid))
     }
   }
