@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const {Order, LineItem, Product} = require('../db/models')
+const {User, Order, LineItem, Product} = require('../db/models')
 
 router.put('/', async (req, res, next) => {
   try {
-    const {userId, productId, qty = 1} = req.body
+    const {userId, productId, quantity = 1} = req.body
     if (userId) {
       if (req.user.id === userId) {
         let order = await Order.findOne({where: {userId}})
@@ -14,14 +14,23 @@ router.put('/', async (req, res, next) => {
           })
           order.setUser(user)
         }
-        const product = await Product.findOne({where: {id: productId}})
-        const newLineItem = await LineItem.create({
-          quantity: qty,
-          itemPrice: product.price
+        let lineItem = await LineItem.findOne({
+          where: {
+            orderId: order.id,
+            productId
+          }
         })
-        await newLineItem.setOrder(order)
-        await newLineItem.setProduct(product)
-
+        if (!lineItem) {
+          const product = await Product.findOne({where: {id: productId}})
+          lineItem = await LineItem.create({
+            quantity,
+            itemPrice: product.price
+          })
+          await lineItem.setOrder(order)
+          await lineItem.setProduct(product)
+        } else {
+          lineItem.update({quantity})
+        }
         res.status(204).send()
       } else {
         res.status(403).send('ACCESS DENIED')
@@ -64,10 +73,29 @@ router.get('/:uid', async (req, res, next) => {
     const order = await Order.findOne({
       where: {userId, orderStatus: 'CART'}
     })
-    for (let i = 0; i < userCart.length; i++) {
-      userCart[i].destroy()
+    if (order) {
+      const userCart = await LineItem.findAll({
+        where: {orderId: order.id}
+      })
+      const parsedCart = {}
+      for (let i = 0; i < userCart.length; i++) {
+        const {productId, quantity} = userCart[i]
+
+        const product = await Product.findOne({where: {id: productId}})
+        const {id, name, price, imageUrl, description} = product
+        parsedCart[productId] = {
+          id,
+          name,
+          price,
+          imageUrl,
+          description,
+          quantity
+        }
+      }
+      res.status(200).send(parsedCart)
+    } else {
+      res.status(204).send()
     }
-    res.status(204).send()
   } catch (error) {
     next(error)
   }
@@ -85,26 +113,6 @@ router.delete('/:uid/:pid', async (req, res, next) => {
     })
     userCart.destroy()
     res.status(204).send()
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/:uid', async (req, res, next) => {
-  try {
-    const userId = req.params.uid
-    const userCart = await LineItem.findAll({
-      where: {order: order.id}
-    })
-    const parsedCart = {}
-    for (let i = 0; i < userCart.length; i++) {
-      const {productId, quantity} = userCart[i]
-      const pid = Number(productId)
-
-      const product = await Product.findOne({where: {id: productId}})
-      parsedCart[pid] = {...product, quantity}
-    }
-    res.status(200).json(parsedCart)
   } catch (error) {
     next(error)
   }

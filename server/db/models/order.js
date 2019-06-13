@@ -22,8 +22,8 @@ const Order = db.define('order', {
     type: Sequelize.STRING
   },
   confirmationNumber: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.INTEGER
+    // allowNull: false
   },
   billingAddress: {
     type: Sequelize.STRING
