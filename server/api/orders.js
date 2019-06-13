@@ -66,4 +66,17 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const orders = await LineItem.findAll()
+      res.json(orders)
+    } else {
+      res.status(403).send('Access Denied')
+    }
+  } catch (error) {
+    res.json('ACCESS DENIED')
+  }
+})
+
 module.exports = router

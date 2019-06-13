@@ -57,6 +57,34 @@ router.get('/:uid', async (req, res, next) => {
     const order = await Order.findOne({
       where: {userId, orderStatus: 'CART'}
     })
+    for (let i = 0; i < userCart.length; i++) {
+      userCart[i].destroy()
+    }
+    res.status(204).send()
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:uid/:pid', async (req, res, next) => {
+  try {
+    const userId = req.params.uid
+    const productId = req.params.pid
+    const userCart = await LineItem.findAll({
+      where: {userId, orderStatus: 'CART', productId}
+    })
+    for (let i = 0; i < userCart.length; i++) {
+      userCart[i].destroy()
+    }
+    res.status(204).send()
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:uid', async (req, res, next) => {
+  try {
+    const userId = req.params.uid
     const userCart = await LineItem.findAll({
       where: {order: order.id}
     })
