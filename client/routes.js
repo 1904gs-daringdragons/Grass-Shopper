@@ -11,6 +11,7 @@ import {
   Checkout
 } from './components'
 import {me, getCartThunk} from './store'
+import AccountDetails from './components/account-details'
 
 /**
  * COMPONENT
@@ -21,6 +22,11 @@ class Routes extends Component {
   }
 
   render() {
+    const {isLoggedIn} = this.props
+    const accountDetailPath = isLoggedIn ? (
+      <Route exact path="/:userId/accountdetails" component={AccountDetails} />
+    ) : null
+
     this.props.loadCart(this.props.uid)
     return (
       <Switch>
@@ -29,7 +35,10 @@ class Routes extends Component {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/cart" component={Cart} />
+
         <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/accounts" component={AccountDetails} />
+        {accountDetailPath}
         <Route component={Products} />
       </Switch>
     )
@@ -45,6 +54,7 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     uid: state.user.id
+    // user: state.user
   }
 }
 

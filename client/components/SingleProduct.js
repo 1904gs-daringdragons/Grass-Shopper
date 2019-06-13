@@ -30,7 +30,7 @@ class SingleProduct extends Component {
               {this.props.product.name}
             </Typography>
             <Typography variant="h5" component="h5">
-              {this.props.product.price}
+              $ {this.props.product.price / 100}
             </Typography>
             <Typography component="p">
               {this.props.product.description}
@@ -51,11 +51,14 @@ class SingleProduct extends Component {
               Add to Cart ;)
             </Button>
             <TextField
-              label="Quantity"
+              style={{padding: '40px'}}
+              // label="Quantity"
               id={`qty-${this.props.product.id}`}
+              label="With placeholder"
+              placeholder="Placeholder"
               type="number"
               margin="normal"
-              defaultValue="1"
+              // defaultValue="1"
               inputProps={{min: '1', step: '1'}}
             />
           </CardActions>
