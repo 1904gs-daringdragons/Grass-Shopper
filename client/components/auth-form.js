@@ -53,7 +53,7 @@ const AuthForm = props => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Grace Shopper {displayName}
+          Grass Shopper {displayName}
         </Typography>
         <form
           className={classes.form}
@@ -61,6 +61,28 @@ const AuthForm = props => {
           name={name}
           noValidate
         >
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            // autoComplete="email"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            // autoComplete="email"
+            autoFocus
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -146,9 +168,12 @@ const mapDispatch = dispatch => {
     handleSubmit(evt) {
       evt.preventDefault()
       const formName = evt.target.name
+      const firstName = evt.target.firstName.value
+      const lastName = evt.target.lastName.value
+
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, formName, firstName, lastName))
     }
   }
 }
