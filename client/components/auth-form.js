@@ -53,7 +53,7 @@ const AuthForm = props => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Grace Shopper {displayName}
+          Grass Shopper {displayName}
         </Typography>
         <form
           className={classes.form}
