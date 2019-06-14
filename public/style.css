@@ -30,7 +30,7 @@ body {
   width: 500px;
 }
 
-a {
+a:link {
   text-decoration: none;
 }
 
