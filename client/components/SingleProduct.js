@@ -36,7 +36,7 @@ class SingleProduct extends Component {
               {this.props.product.description}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions className="quantity">
             <Button
               size="small"
               color="primary"
@@ -51,11 +51,9 @@ class SingleProduct extends Component {
               Add to Cart ;)
             </Button>
             <TextField
-              style={{padding: '40px'}}
-              // label="Quantity"
+              label="Quantity"
               id={`qty-${this.props.product.id}`}
-              label="With placeholder"
-              placeholder="Placeholder"
+              placeholder="Quantity"
               type="number"
               margin="normal"
               // defaultValue="1"
