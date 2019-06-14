@@ -68,7 +68,6 @@ function Navbar(props) {
   })
 
   const toggleDrawer = open => event => {
-    console.log('im here')
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
