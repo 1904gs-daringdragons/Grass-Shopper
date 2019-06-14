@@ -30,6 +30,10 @@ body {
   width: 500px;
 }
 
+a:link {
+  text-decoration: none;
+}
+
 .quantity {
   display: flex;
   justify-content: space-evenly;
