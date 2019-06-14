@@ -9,7 +9,7 @@ import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
-// import SearchIcon from '@material-ui/icons/Search'
+import Button from '@material-ui/core/Button'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 // import MailIcon from '@material-ui/icons/Mail'
 // import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -145,7 +145,9 @@ function Navbar(props) {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/home">
-              <span style={{color: 'white'}}>Grass Shopper</span>
+              <Button>Grass Shopper</Button>
+
+              {/* <span style={{color: 'white'}}>Grass Shopper</span> */}
             </Link>
           </Typography>
 
@@ -156,10 +158,13 @@ function Navbar(props) {
             ) : (
               <Typography className={classes.menuButton} noWrap>
                 <Link to="/login">
-                  <span style={{color: 'white'}}>Login</span>
+                  <Button>Login</Button>
+                  {/* <span style={{color: 'white'}}>Login</span> */}
                 </Link>
                 <Link to="/signup">
-                  <span style={{color: 'white'}}>Sign Up</span>
+                  <Button>Sign Up</Button>
+
+                  {/* <span style={{color: 'white'}}>Sign Up</span> */}
                 </Link>
               </Typography>
             )}
