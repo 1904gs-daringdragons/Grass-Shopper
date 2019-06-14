@@ -16,11 +16,14 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 // import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import ShoppingCart from '@material-ui/icons/ShoppingCart'
+import Drawer from '@material-ui/core/Drawer'
+import Paper from '@material-ui/core/Paper'
 
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {useTheme} from '@material-ui/styles'
+// import { StylesProvider } from '@material-ui/styles';
+import {ListItem, ListItemText, Divider, List} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -48,12 +51,60 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  list: {
+    width: 250
+  },
+  fullList: {
+    width: 'auto'
   }
 }))
 
 function Navbar(props) {
   // const theme = useTheme()
   const classes = useStyles()
+  const [state, setState] = React.useState({
+    adminDrawer: false
+  })
+
+  const toggleDrawer = open => event => {
+    console.log('im here')
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return
+    }
+    setState({...state, adminDrawer: open})
+  }
+
+  const drawerList = () => {
+    return (
+      // <StylesProvider jss={drawerClasses} disableGeneration>
+      <Paper>
+        <div>
+          <List>
+            <ListItem>
+              <ListItemText primary={<h3>Admin Menu</h3>} />
+            </ListItem>
+          </List>
+
+          <Divider />
+          <List>
+            {['User Toolbox', 'Product Toolbox', 'Inventory Management'].map(
+              (text, index) => (
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              )
+            )}
+          </List>
+        </div>
+      </Paper>
+      // </StylesProvider>
+    )
+  }
+
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -136,15 +187,27 @@ function Navbar(props) {
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" color="primary" className="navbar">
+        <Drawer
+          anchor="left"
+          open={state.adminDrawer}
+          onClose={toggleDrawer(false)}
+        >
+          {drawerList()}
+        </Drawer>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          {!props.isAdmin ? (
+            ''
+          ) : (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={toggleDrawer(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/home">
               <img
@@ -216,6 +279,7 @@ function Navbar(props) {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
     currentUser: state.user,
     cart: state.cart
   }

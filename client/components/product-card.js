@@ -20,7 +20,7 @@ const ProductCard = props => {
         />
       </Link>
       <CardContent>
-        <Typography gutterBottom variant="h4" component="h2">
+        <Typography gutterBottom variant="h5" component="h2">
           {props.product.name}
         </Typography>
         <Typography component="p">{props.product.description}</Typography>
