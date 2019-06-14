@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 // import InputBase from '@material-ui/core/InputBase'
 import Badge from '@material-ui/core/Badge'
@@ -145,7 +146,7 @@ function Navbar(props) {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/home">
-              <span style={{color: 'white'}}>Grass Shopper</span>
+              <Button>Grass Shopper</Button>
             </Link>
           </Typography>
 
@@ -156,10 +157,10 @@ function Navbar(props) {
             ) : (
               <Typography className={classes.menuButton} noWrap>
                 <Link to="/login">
-                  <span style={{color: 'white'}}>Login</span>
+                  <Button>Login</Button>
                 </Link>
                 <Link to="/signup">
-                  <span style={{color: 'white'}}>Sign Up</span>
+                  <Button>Sign Up</Button>
                 </Link>
               </Typography>
             )}
