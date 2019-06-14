@@ -1,6 +1,29 @@
 const router = require('express').Router()
 const {User, Order, LineItem, Product} = require('../db/models')
 
+const generateLineItems = async (newOrder, cart) => {
+  let totalPrice = 0
+  for (let product in cart) {
+    if (product.id) {
+      const curProduct = await Product.findOne({
+        where: {
+          id: cart[product].id
+        }
+      })
+      totalPrice += curProduct.price
+      const itemPrice = curProduct.price
+      const quantity = curProduct.quantity
+      const lineItem = await LineItem.create({
+        quantity,
+        itemPrice
+      })
+      await lineItem.setOrder(newOrder)
+      await lineItem.setProduct(curProduct)
+    }
+  }
+  await newOrder.update({totalPrice})
+}
+
 router.post('/', async (req, res, next) => {
   try {
     const {
@@ -30,8 +53,7 @@ router.post('/', async (req, res, next) => {
       shippingZipcode
     }
     if (req.user) {
-      const test = req.user.id
-      if (userId === test) {
+      if (userId === req.user.id) {
         const newOrder = await Order.findOne({
           where: {
             userId,
@@ -52,26 +74,9 @@ router.post('/', async (req, res, next) => {
       const newOrder = await Order.create({
         ...shippingAndBilling
       })
-      let totalPrice = 0
-      for (let product in cart) {
-        if (product.id) {
-          const curProduct = await Product.findOne({
-            where: {
-              id: cart[product].id
-            }
-          })
-          totalPrice += curProduct.price
-          const itemPrice = curProduct.price
-          const quantity = curProduct.quantity
-          const lineItem = await LineItem.create({
-            quantity,
-            itemPrice
-          })
-          await lineItem.setOrder(newOrder)
-          await lineItem.setProduct(curProduct)
-        }
-      }
-      await newOrder.update({totalPrice})
+
+      await generateLineItems(newOrder, cart)
+
       await newOrder.setUser(user)
       res.status(204).send()
     }

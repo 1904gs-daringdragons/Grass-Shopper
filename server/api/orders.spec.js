@@ -31,17 +31,17 @@ describe('order routes', () => {
     it('saves a submitted guest order to the db', async () => {
       await request(app)
         .post('/api/orders')
-        .send(dummyOrder)
+        .send({...dummyOrder})
         .expect(204)
     })
 
     it('saves a submitted user order to the db', async () => {
-      const cody = await User.create(codyUser)
+      const cody = await User.create({...codyUser})
       const codyOrder = {...dummyOrder}
       codyOrder.userId = cody.id
       await request(app)
         .post('/api/orders')
-        .send(dummyOrder)
+        .send({...dummyOrder})
         .expect(204)
     })
   })
@@ -77,7 +77,7 @@ describe('order routes', () => {
       })
       await request(app)
         .post('/api/orders')
-        .send(dummyOrder)
+        .send({...dummyOrder})
         .expect(204)
     })
 
