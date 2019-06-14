@@ -43,7 +43,7 @@ const ProductCard = props => {
           }
           variant="contained"
         >
-          Add to Cart ;)
+          Add to Cart
         </Button>
         <TextField
           label="Quantity"
