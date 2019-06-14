@@ -23,7 +23,7 @@ const ProductCard = props => {
         <Typography gutterBottom variant="h5" component="h2">
           {props.product.name}
         </Typography>
-        <Typography component="p">{props.product.description}</Typography>
+        <Typography component="p">$ {props.product.price / 100}</Typography>
       </CardContent>
       <CardActions>
         <Link to={`/products/${props.product.id}`}>
