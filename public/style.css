@@ -29,3 +29,8 @@ body {
   overflow: hidden;
   width: 500px;
 }
+
+.quantity {
+  display: flex;
+  justify-content: space-evenly;
+}
