@@ -31,8 +31,9 @@ body {
   width: 500px;
 }
 
-a:link {
+a {
   text-decoration: none;
+  color: white;
 }
 
 .quantity {
