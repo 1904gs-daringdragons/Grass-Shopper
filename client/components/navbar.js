@@ -39,7 +39,8 @@ const useStyles = makeStyles(theme => ({
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
-      display: 'flex'
+      display: 'flex',
+      alignItems: 'center'
     }
   },
   sectionMobile: {
@@ -146,7 +147,10 @@ function Navbar(props) {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/home">
-              <Button>Grass Shopper</Button>
+              <img
+                src="LogoMakr_4AgeQz.png"
+                style={{width: '50%', height: '50%'}}
+              />
             </Link>
           </Typography>
 
