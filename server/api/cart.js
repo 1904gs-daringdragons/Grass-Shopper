@@ -5,7 +5,7 @@ router.put('/', async (req, res, next) => {
   try {
     const {userId, productId, quantity = 1} = req.body
     if (userId) {
-      if (req.user.id === userId) {
+      if (+req.user.id === +userId) {
         let order = await Order.findOne({where: {userId, orderStatus: 'CART'}})
         if (!order) {
           const user = await User.findOne({where: {id: userId}})
@@ -70,7 +70,7 @@ router.put('/:pId', async (req, res, next) => {
 router.get('/:uid', async (req, res, next) => {
   try {
     const userId = req.params.uid
-    if (req.user.id !== userId) res.status(403).send()
+    if (+req.user.id !== +userId) res.status(403).send()
     const order = await Order.findOne({
       where: {userId, orderStatus: 'CART'}
     })
@@ -105,7 +105,7 @@ router.get('/:uid', async (req, res, next) => {
 router.delete('/:uid/:pid', async (req, res, next) => {
   try {
     const userId = req.params.uid
-    if (req.user.id !== userId) res.status(403).send()
+    if (+req.user.id !== +userId) res.status(403).send()
     const productId = req.params.pid
     const order = await Order.findOne({
       where: {userId, orderStatus: 'CART'}
