@@ -50,8 +50,7 @@ function subtotal(items) {
 function SpanningTable(props) {
   const classes = useStyles()
 
-  function handlePayment(payerDetails, purchaseDetails) {
-    console.log(purchaseDetails.shipping)
+  function handlePayment(orderId, payerDetails, purchaseDetails) {
     const newOrder = {
       recipientName:
         payerDetails.name.given_name + ' ' + payerDetails.name.surname,
@@ -65,9 +64,9 @@ function SpanningTable(props) {
       shippingCity: purchaseDetails.shipping.address.admin_area_2,
       shippingState: purchaseDetails.shipping.address.admin_area_1,
       shippingZipcode: purchaseDetails.shipping.address.postal_code,
+      payPalConfirmationNumber: orderId,
       cart: props.cart
     }
-    console.log(newOrder)
     props.submitOrder(newOrder)
     props.history.push('./home')
   }
@@ -155,11 +154,10 @@ function SpanningTable(props) {
             <PayPalButton
               amount={ccyFormat(invoiceTotal)}
               onSuccess={(details, data) => {
-                console.log(details)
                 handlePayment(
+                  details.id,
                   details.payer,
-                  details.purchase_units[0],
-                  props.userId
+                  details.purchase_units[0]
                 )
                 return fetch('/paypal-transaction-complete', {
                   method: 'post',

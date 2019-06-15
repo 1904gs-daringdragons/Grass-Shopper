@@ -21,8 +21,8 @@ const Order = db.define('order', {
   confirmationEmail: {
     type: Sequelize.STRING
   },
-  confirmationNumber: {
-    type: Sequelize.INTEGER
+  payPalConfirmationNumber: {
+    type: Sequelize.STRING
     // allowNull: false
   },
   totalPrice: {
