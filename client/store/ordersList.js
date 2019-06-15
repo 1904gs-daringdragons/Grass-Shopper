@@ -9,7 +9,7 @@ const setOrdersOnState = orderList => ({
 
 export const getOwnOrdersThunk = userId => async dispatch => {
   try {
-    const res = await axios.get(`api/orders/${userId}`)
+    const res = await axios.get(`/api/orders/${userId}`)
     dispatch(setOrdersOnState(res.data))
   } catch (error) {
     console.error(error)
@@ -18,7 +18,8 @@ export const getOwnOrdersThunk = userId => async dispatch => {
 
 export const getAllOrdersThunk = () => async dispatch => {
   try {
-    const res = await axios.get('api/orders')
+    const res = await axios.get('/api/orders')
+    console.log(res.data)
     dispatch(setOrdersOnState(res.data))
   } catch (error) {
     console.error(error)

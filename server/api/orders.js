@@ -92,6 +92,7 @@ router.get('/', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
       const orders = await Order.findAll()
+      console.log('in orders route')
       res.json(orders)
     } else {
       res.status(403).send('Access Denied')
