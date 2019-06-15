@@ -32,15 +32,17 @@ class AccountDetails extends Component {
           </Link>
         </Grid>
         <br />
-        <h1>Account Details</h1>
-        <br />
-        <h3>FirstName:</h3> <p> {user.firstName}</p>
-        <h3>LastName:</h3> <p> {user.lastName}</p>
-        <h3>Email Address:</h3> <p> {user.email}</p>
-        <h3>Address:</h3> <p> {user.address}</p>
-        <h3>City:</h3> <p> {user.city}</p>
-        <h3>State:</h3> <p> {user.state}</p>
-        <h3>Zipcode:</h3> <p> {user.zipcode}</p>
+        <div>
+          <h1>Account Details</h1>
+          <br />
+          <h3>FirstName:</h3> <p> {user.firstName}</p>
+          <h3>LastName:</h3> <p> {user.lastName}</p>
+          <h3>Email Address:</h3> <p> {user.email}</p>
+          <h3>Billing Address:</h3> <p> {user.billingAddress}</p>
+          <h3>City:</h3> <p> {user.billingCity}</p>
+          <h3>State:</h3> <p> {user.billingState}</p>
+          <h3>Zipcode:</h3> <p> {user.billingZipcode}</p>
+        </div>
       </div>
     ) : (
       <div>
@@ -64,64 +66,3 @@ export default connect(mapState, mapDispatch)(AccountDetails)
 AccountDetails.propTypes = {
   displayUserName: PropTypes.string
 }
-
-// import React from 'react'
-// import PropTypes from 'prop-types'
-// import {connect} from 'react-redux'
-// import {displayUserInfoName} from '../store/user'
-// // import AdminHome from './AdminHome'
-// import {Link} from 'react-router-dom'
-// import {Button, ButtonToolbar} from '@material-ui/core'
-// // import DisplayPastOrders from './DisplayPastOrders'
-
-// /**
-//  * COMPONENT
-//  */
-// export const AccountDetails = props => {
-//   const {displayName} = props
-
-//   return (
-//     <div>
-//       <br />
-//       <h4>Welcome, {displayName}</h4>
-//       {/* <ButtonToolbar> */}
-//         <Link to="/profile/orders">
-//           <Button variant="secondary" className="home-page-btn">
-//             View Your Orders
-//           </Button>
-//         </Link>
-
-//         <Link to="profile/update">
-//           <Button variant="secondary" className="home-page-btn">
-//             Update Your Profile Information
-//           </Button>
-//         </Link>
-
-//         <Link to="profile/resetPassword">
-//           <Button variant="secondary" className="home-page-btn">
-//             Reset Your Password
-//           </Button>
-//         </Link>
-//       {/* </ButtonToolbar> */}
-//     </div>
-//   )
-// }
-
-// /**
-//  * CONTAINER
-//  */
-// const mapState = state => {
-//   return {
-//     displayName: displayUserInfoName(state.user.firstName, state.user.email),
-//     user: state.user
-//   }
-// }
-
-// export default connect(mapState)(AccountDetails)
-
-// /**
-//  * PROP TYPES
-//  */
-// AccountDetails.propTypes = {
-//   displayName: PropTypes.string
-// }
