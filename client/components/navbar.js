@@ -66,7 +66,7 @@ function Navbar(props) {
   const [state, setState] = React.useState({
     adminDrawer: false
   })
-
+  console.log(props.history)
   const toggleDrawer = open => event => {
     if (
       event.type === 'keydown' &&
@@ -93,7 +93,9 @@ function Navbar(props) {
             {['User Toolbox', 'Product Toolbox', 'Inventory Management'].map(
               (text, index) => (
                 <ListItem button key={text}>
-                  <ListItemText primary={text} />
+                  <Link to="/admin/allusers">
+                    <ListItemText primary={text} />
+                  </Link>
                 </ListItem>
               )
             )}
@@ -210,7 +212,7 @@ function Navbar(props) {
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/home">
               <img
-                src="LogoMakr_4AgeQz.png"
+                src="/LogoMakr_4AgeQz.png"
                 style={{width: '50%', height: '50%'}}
               />
             </Link>
