@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import {PayPalButton} from 'react-paypal-button-v2'
 
 import {
   changeQuantityThunk as changeQuantity,
@@ -129,16 +130,26 @@ function SpanningTable(props) {
             </TableBody>
           </Table>
           <Grid container alignItems="flex-end" justify="flex-end">
-            <Button
-              variant="contained"
-              className={classes.button}
-              color="primary"
-              onClick={() => {
-                props.history.push('/checkout')
+            <PayPalButton
+              amount="0.01"
+              onSuccess={(details, data) => {
+                alert(
+                  'Transaction completed by ' + details.payer.name.given_name
+                )
+
+                // OPTIONAL: Call your server to save the transaction
+                return fetch('/paypal-transaction-complete', {
+                  method: 'post',
+                  body: JSON.stringify({
+                    orderId: data.orderID
+                  })
+                })
               }}
-            >
-              Check Out
-            </Button>
+              options={{
+                clientId:
+                  'AUlK0-pQQmL4OI4BcmcjjlQ9TOX8QtG0aS4MmsX0m988VaZdAOPldGFYSjyerJgAKr0mzjTYfr2gFfkT'
+              }}
+            />
           </Grid>
         </Paper>
       </Container>
