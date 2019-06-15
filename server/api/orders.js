@@ -69,15 +69,12 @@ router.post('/', async (req, res, next) => {
         res.status(403).send('ACCESS DENIED')
       }
     } else if (userId === 0) {
-      const confirmationNumber = (Date.now() * billingZipcode) % 1000000000
-      const user = await User.findOne({where: {id: userId}})
       const newOrder = await Order.create({
         ...shippingAndBilling
       })
 
       await generateLineItems(newOrder, cart)
 
-      await newOrder.setUser(user)
       res.status(204).send()
     }
   } catch (error) {
@@ -88,7 +85,7 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
-      const orders = await LineItem.findAll()
+      const orders = await Order.findAll()
       res.json(orders)
     } else {
       res.status(403).send('Access Denied')

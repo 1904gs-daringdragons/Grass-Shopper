@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {User, Order, LineItem, Product} = require('../db/models')
 
+// This PUT route handles te Add Product button
 router.put('/', async (req, res, next) => {
   try {
     const {userId, productId, quantity = 1} = req.body
@@ -43,6 +44,7 @@ router.put('/', async (req, res, next) => {
   }
 })
 
+// This is for changing quantity of a product that is already in the cart
 router.put('/:pId', async (req, res, next) => {
   try {
     const {userId, qty} = req.body
