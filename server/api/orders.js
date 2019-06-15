@@ -32,28 +32,22 @@ router.post('/', async (req, res, next) => {
     const {
       recipientName,
       confirmationEmail,
-      billingAddress,
       shippingAddress,
-      billingCity,
       shippingCity,
-      billingState,
       shippingState,
-      billingZipcode,
       shippingZipcode,
       userId,
+      payPalConfirmationNumber,
       cart
     } = req.body
     const shippingAndBilling = {
       recipientName,
       confirmationEmail,
-      billingAddress,
       shippingAddress,
-      billingCity,
       shippingCity,
-      billingState,
       shippingState,
-      billingZipcode,
-      shippingZipcode
+      shippingZipcode,
+      payPalConfirmationNumber
     }
     if (req.user) {
       if (userId === req.user.id) {
@@ -72,7 +66,6 @@ router.post('/', async (req, res, next) => {
         res.status(403).send('ACCESS DENIED')
       }
     } else if (userId === 0) {
-      const confirmationNumber = (Date.now() * billingZipcode) % 1000000000
       const user = await User.findOne({where: {id: userId}})
       const newOrder = await Order.create({
         ...shippingAndBilling
