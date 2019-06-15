@@ -13,6 +13,7 @@ import {
 } from './components'
 import {me, getCartThunk} from './store'
 import AccountDetails from './components/account-details'
+import UpdateUser from './components/updateUser'
 
 /**
  * COMPONENT
@@ -39,6 +40,7 @@ class Routes extends Component {
 
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/accounts" component={AccountDetails} />
+        <Route path="/profile/update" component={UpdateUser} />
         <Route exact path="/admin/allusers" component={ViewAllUsers} />
 
         {accountDetailPath}
