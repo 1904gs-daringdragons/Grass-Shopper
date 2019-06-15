@@ -4,15 +4,18 @@ const {User, Order, LineItem, Product} = require('../db/models')
 const generateLineItems = async (newOrder, cart) => {
   let totalPrice = 0
   for (let product in cart) {
-    if (product.id) {
+    if (cart[product].id) {
+      console.log(cart[product])
+
       const curProduct = await Product.findOne({
         where: {
-          id: cart[product].id
+          id: product
         }
       })
-      totalPrice += curProduct.price
+      const quantity = cart[product].quantity
       const itemPrice = curProduct.price
-      const quantity = curProduct.quantity
+
+      totalPrice += itemPrice * quantity
       const lineItem = await LineItem.create({
         quantity,
         itemPrice
