@@ -66,7 +66,6 @@ function Navbar(props) {
   const [state, setState] = React.useState({
     adminDrawer: false
   })
-  console.log(props.history)
   const toggleDrawer = open => event => {
     if (
       event.type === 'keydown' &&
@@ -75,6 +74,13 @@ function Navbar(props) {
       return
     }
     setState({...state, adminDrawer: open})
+  }
+
+  const LinkMap = {
+    'User Toolbox': '/admin/allusers',
+    'Product Toolbox': '/home',
+    'Order Management': '/admin/orders',
+    'Inventory Management': '/home'
   }
 
   const drawerList = () => {
@@ -90,15 +96,18 @@ function Navbar(props) {
 
           <Divider />
           <List>
-            {['User Toolbox', 'Product Toolbox', 'Inventory Management'].map(
-              (text, index) => (
-                <ListItem button key={text}>
-                  <Link to="/admin/allusers">
-                    <ListItemText primary={text} />
-                  </Link>
-                </ListItem>
-              )
-            )}
+            {[
+              'User Toolbox',
+              'Product Toolbox',
+              'Order Management',
+              'Inventory Management'
+            ].map((text, index) => (
+              <ListItem button key={text}>
+                <Link to={LinkMap[text]}>
+                  <ListItemText primary={text} />
+                </Link>
+              </ListItem>
+            ))}
           </List>
         </div>
       </Paper>
@@ -232,20 +241,19 @@ function Navbar(props) {
                 </Link>
               </Typography>
             )}
-
-            <IconButton aria-label="Go To Cart" color="inherit">
-              <Badge
-                badgeContent={Object.values(props.cart).reduce(
-                  (accum, item) => accum + item.quantity,
-                  0
-                )}
-                color="secondary"
-              >
-                <Link to="/cart">
+            <Link to="/cart">
+              <IconButton aria-label="Go To Cart" color="inherit">
+                <Badge
+                  badgeContent={Object.values(props.cart).reduce(
+                    (accum, item) => accum + item.quantity,
+                    0
+                  )}
+                  color="secondary"
+                >
                   <ShoppingCart />
-                </Link>
-              </Badge>
-            </IconButton>
+                </Badge>
+              </IconButton>
+            </Link>
 
             <IconButton
               edge="end"

@@ -16,7 +16,8 @@ import {PayPalButton} from 'react-paypal-button-v2'
 
 import {
   changeQuantityThunk as changeQuantity,
-  removeProductThunk as removeProduct
+  removeProductThunk as removeProduct,
+  submitOrderThunk
 } from '../store/cart'
 
 const TAX_RATE = 0.07
@@ -42,12 +43,33 @@ function priceRow(qty, unit) {
 
 function subtotal(items) {
   return items
-    .map(({price, quantity}) => price * quantity)
+    .map(({price, quantity}) => price / 100 * quantity)
     .reduce((sum, i) => sum + i, 0)
 }
 
 function SpanningTable(props) {
   const classes = useStyles()
+
+  function handlePayment(orderId, payerDetails, purchaseDetails) {
+    const newOrder = {
+      recipientName:
+        payerDetails.name.given_name + ' ' + payerDetails.name.surname,
+      confirmationEmail: payerDetails.email_address,
+      price: purchaseDetails.amount.value,
+      userId: props.userId,
+      shippingAddress:
+        purchaseDetails.shipping.address.address_line_1 +
+        ' ' +
+        purchaseDetails.shipping.address.address_line_2,
+      shippingCity: purchaseDetails.shipping.address.admin_area_2,
+      shippingState: purchaseDetails.shipping.address.admin_area_1,
+      shippingZipcode: purchaseDetails.shipping.address.postal_code,
+      payPalConfirmationNumber: orderId,
+      cart: props.cart
+    }
+    props.submitOrder(newOrder)
+    props.history.push('./home')
+  }
 
   if (
     Object.keys(props.cart).length !== 0 &&
@@ -75,7 +97,6 @@ function SpanningTable(props) {
             </TableHead>
             <TableBody>
               {Object.values(props.cart).map(row => {
-                console.log(row.id)
                 return (
                   <TableRow key={row.id}>
                     <TableCell>{row.name}</TableCell>
@@ -100,9 +121,9 @@ function SpanningTable(props) {
                         onChange={handleChange}
                       />
                     </TableCell>
-                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="right">{row.price / 100}</TableCell>
                     <TableCell align="right">
-                      {ccyFormat(priceRow(row.quantity, row.price))}
+                      {ccyFormat(priceRow(row.quantity, row.price / 100))}
                     </TableCell>
                   </TableRow>
                 )
@@ -131,13 +152,13 @@ function SpanningTable(props) {
           </Table>
           <Grid container alignItems="flex-end" justify="flex-end">
             <PayPalButton
-              amount="0.01"
+              amount={ccyFormat(invoiceTotal)}
               onSuccess={(details, data) => {
-                alert(
-                  'Transaction completed by ' + details.payer.name.given_name
+                handlePayment(
+                  details.id,
+                  details.payer,
+                  details.purchase_units[0]
                 )
-
-                // OPTIONAL: Call your server to save the transaction
                 return fetch('/paypal-transaction-complete', {
                   method: 'post',
                   body: JSON.stringify({
@@ -169,7 +190,8 @@ const mapDispatchToProps = dispatch => {
     changeQty: (userId, productId, qty) =>
       dispatch(changeQuantity(userId, productId, qty)),
     removeProduct: (userId, productId) =>
-      dispatch(removeProduct(userId, productId))
+      dispatch(removeProduct(userId, productId)),
+    submitOrder: order => dispatch(submitOrderThunk(order))
   }
 }
 
