@@ -28,13 +28,7 @@ const Order = db.define('order', {
   totalPrice: {
     type: Sequelize.INTEGER
   },
-  billingAddress: {
-    type: Sequelize.STRING
-    // allowNull: false,
-    // validate: {
-    // 	notEmpty: true
-    // }
-  },
+
   shippingAddress: {
     type: Sequelize.STRING
     // allowNull: false,
@@ -42,13 +36,7 @@ const Order = db.define('order', {
     // 	notEmpty: true
     // }
   },
-  billingCity: {
-    type: Sequelize.STRING
-    // allowNull: false,
-    // validate: {
-    // 	notEmpty: true
-    // }
-  },
+
   shippingCity: {
     type: Sequelize.STRING
     // allowNull: false,
@@ -56,13 +44,7 @@ const Order = db.define('order', {
     // 	notEmpty: true
     // }
   },
-  billingState: {
-    type: Sequelize.STRING
-    // allowNull: false,
-    // validate: {
-    // 	notEmpty: true
-    // }
-  },
+
   shippingState: {
     type: Sequelize.STRING
     // allowNull: false,
@@ -70,13 +52,7 @@ const Order = db.define('order', {
     // 	notEmpty: true
     // }
   },
-  billingZipcode: {
-    type: Sequelize.INTEGER
-    // allowNull: false,
-    // validate: {
-    // 	notEmpty: true
-    // }
-  },
+
   shippingZipcode: {
     type: Sequelize.INTEGER
     // allowNull: false,
