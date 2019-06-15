@@ -66,7 +66,6 @@ function Navbar(props) {
   const [state, setState] = React.useState({
     adminDrawer: false
   })
-  console.log(props.history)
   const toggleDrawer = open => event => {
     if (
       event.type === 'keydown' &&
@@ -232,20 +231,19 @@ function Navbar(props) {
                 </Link>
               </Typography>
             )}
-
-            <IconButton aria-label="Go To Cart" color="inherit">
-              <Badge
-                badgeContent={Object.values(props.cart).reduce(
-                  (accum, item) => accum + item.quantity,
-                  0
-                )}
-                color="secondary"
-              >
-                <Link to="/cart">
+            <Link to="/cart">
+              <IconButton aria-label="Go To Cart" color="inherit">
+                <Badge
+                  badgeContent={Object.values(props.cart).reduce(
+                    (accum, item) => accum + item.quantity,
+                    0
+                  )}
+                  color="secondary"
+                >
                   <ShoppingCart />
-                </Link>
-              </Badge>
-            </IconButton>
+                </Badge>
+              </IconButton>
+            </Link>
 
             <IconButton
               edge="end"
