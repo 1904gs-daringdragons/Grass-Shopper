@@ -91,13 +91,48 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
-      const orders = await LineItem.findAll()
+      const orders = await Order.findAll()
       res.json(orders)
     } else {
       res.status(403).send('Access Denied')
     }
   } catch (error) {
-    res.json('ACCESS DENIED')
+    next(error)
+  }
+})
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    if (+req.params.userId === +req.user.id) {
+      const {userId} = req.params
+      const orders = await Order.findAll({where: {userId}})
+      res.json(orders)
+    } else {
+      res.send(
+        'You are not logged in as this user. Put yourself in their shoes.'
+      )
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/details/:orderId', async (req, res, next) => {
+  try {
+    const {orderId} = req.params
+    const {userId} = await Order.findOne({
+      where: {
+        id: orderId
+      }
+    })
+    if (+userId === +req.user.id || req.user.isAdmin) {
+      const details = await LineItem.findAll({where: {orderId}})
+      res.send(details)
+    } else {
+      res.status(403).send('Sorry, not this time.')
+    }
+  } catch (error) {
+    next(error)
   }
 })
 
