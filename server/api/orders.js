@@ -128,8 +128,9 @@ router.get('/details/:orderId', async (req, res, next) => {
     if (+userId === +req.user.id || req.user.isAdmin) {
       const details = await LineItem.findAll({where: {orderId}})
       res.send(details)
+    } else {
+      res.status(403).send('Sorry, not this time.')
     }
-    res.status(403).send('Sorry, not this time.')
   } catch (error) {
     next(error)
   }
