@@ -32,7 +32,7 @@ class AllUsers extends React.Component {
               {this.props.userList[0] ? (
                 this.props.userList.map(user => {
                   return (
-                    <TableRow>
+                    <TableRow key={user.id}>
                       <TableCell align="right">{user.email}</TableCell>
                       <TableCell align="right">{user.firstName}</TableCell>
                       <TableCell align="right">{user.lastName}</TableCell>

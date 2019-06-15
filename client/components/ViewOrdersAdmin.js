@@ -9,10 +9,11 @@ import {
   TableCell,
   TableRow
 } from '@material-ui/core'
+import {getOwnOrdersThunk, getAllOrdersThunk} from '../store/ordersList'
 
 class ViewOrdersAdmin extends React.Component {
   componentDidMount() {
-    this.props.getUserList()
+    this.props.getOrderList()
   }
   render() {
     return (
@@ -28,10 +29,10 @@ class ViewOrdersAdmin extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.userList[0] ? (
-                this.props.userList.map(user => {
+              {this.props.orderList[0] ? (
+                this.props.orderList.map(order => {
                   return (
-                    <TableRow>
+                    <TableRow key={order.id}>
                       <TableCell align="right">{user.email}</TableCell>
                       <TableCell align="right">{user.firstName}</TableCell>
                       <TableCell align="right">{user.lastName}</TableCell>
@@ -53,13 +54,16 @@ class ViewOrdersAdmin extends React.Component {
 }
 
 const mapState = state => ({
-  userList: state.userList
+  orderList: state.ordersList
 })
 
 const mapDisptach = dispatch => {
   return {
-    getUserList() {
-      dispatch(userListThunk())
+    getOwnOrders() {
+      dispatch(getOwnOrdersThunk())
+    },
+    getAllOrders() {
+      dispatch(getAllOrdersThunk())
     }
   }
 }
