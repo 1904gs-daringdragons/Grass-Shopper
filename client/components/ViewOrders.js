@@ -13,10 +13,16 @@ import {getOwnOrdersThunk, getAllOrdersThunk} from '../store/ordersList'
 
 class ViewOrders extends React.Component {
   componentDidMount() {
-    this.props.getAllOrders()
+    if (this.props.adminView && this.props.isAdmin) {
+      this.props.getAllOrders()
+    } else {
+      const {userId} = this.props
+      this.props.getOwnOrders(userId)
+    }
   }
   render() {
     // console.log(this.props.orderList)
+    const {adminView} = this.props
     return (
       <Container>
         <Paper>
@@ -24,7 +30,7 @@ class ViewOrders extends React.Component {
             <TableHead>
               <TableRow>
                 <TableCell align="right">Order #</TableCell>
-                <TableCell align="right">User</TableCell>
+                {adminView ? <TableCell align="right">User</TableCell> : null}
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Total</TableCell>
                 <TableCell align="right">Date Placed</TableCell>
@@ -39,8 +45,14 @@ class ViewOrders extends React.Component {
                   return (
                     <TableRow key={order.id}>
                       <TableCell align="right">{order.id}</TableCell>
-                      <TableCell align="right">{order.userId}</TableCell>
-                      <TableCell align="right">{order.orderStatus}</TableCell>
+                      {adminView ? (
+                        <TableCell align="right">{order.userId}</TableCell>
+                      ) : null}
+                      {adminView ? (
+                        <TableCell align="right">{order.orderStatus}</TableCell>
+                      ) : (
+                        <TableCell align="right">{order.orderStatus}</TableCell>
+                      )}
                       <TableCell align="right">{order.totalPrice}</TableCell>
                       <TableCell align="right">
                         {upDate.toLocaleString('default')}
@@ -70,8 +82,8 @@ const mapState = state => ({
 
 const mapDisptach = dispatch => {
   return {
-    getOwnOrders() {
-      dispatch(getOwnOrdersThunk())
+    getOwnOrders(userId) {
+      dispatch(getOwnOrdersThunk(userId))
     },
     getAllOrders() {
       dispatch(getAllOrdersThunk())

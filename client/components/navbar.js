@@ -76,6 +76,13 @@ function Navbar(props) {
     setState({...state, adminDrawer: open})
   }
 
+  const LinkMap = {
+    'User Toolbox': '/admin/allusers',
+    'Product Toolbox': '/home',
+    'Order Management': '/admin/orders',
+    'Inventory Management': '/home'
+  }
+
   const drawerList = () => {
     return (
       // <StylesProvider jss={drawerClasses} disableGeneration>
@@ -89,15 +96,18 @@ function Navbar(props) {
 
           <Divider />
           <List>
-            {['User Toolbox', 'Product Toolbox', 'Inventory Management'].map(
-              (text, index) => (
-                <ListItem button key={text}>
-                  <Link to="/admin/allusers">
-                    <ListItemText primary={text} />
-                  </Link>
-                </ListItem>
-              )
-            )}
+            {[
+              'User Toolbox',
+              'Product Toolbox',
+              'Order Management',
+              'Inventory Management'
+            ].map((text, index) => (
+              <ListItem button key={text}>
+                <Link to={LinkMap[text]}>
+                  <ListItemText primary={text} />
+                </Link>
+              </ListItem>
+            ))}
           </List>
         </div>
       </Paper>
