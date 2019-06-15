@@ -25,7 +25,7 @@ router.put('/:id/userInfo', async (req, res, next) => {
     const {id} = req.params
     const {firstName, lastName, email} = req.body
 
-    const [, updatedUser] = await User.update(
+    const [, editedUser] = await User.update(
       {firstName, lastName, email},
       {
         returning: true,
@@ -34,8 +34,8 @@ router.put('/:id/userInfo', async (req, res, next) => {
       }
     )
 
-    res.json(updatedUser[0])
-  } catch (err) {
-    next(err)
+    res.json(editedUser[0])
+  } catch (error) {
+    next(error)
   }
 })
