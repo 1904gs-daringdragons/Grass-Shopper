@@ -19,3 +19,23 @@ router.get('/', async (req, res, next) => {
     res.json('ACCESS DENIED')
   }
 })
+
+router.put('/:id/userInfo', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const {firstName, lastName, email} = req.body
+
+    const [, updatedUser] = await User.update(
+      {firstName, lastName, email},
+      {
+        returning: true,
+        where: {id},
+        individualHooks: true
+      }
+    )
+
+    res.json(updatedUser[0])
+  } catch (err) {
+    next(err)
+  }
+})
