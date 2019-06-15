@@ -6,7 +6,7 @@ router.put('/', async (req, res, next) => {
     const {userId, productId, quantity = 1} = req.body
     if (userId) {
       if (req.user.id === userId) {
-        let order = await Order.findOne({where: {userId}})
+        let order = await Order.findOne({where: {userId, orderStatus: 'CART'}})
         if (!order) {
           const user = await User.findOne({where: {id: userId}})
           order = await Order.create({
