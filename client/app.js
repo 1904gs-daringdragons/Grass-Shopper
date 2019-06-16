@@ -4,6 +4,7 @@ import {Navbar} from './components'
 import Routes from './routes'
 import {createMuiTheme} from '@material-ui/core/styles'
 import {ThemeProvider} from '@material-ui/styles'
+import {ErrorBoundary} from './ErrorBoundary'
 
 const greenTheme = createMuiTheme({
   palette: {
@@ -20,10 +21,12 @@ const greenTheme = createMuiTheme({
 const App = () => {
   return (
     <ThemeProvider theme={greenTheme}>
-      <div>
-        <Navbar />
-        <Routes />
-      </div>
+      <ErrorBoundary>
+        <div>
+          <Navbar />
+          <Routes />
+        </div>
+      </ErrorBoundary>
     </ThemeProvider>
   )
 }

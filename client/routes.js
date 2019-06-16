@@ -15,6 +15,7 @@ import {
 import {me, getCartThunk} from './store'
 import AccountDetails from './components/account-details'
 import UpdateUser from './components/updateUser'
+import {ErrorBoundary} from './ErrorBoundary'
 
 /**
  * COMPONENT
@@ -32,32 +33,34 @@ class Routes extends Component {
 
     this.props.loadCart(this.props.uid)
     return (
-      <Switch>
-        <Route path="/products/:pId" component={SingleProduct} />
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/cart" component={Cart} />
+      <ErrorBoundary>
+        <Switch>
+          <Route path="/products/:pId" component={SingleProduct} />
+          <Route exact path="/products" component={Products} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/cart" component={Cart} />
 
-        <Route exact path="/checkout" component={Checkout} />
-        <Route exact path="/accounts" component={AccountDetails} />
+          <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/accounts" component={AccountDetails} />
 
-        <Route exact path="/profile/update" component={UpdateUser} />
-        <Route
-          exact
-          path="/orders"
-          render={() => <ViewOrders adminView={false} />}
-        />
-        <Route exact path="/admin/allusers" component={ViewAllUsers} />
-        <Route
-          exact
-          path="/admin/orders"
-          render={() => <ViewOrders adminView={true} />}
-        />
+          <Route exact path="/profile/update" component={UpdateUser} />
+          <Route
+            exact
+            path="/orders"
+            render={() => <ViewOrders adminView={false} />}
+          />
+          <Route exact path="/admin/allusers" component={ViewAllUsers} />
+          <Route
+            exact
+            path="/admin/orders"
+            render={() => <ViewOrders adminView={true} />}
+          />
 
-        {accountDetailPath}
-        <Route component={Products} />
-      </Switch>
+          {accountDetailPath}
+          <Route component={Products} />
+        </Switch>
+      </ErrorBoundary>
     )
   }
 }
