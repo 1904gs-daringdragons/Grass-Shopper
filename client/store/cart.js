@@ -63,9 +63,7 @@ export const getCartThunk = userId => {
   return async dispatch => {
     try {
       let cart = {}
-      if (!userId) {
-        cart = JSON.parse(localStorage.getItem('localCart'))
-      }
+      if (!userId) cart = JSON.parse(localStorage.getItem('localCart'))
       if (userId) {
         const res = await axios.get(`/api/cart/${userId}`)
         cart = res.data
