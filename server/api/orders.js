@@ -85,7 +85,6 @@ router.get('/', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
       const orders = await Order.findAll()
-      console.log('in orders route')
       res.json(orders)
     } else {
       res.status(403).send('Access Denied')
@@ -101,6 +100,25 @@ router.get('/:userId', async (req, res, next) => {
       const {userId} = req.params
       const orders = await Order.findAll({where: {userId}})
       res.json(orders)
+    } else {
+      res.send(
+        'You are not logged in as this user. Put yourself in their shoes.'
+      )
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const id = req.params.orderId
+    const order = await Order.findOne({where: {id}})
+    if (+order.userId === +req.user.id || req.user.isAdmin) {
+      const {orderStatus} = req.body
+      console.log(orderStatus)
+      await order.update({orderStatus})
+      res.status(200).send()
     } else {
       res.send(
         'You are not logged in as this user. Put yourself in their shoes.'

@@ -42,7 +42,7 @@ class Routes extends Component {
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/accounts" component={AccountDetails} />
 
-        <Route path="/profile/update" component={UpdateUser} />
+        <Route exact path="/profile/update" component={UpdateUser} />
         <Route
           exact
           path="/orders"

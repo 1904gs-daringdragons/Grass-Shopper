@@ -7,11 +7,21 @@ import {
   TableBody,
   TableHead,
   TableCell,
-  TableRow
+  TableRow,
+  Select,
+  MenuItem,
+  Fab
 } from '@material-ui/core'
-import {getOwnOrdersThunk, getAllOrdersThunk} from '../store/ordersList'
+import CloseIcon from '@material-ui/icons/Delete'
+import {getOwnOrdersThunk, getAllOrdersThunk, updateOrderThunk} from '../store'
 
 class ViewOrders extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+  }
+
   componentDidMount() {
     if (this.props.adminView && this.props.isAdmin) {
       this.props.getAllOrders()
@@ -20,8 +30,16 @@ class ViewOrders extends React.Component {
       this.props.getOwnOrders(userId)
     }
   }
+
+  handleChange(event) {
+    const {name, value} = event.target
+    this.props.updateOrder(name, value)
+  }
+
+  handleDelete(id) {
+    this.props.updateOrder(id, 'CANCELLED')
+  }
   render() {
-    // console.log(this.props.orderList)
     const {adminView} = this.props
     return (
       <Container>
@@ -35,6 +53,7 @@ class ViewOrders extends React.Component {
                 <TableCell align="right">Total</TableCell>
                 <TableCell align="right">Date Placed</TableCell>
                 <TableCell align="right">Date Created</TableCell>
+                <TableCell align="right">Cancel Order</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -48,8 +67,24 @@ class ViewOrders extends React.Component {
                       {adminView ? (
                         <TableCell align="right">{order.userId}</TableCell>
                       ) : null}
-                      {adminView ? (
-                        <TableCell align="right">{order.orderStatus}</TableCell>
+                      {adminView &&
+                      order.orderStatus &&
+                      order.orderStatus !== 'CANCELLED' ? (
+                        <TableCell align="right">
+                          <Select
+                            value={order.orderStatus}
+                            onChange={this.handleChange}
+                            inputProps={{
+                              name: `${order.id}`,
+                              id: order.id
+                            }}
+                          >
+                            <MenuItem value="CREATED">CREATED</MenuItem>
+                            <MenuItem value="PROCESSING">PROCESSING</MenuItem>
+                            <MenuItem value="SHIPPED">SHIPPED</MenuItem>
+                            <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+                          </Select>
+                        </TableCell>
                       ) : (
                         <TableCell align="right">{order.orderStatus}</TableCell>
                       )}
@@ -59,6 +94,14 @@ class ViewOrders extends React.Component {
                       </TableCell>
                       <TableCell align="right">
                         {createDate.toLocaleString('default')}
+                      </TableCell>
+                      <TableCell>
+                        <Fab
+                          onClick={() => this.handleDelete(order.id)}
+                          size="small"
+                        >
+                          X
+                        </Fab>
                       </TableCell>
                     </TableRow>
                   )
@@ -87,6 +130,9 @@ const mapDisptach = dispatch => {
     },
     getAllOrders() {
       dispatch(getAllOrdersThunk())
+    },
+    updateOrder(orderId, orderStatus) {
+      dispatch(updateOrderThunk(orderId, orderStatus))
     }
   }
 }
