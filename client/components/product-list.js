@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid'
 import ProductCard from './product-card'
 import {addProductThunk} from '../store/cart'
 import ProductCarousel from './product-carousel'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 class DisconnectedProductList extends Component {
   componentDidMount() {
