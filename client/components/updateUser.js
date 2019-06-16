@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import UserForm from './userForm'
+import UserForm from './UserForm'
 import {editUserInfo} from '../store/user'
 
 export class UpdateUser extends Component {
