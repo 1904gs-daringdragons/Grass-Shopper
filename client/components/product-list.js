@@ -4,6 +4,8 @@ import {getProductsThunk} from '../store/product'
 import Grid from '@material-ui/core/Grid'
 import ProductCard from './product-card'
 import {addProductThunk} from '../store/cart'
+import ProductCarousel from './product-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 class DisconnectedProductList extends Component {
   componentDidMount() {
@@ -13,6 +15,7 @@ class DisconnectedProductList extends Component {
     if (this.props.products[0]) {
       return (
         <div>
+          <ProductCarousel />
           <div id="products" className="container">
             <Grid container spacing={10} style={{padding: 24}}>
               {this.props.products.map(product => {
