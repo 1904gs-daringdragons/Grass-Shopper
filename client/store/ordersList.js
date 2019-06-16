@@ -19,10 +19,23 @@ export const getOwnOrdersThunk = userId => async dispatch => {
 export const getAllOrdersThunk = () => async dispatch => {
   try {
     const res = await axios.get('/api/orders')
-    console.log(res.data)
     dispatch(setOrdersOnState(res.data))
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const updateOrderThunk = (orderId, orderStatus) => async dispatch => {
+  try {
+    await axios({
+      url: `/api/orders/${orderId}`,
+      method: 'PUT',
+      data: {orderStatus}
+    })
+    const res = await axios.get('/api/orders')
+    dispatch(setOrdersOnState(res.data))
+  } catch (error) {
+    console.log(error)
   }
 }
 
