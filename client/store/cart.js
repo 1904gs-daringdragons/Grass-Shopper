@@ -34,7 +34,7 @@ export const addProductThunk = (productId, qty, userId) => {
         quantity = getState().cart[productId].quantity + qty
       if (userId) {
         await axios({
-          url: '/api/cart',
+          url: `/api/cart/${productId}`,
           method: 'PUT',
           data: {userId, productId, quantity}
         })
@@ -63,7 +63,9 @@ export const getCartThunk = userId => {
   return async dispatch => {
     try {
       let cart = {}
-      if (!userId) cart = JSON.parse(localStorage.getItem('localCart'))
+      if (!userId) {
+        cart = JSON.parse(localStorage.getItem('localCart'))
+      }
       if (userId) {
         const res = await axios.get(`/api/cart/${userId}`)
         cart = res.data
