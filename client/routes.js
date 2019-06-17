@@ -17,6 +17,7 @@ import {me, getCartThunk} from './store'
 import AccountDetails from './components/account-details'
 import UpdateUser from './components/updateUser'
 import {ErrorBoundary} from './ErrorBoundary'
+import OrderCompleted from './components/OrderCompleted'
 
 /**
  * COMPONENT
@@ -44,7 +45,7 @@ class Routes extends Component {
 
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/accounts" component={AccountDetails} />
-
+          <Route exact path="/ordercompleted" component={OrderCompleted} />
           <Route exact path="/profile/update" component={UpdateUser} />
           <Route
             exact

@@ -20,45 +20,46 @@ class AccountDetails extends Component {
   render() {
     const {user, displayUserName} = this.props
     return user.id ? (
-      <Paper>
-        <div className="center">
-          <Typography>
+      <div className="accountDetails">
+        <Paper>
+          <div>
             <h2>Welcome, {displayUserName}</h2>
-          </Typography>
-          <Grid container spacing={2}>
-            <Link to="/orders">
-              <Button variant="contained" color="secondary">
-                View Your Orders
-              </Button>
-            </Link>
-            <Link to="/profile/update">
-              <Button variant="contained" color="secondary">
-                Update Your Profile
-              </Button>
-            </Link>
-            <Link to="profile/resetPassword">
-              <Button variant="contained" color="secondary">
-                Reset Your Password
-              </Button>
-            </Link>
-          </Grid>
-          <br />
-          <Card>
-            <CardContent>
-              <Typography>
-                <h2>Account Details</h2>
-                <h3>First Name:</h3> <p> {user.firstName}</p>
-                <h3>Last Name:</h3> <p> {user.lastName}</p>
-                <h3>Email Address:</h3> <p> {user.email}</p>
-                <h3>Billing Address:</h3> <p> {user.billingAddress}</p>
-                <h3>City:</h3> <p> {user.billingCity}</p>
-                <h3>State:</h3> <p> {user.billingState}</p>
-                <h3>Zipcode:</h3> <p> {user.billingZipcode}</p>
-              </Typography>
-            </CardContent>
-          </Card>
-        </div>
-      </Paper>
+
+            <Grid container spacing={2}>
+              <Link to="/orders">
+                <Button variant="contained" color="secondary">
+                  View Your Orders
+                </Button>
+              </Link>
+              <Link to="/profile/update">
+                <Button variant="contained" color="secondary">
+                  Update Your Profile
+                </Button>
+              </Link>
+              <Link to="profile/resetPassword">
+                <Button variant="contained" color="secondary">
+                  Reset Your Password
+                </Button>
+              </Link>
+            </Grid>
+
+            <Card>
+              <CardContent>
+                <Typography>
+                  <h2>Account Details</h2>
+                  <h3>First Name:</h3> {user.firstName}
+                  <h3>Last Name:</h3> {user.lastName}
+                  <h3>Email Address:</h3> {user.email}
+                  <h3>Billing Address:</h3> {user.billingAddress}
+                  <h3>City:</h3> {user.billingCity}
+                  <h3>State:</h3> {user.billingState}
+                  <h3>Zipcode:</h3> {user.billingZipcode}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
+        </Paper>
+      </div>
     ) : (
       <div>
         <h3> Loading user details...</h3>
