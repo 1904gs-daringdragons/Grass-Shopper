@@ -27,7 +27,7 @@ const TAX_RATE = 0.07
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: '70px',
     overflowX: 'auto'
   },
   table: {
