@@ -24,7 +24,6 @@ router.post('/', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
       const {name, price, description} = req.body
-      console.log(name, price, description)
       await Product.create({name, price, description})
       res.status(201).send()
     } else {
