@@ -29,6 +29,7 @@ class ProductManager extends React.Component {
             totalCount: tableRowCt
           }
         }}
+        options={{search: false}}
         editable={{
           onRowAdd: async newData => {
             this.props.addProduct(newData)
