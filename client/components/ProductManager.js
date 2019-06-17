@@ -10,6 +10,7 @@ import {
   TableRow
 } from '@material-ui/core'
 import MaterialTable from 'material-table'
+import axios from 'axios'
 
 class ProductManager extends React.Component {
   render() {
