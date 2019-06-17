@@ -70,7 +70,7 @@ function SpanningTable(props) {
       cart: props.cart
     }
     props.submitOrder(newOrder)
-    props.history.push('./home')
+    props.history.push('./ordercompleted')
   }
 
   if (
@@ -202,7 +202,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(changeQuantity(userId, productId, qty)),
     removeProduct: (userId, productId) =>
       dispatch(removeProduct(userId, productId)),
-    submitOrder: order => dispatch(submitOrderThunk(order))
+    submitOrder: (order, history) => dispatch(submitOrderThunk(order, history))
   }
 }
 
