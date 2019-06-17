@@ -62,7 +62,7 @@ const AuthForm = props => {
             name={name}
             noValidate
           >
-            {props.location.pathname === '/login' ? (
+            {props.location.pathname === '/signup' ? (
               <div>
                 <TextField
                   variant="outlined"
@@ -112,10 +112,7 @@ const AuthForm = props => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="cop" color="primary" />}
-              label="Are you a cop?"
-            />
+            <Checkbox value="cop" color="primary" label="Are you a cop?" />
             {error && error.response && <div> {error.response.data} </div>}
             <Button
               type="submit"
