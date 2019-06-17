@@ -19,3 +19,28 @@ router.get('/:productId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    if (req.user.isadmin) {
+      const {name, price, imageUrl, description} = req.body
+      await Product.create({name, price, imageUrl, description})
+      res.status(201).send()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:productId', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const product = await Product.findByPk(req.params.productId)
+      const {name, price, imageUrl, description} = req.body
+      await product.update({name, price, imageUrl, description})
+      res.status(202).send()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
