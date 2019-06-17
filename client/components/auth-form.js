@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
@@ -38,12 +38,11 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   }
 }))
-/**
- * COMPONENT
- */
+
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
   const classes = useStyles()
+  const [isCop, setIsCop] = useState('')
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,7 +72,7 @@ const AuthForm = props => {
                   label="First Name"
                   name="firstName"
                   autoComplete="given-name"
-                  autoFocus
+                  autoFocus={true}
                 />
                 <TextField
                   variant="outlined"
@@ -84,7 +83,6 @@ const AuthForm = props => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  autoFocus
                 />
               </div>
             ) : (
@@ -99,7 +97,7 @@ const AuthForm = props => {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              autoFocus={props.location.pathname === '/login'}
             />
             <TextField
               variant="outlined"
@@ -112,6 +110,22 @@ const AuthForm = props => {
               id="password"
               autoComplete="current-password"
             />
+            {props.location.pathname === '/signup' ? (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    onChange={e => setIsCop(e.target.checked)}
+                  />
+                }
+                label="Are you a cop?"
+              />
+            ) : (
+              <div />
+            )}
+            <span className={isCop === true ? 'warning' : 'warning hidden'}>
+              No cops allowed!
+            </span>
             {error && error.response && <div> {error.response.data} </div>}
             <Button
               type="submit"
@@ -119,6 +133,7 @@ const AuthForm = props => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={isCop === true}
             >
               {displayName}
             </Button>
@@ -177,10 +192,13 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-
-      // const firstName = evt.target.firstName.value;
-      // const lastName = evt.target.lastName.value;
-      dispatch(auth(email, password, formName))
+      if (evt.target.lastName.value) {
+        const firstName = evt.target.firstName.value
+        const lastName = evt.target.lastName.value
+        dispatch(auth(email, password, formName, firstName, lastName))
+      } else {
+        dispatch(auth(email, password, formName))
+      }
     }
   }
 }
