@@ -78,7 +78,7 @@ function Navbar(props) {
 
   const LinkMap = {
     'User Toolbox': '/admin/allusers',
-    'Product Toolbox': '/home',
+    'Product Toolbox': '/admin/products',
     'Order Management': '/admin/orders',
     'Inventory Management': '/home'
   }

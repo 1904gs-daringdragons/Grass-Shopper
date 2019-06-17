@@ -9,6 +9,8 @@ import {
   TableCell,
   TableRow
 } from '@material-ui/core'
+import MaterialTable from 'material-table'
+
 class ProductManager extends React.Component {
   render() {
     return (
