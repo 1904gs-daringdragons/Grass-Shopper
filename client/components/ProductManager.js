@@ -52,7 +52,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  addProduct: () => dispatch(addProductThunk()),
+  addProduct: newData => dispatch(addProductThunk(newData)),
   updateProduct: (pId, newData) => dispatch(updateProductThunk(pId, newData)),
   deleteProduct: pId => dispatch(deleteProductThunk(pId))
 })

@@ -22,10 +22,13 @@ router.get('/:productId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    if (req.user.isadmin) {
-      const {name, price, imageUrl, description} = req.body
-      await Product.create({name, price, imageUrl, description})
+    if (req.user.isAdmin) {
+      const {name, price, description} = req.body
+      console.log(name, price, description)
+      await Product.create({name, price, description})
       res.status(201).send()
+    } else {
+      res.status(403).send('you cant edit products dog')
     }
   } catch (err) {
     next(err)
