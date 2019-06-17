@@ -56,7 +56,7 @@ router.put('/:id/userInfo/passchg', async (req, res, next) => {
           individualHooks: true
         }
       )
-      res.json({editedUser})
+      res.json(editedUser[1][0])
     } else {
       res.status(401).send('not authenticated')
     }
