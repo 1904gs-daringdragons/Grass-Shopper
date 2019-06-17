@@ -53,10 +53,9 @@ class SingleProduct extends Component {
             <TextField
               label="Quantity"
               id={`qty-${this.props.product.id}`}
-              placeholder="Quantity"
               type="number"
               margin="normal"
-              // defaultValue="1"
+              defaultValue="1"
               inputProps={{min: '1', step: '1'}}
             />
           </CardActions>
