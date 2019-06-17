@@ -47,11 +47,12 @@ export const addProductThunk = (productId, qty, userId) => {
   }
 }
 
-export const submitOrderThunk = order => {
+export const submitOrderThunk = (order, history) => {
   return async dispatch => {
     try {
       await axios.post('/api/orders', order)
       dispatch(emptyCart())
+      history.push('/ordercompleted')
     } catch (error) {
       //Error Handling
       console.log(error)
