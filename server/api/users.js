@@ -42,10 +42,18 @@ router.put('/:id/userInfo', async (req, res, next) => {
 
 router.put('/:id/userInfo/passchg', async (req, res, next) => {
   try {
+    // Take the id from the request parameters and
+    // the old/new passwords from the body, then
+    // find the user in the db that matches that id
     const {id} = req.params
     const {formerPassword, newPassword} = req.body
     const user = await User.findOne({where: {id: id}})
+
+    // Use the correctPassword User model class method to check
+    // that the user has input the correct current password
     if (user.correctPassword(formerPassword)) {
+      // Then update the user's password and
+      // return the user
       const editedUser = await User.update(
         {
           password: newPassword
