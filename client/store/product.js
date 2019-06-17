@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {awaitExpression} from '@babel/types'
 
 /**
  * ACTION TYPES
@@ -37,6 +38,50 @@ export const getOneProductThunk = pId => async dispatch => {
     dispatch(getOneProduct(res.data))
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const addProduct = () => async dispatch => {
+  try {
+    const newData = {
+      name: 'new product',
+      price: 0,
+      imageUrl: null,
+      description: 'new product'
+    }
+    await axios({
+      url: `/api/products/${pId}`,
+      method: 'POST',
+      data: newData
+    })
+    const res = await axios.get('/api/products')
+    dispatch(getProducts(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateProduct = (pId, newData) => async dispatch => {
+  try {
+    await axios({
+      url: `/api/products/${pId}`,
+      method: 'PUT',
+      data: newData
+    })
+    const res = await axios.get('/api/products')
+    dispatch(getProducts(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const deleteProduct = pId => async dispatch => {
+  try {
+    await axios.delete(`/api/products/${pId}`)
+    const res = await axios.get('/api/products')
+    dispatch(getProducts(res.data))
+  } catch (error) {
+    console.log(error)
   }
 }
 

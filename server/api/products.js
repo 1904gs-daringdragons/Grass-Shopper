@@ -44,3 +44,15 @@ router.put('/:productId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const product = await Product.findByPk(req.params.productId)
+      await product.destroy()
+      res.status(204).send()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
