@@ -10,20 +10,17 @@ import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
-// import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-// import MailIcon from '@material-ui/icons/Mail'
-// import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import ShoppingCart from '@material-ui/icons/ShoppingCart'
 import Drawer from '@material-ui/core/Drawer'
 import Paper from '@material-ui/core/Paper'
-
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 // import { StylesProvider } from '@material-ui/styles';
 import {ListItem, ListItemText, Divider, List} from '@material-ui/core'
+import {Cart} from './'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -64,9 +61,10 @@ function Navbar(props) {
   // const theme = useTheme()
   const classes = useStyles()
   const [state, setState] = React.useState({
-    adminDrawer: false
+    adminDrawer: false,
+    cartDrawer: false
   })
-  const toggleDrawer = open => event => {
+  const toggleAdminDrawer = open => event => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
@@ -74,6 +72,15 @@ function Navbar(props) {
       return
     }
     setState({...state, adminDrawer: open})
+  }
+  const toggleCartDrawer = open => event => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return
+    }
+    setState({...state, cartDrawer: open})
   }
 
   const LinkMap = {
@@ -200,9 +207,17 @@ function Navbar(props) {
         <Drawer
           anchor="left"
           open={state.adminDrawer}
-          onClose={toggleDrawer(false)}
+          onClose={toggleAdminDrawer(false)}
         >
           {drawerList()}
+        </Drawer>
+        <Drawer
+          anchor="right"
+          open={state.cartDrawer}
+          onClose={toggleCartDrawer(false)}
+          style={{zIndex: 11}}
+        >
+          {<Cart />}
         </Drawer>
         <Toolbar>
           {!props.isAdmin ? (
@@ -213,7 +228,7 @@ function Navbar(props) {
               className={classes.menuButton}
               color="inherit"
               aria-label="Open drawer"
-              onClick={toggleDrawer(true)}
+              onClick={toggleAdminDrawer(true)}
             >
               <MenuIcon />
             </IconButton>
@@ -241,19 +256,21 @@ function Navbar(props) {
                 </Link>
               </Typography>
             )}
-            <Link to="/cart">
-              <IconButton aria-label="Go To Cart" color="inherit">
-                <Badge
-                  badgeContent={Object.values(props.cart).reduce(
-                    (accum, item) => accum + item.quantity,
-                    0
-                  )}
-                  color="secondary"
-                >
-                  <ShoppingCart />
-                </Badge>
-              </IconButton>
-            </Link>
+            <IconButton
+              aria-label="Go To Cart"
+              color="inherit"
+              onClick={toggleCartDrawer(true)}
+            >
+              <Badge
+                badgeContent={Object.values(props.cart).reduce(
+                  (accum, item) => accum + item.quantity,
+                  0
+                )}
+                color="secondary"
+              >
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
 
             <IconButton
               edge="end"
