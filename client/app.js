@@ -15,6 +15,16 @@ const greenTheme = createMuiTheme({
       main: '#8bc34a'
     },
     type: 'dark'
+  },
+  overrides: {
+    MuiInputBase: {
+      input: {
+        '&:-webkit-autofill': {
+          transitionDelay: '9999s',
+          transitionProperty: 'background-color, color'
+        }
+      }
+    }
   }
 })
 
