@@ -66,14 +66,10 @@ router.post('/', async (req, res, next) => {
         res.status(403).send('ACCESS DENIED')
       }
     } else if (userId === 0) {
-      const user = await User.findOne({where: {id: userId}})
       const newOrder = await Order.create({
         ...shippingAndBilling
       })
-
       await generateLineItems(newOrder, cart)
-
-      await newOrder.setUser(user)
       res.status(204).send()
     }
   } catch (error) {
