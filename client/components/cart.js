@@ -19,6 +19,8 @@ import {
   removeProductThunk as removeProduct,
   submitOrderThunk
 } from '../store/cart'
+import MailingList from './MailingList'
+import {Link} from 'react-router-dom'
 
 const TAX_RATE = 0.07
 
@@ -176,7 +178,20 @@ function SpanningTable(props) {
       </Container>
     )
   } else {
-    return <div>Loading...</div>
+    return (
+      <div>
+        return (
+        <div style={{textAlign: 'center', padding: '50px'}}>
+          <h3>Your shopping cart is currently empty.</h3>
+          <h3>
+            Please click <Link to="/products">HERE</Link> to add item to your
+            shopping cart. Thanks
+          </h3>
+          <MailingList />
+        </div>
+        )
+      </div>
+    )
   }
 }
 
