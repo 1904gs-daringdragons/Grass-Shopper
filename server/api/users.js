@@ -40,7 +40,7 @@ router.put('/:id/userInfo', async (req, res, next) => {
   }
 })
 
-router.put('/:id/userInfo/passchg', async (req, res, next) => {
+router.put('/:id/userInfo/pc', async (req, res, next) => {
   try {
     // Take the id from the request parameters and
     // the old/new passwords from the body, then
@@ -66,7 +66,7 @@ router.put('/:id/userInfo/passchg', async (req, res, next) => {
       )
       res.json(editedUser[1][0])
     } else {
-      res.status(401).send('not authenticated')
+      res.status(401).send('Unauthorized')
     }
   } catch (error) {
     next(error)
