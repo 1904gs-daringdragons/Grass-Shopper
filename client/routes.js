@@ -10,8 +10,7 @@ import {
   Cart,
   Checkout,
   ViewAllUsers,
-  ViewOrders,
-  ProductManager
+  ViewOrders
 } from './components'
 import {me, getCartThunk} from './store'
 import AccountDetails from './components/account-details'
