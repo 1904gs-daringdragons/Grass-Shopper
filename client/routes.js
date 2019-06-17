@@ -56,7 +56,7 @@ class Routes extends Component {
             path="/admin/orders"
             render={() => <ViewOrders adminView={true} />}
           />
-
+          <Route exact path="/admin/products" component={ProductManager} />
           {accountDetailPath}
           <Route component={Products} />
         </Switch>
