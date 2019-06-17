@@ -69,7 +69,8 @@ class ViewOrders extends React.Component {
                       ) : null}
                       {adminView &&
                       order.orderStatus &&
-                      order.orderStatus !== 'CANCELLED' ? (
+                      order.orderStatus !== 'CANCELLED' &&
+                      order.orderStatus !== 'CART' ? (
                         <TableCell align="right">
                           <Select
                             value={order.orderStatus}
