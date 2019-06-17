@@ -10,8 +10,7 @@ import {
   Cart,
   Checkout,
   ViewAllUsers,
-  ViewOrders,
-  ProductManager
+  ViewOrders
 } from './components'
 import {me, getCartThunk} from './store'
 import AccountDetails from './components/account-details'
@@ -57,7 +56,6 @@ class Routes extends Component {
             path="/admin/orders"
             render={() => <ViewOrders adminView={true} />}
           />
-          <Route exact path="/admin/products" component={ProductManager} />
 
           {accountDetailPath}
           <Route component={Products} />
