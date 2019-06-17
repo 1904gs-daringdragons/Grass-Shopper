@@ -179,17 +179,13 @@ function SpanningTable(props) {
     )
   } else {
     return (
-      <div>
-        return (
-        <div style={{textAlign: 'center', padding: '50px'}}>
-          <h3>Your shopping cart is currently empty.</h3>
-          <h3>
-            Please click <Link to="/products">HERE</Link> to add item to your
-            shopping cart. Thanks
-          </h3>
-          <MailingList />
-        </div>
-        )
+      <div style={{textAlign: 'center', padding: '50px'}}>
+        <h3>Your shopping cart is currently empty.</h3>
+        <h3>
+          Please click <Link to="/products">HERE</Link> to add item to your
+          shopping cart. Thanks
+        </h3>
+        <MailingList />
       </div>
     )
   }
