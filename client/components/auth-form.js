@@ -13,18 +13,16 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.black
-    }
-  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: theme.palette.primary,
+    padding: '20px'
   },
   avatar: {
     margin: theme.spacing(1),
@@ -47,73 +45,75 @@ const AuthForm = props => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Grass Shopper {displayName}
-        </Typography>
-        <form
-          className={classes.form}
-          onSubmit={handleSubmit}
-          name={name}
-          noValidate
-        >
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          {/* <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" /> */}
-          {error && error.response && <div> {error.response.data} </div>}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+      <Paper>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Grass Shopper {displayName}
+          </Typography>
+          <form
+            className={classes.form}
+            onSubmit={handleSubmit}
+            name={name}
+            noValidate
           >
-            {displayName}
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/auth/google" variant="body2">
-                {displayName} with Google
-              </Link>
-            </Grid>
-            <Grid item>
-              {props.location.pathname === '/login' ? (
-                <Link component={RouterLink} to="/signup">
-                  {"Don't have an account? Sign Up"}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            {/* <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" /> */}
+            {error && error.response && <div> {error.response.data} </div>}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              {displayName}
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="/auth/google" variant="body2">
+                  {displayName} with Google
                 </Link>
-              ) : (
-                <Link component={RouterLink} to="/login">
-                  {'Already have an account? Login'}
-                </Link>
-              )}
+              </Grid>
+              <Grid item>
+                {props.location.pathname === '/login' ? (
+                  <Link component={RouterLink} to="/signup">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                ) : (
+                  <Link component={RouterLink} to="/login">
+                    {'Already have an account? Login'}
+                  </Link>
+                )}
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
+          </form>
+        </div>
+      </Paper>
     </Container>
   )
 }
