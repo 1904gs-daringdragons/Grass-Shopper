@@ -39,3 +39,28 @@ router.put('/:id/userInfo', async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:id/userInfo/passchg', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const {formerPassword, newPassword} = req.body
+    const user = await User.findOne({where: {id: id}})
+    if (user.correctPassword(formerPassword)) {
+      const editedUser = await User.update(
+        {
+          password: newPassword
+        },
+        {
+          returning: true,
+          where: {id},
+          individualHooks: true
+        }
+      )
+      res.json({editedUser})
+    } else {
+      res.status(401).send('not authenticated')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
