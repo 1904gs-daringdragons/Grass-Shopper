@@ -18,3 +18,14 @@ a {
   display: flex;
   justify-content: space-around;
 }
+
+.warning {
+  padding: 0 0.5em;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  color: red;
+}
+
+.hidden {
+  visibility: hidden;
+}
