@@ -41,16 +41,10 @@ export const getOneProductThunk = pId => async dispatch => {
   }
 }
 
-export const addProduct = () => async dispatch => {
+export const addProductThunk = newData => async dispatch => {
   try {
-    const newData = {
-      name: 'new product',
-      price: 0,
-      imageUrl: null,
-      description: 'new product'
-    }
     await axios({
-      url: `/api/products/${pId}`,
+      url: `/api/products`,
       method: 'POST',
       data: newData
     })
@@ -61,7 +55,7 @@ export const addProduct = () => async dispatch => {
   }
 }
 
-export const updateProduct = (pId, newData) => async dispatch => {
+export const updateProductThunk = (pId, newData) => async dispatch => {
   try {
     await axios({
       url: `/api/products/${pId}`,
@@ -75,7 +69,7 @@ export const updateProduct = (pId, newData) => async dispatch => {
   }
 }
 
-export const deleteProduct = pId => async dispatch => {
+export const deleteProductThunk = pId => async dispatch => {
   try {
     await axios.delete(`/api/products/${pId}`)
     const res = await axios.get('/api/products')
