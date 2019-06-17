@@ -19,3 +19,42 @@ router.get('/:productId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const {name, price, description} = req.body
+      await Product.create({name, price, description})
+      res.status(201).send()
+    } else {
+      res.status(403).send('you cant edit products dog')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:productId', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const product = await Product.findByPk(req.params.productId)
+      const {name, price, imageUrl, description} = req.body
+      await product.update({name, price, imageUrl, description})
+      res.status(202).send()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      const product = await Product.findByPk(req.params.productId)
+      await product.destroy()
+      res.status(204).send()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
