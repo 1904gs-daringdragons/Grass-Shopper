@@ -47,21 +47,19 @@ router.put('/:pId', async (req, res, next) => {
   try {
     const {userId, qty} = req.body
     const productId = req.params.pId
-    if (userId) {
-      if (req.user.id === userId) {
-        const currentCart = await Order.findOne({
-          where: {userId, orderStatus: 'CART'}
-        })
-        const currLineItem = await LineItem.findOne({
-          where: {
-            orderId: currentCart.id,
-            productId
-          }
-        })
-        currLineItem.update({quantity: qty})
-      }
-      res.send()
+    if (req.user.id === userId) {
+      const currentCart = await Order.findOne({
+        where: {userId, orderStatus: 'CART'}
+      })
+      const currLineItem = await LineItem.findOne({
+        where: {
+          orderId: currentCart.id,
+          productId
+        }
+      })
+      currLineItem.update({quantity: qty})
     }
+    res.send()
   } catch (error) {
     next(error)
   }

@@ -23,18 +23,21 @@ router.get('/', async (req, res, next) => {
 router.put('/:id/userInfo', async (req, res, next) => {
   try {
     const {id} = req.params
-    const {firstName, lastName, email} = req.body
+    if (req.user.id === id || req.user.isAdmin) {
+      const {firstName, lastName, email} = req.body
 
-    const [, editedUser] = await User.update(
-      {firstName, lastName, email},
-      {
-        returning: true,
-        where: {id},
-        individualHooks: true
-      }
-    )
-
-    res.json(editedUser[0])
+      const [, editedUser] = await User.update(
+        {firstName, lastName, email},
+        {
+          returning: true,
+          where: {id},
+          individualHooks: true
+        }
+      )
+      res.json(editedUser[0])
+    } else {
+      res.status(403).send('NO')
+    }
   } catch (error) {
     next(error)
   }
