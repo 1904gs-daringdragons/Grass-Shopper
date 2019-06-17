@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -60,6 +62,34 @@ const AuthForm = props => {
             name={name}
             noValidate
           >
+            {props.location.pathname === '/signup' ? (
+              <div>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  name="firstName"
+                  autoComplete="given-name"
+                  autoFocus
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                  autoFocus
+                />
+              </div>
+            ) : (
+              <div />
+            )}
             <TextField
               variant="outlined"
               margin="normal"
@@ -82,7 +112,6 @@ const AuthForm = props => {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" /> */}
             {error && error.response && <div> {error.response.data} </div>}
             <Button
               type="submit"
@@ -148,6 +177,9 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
+
+      // const firstName = evt.target.firstName.value;
+      // const lastName = evt.target.lastName.value;
       dispatch(auth(email, password, formName))
     }
   }

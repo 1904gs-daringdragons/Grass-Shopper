@@ -1,15 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {
-  Container,
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableCell,
-  TableRow
-} from '@material-ui/core'
 import MaterialTable from 'material-table'
+import {addProductThunk, updateProductThunk, deleteProductThunk} from '../store'
 import axios from 'axios'
 
 class ProductManager extends React.Component {
