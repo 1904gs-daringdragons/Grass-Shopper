@@ -23,6 +23,14 @@ const Product = db.define('product', {
   description: {
     type: Sequelize.TEXT,
     allowNull: false
+  },
+  quantity: {
+    type: Sequelize.BIGINT,
+    allowNull: false,
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
   }
 })
 

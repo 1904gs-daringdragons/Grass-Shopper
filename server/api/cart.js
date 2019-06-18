@@ -3,7 +3,7 @@ const {User, Order, LineItem, Product} = require('../db/models')
 
 router.put('/', async (req, res, next) => {
   try {
-    const {userId, productId, quantity = 1} = req.body
+    const {userId, productId, qty = 1} = req.body
     if (userId) {
       if (+req.user.id === +userId) {
         let order = await Order.findOne({where: {userId, orderStatus: 'CART'}})
@@ -23,13 +23,15 @@ router.put('/', async (req, res, next) => {
         if (!lineItem) {
           const product = await Product.findOne({where: {id: productId}})
           lineItem = await LineItem.create({
-            quantity,
+            quantity: qty,
             itemPrice: product.price
           })
+          const prodQuantity = product.quantity
+          await product.update({quantity: prodQuantity - qty})
           await lineItem.setOrder(order)
           await lineItem.setProduct(product)
         } else {
-          lineItem.update({quantity})
+          lineItem.update({quantity: qty})
         }
         res.status(204).send()
       } else {
@@ -59,7 +61,7 @@ router.put('/:pId', async (req, res, next) => {
       })
       currLineItem.update({quantity: qty})
     }
-    res.send()
+    res.status(201).send()
   } catch (error) {
     next(error)
   }

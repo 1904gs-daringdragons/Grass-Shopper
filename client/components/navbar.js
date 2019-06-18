@@ -86,8 +86,7 @@ function Navbar(props) {
   const LinkMap = {
     'User Toolbox': '/admin/allusers',
     'Product Toolbox': '/admin/products',
-    'Order Management': '/admin/orders',
-    'Inventory Management': '/home'
+    'Order Management': '/admin/orders'
   }
 
   const drawerList = () => {
@@ -103,18 +102,15 @@ function Navbar(props) {
 
           <Divider />
           <List>
-            {[
-              'User Toolbox',
-              'Product Toolbox',
-              'Order Management',
-              'Inventory Management'
-            ].map((text, index) => (
-              <ListItem button key={text}>
-                <Link to={LinkMap[text]}>
-                  <ListItemText primary={text} />
-                </Link>
-              </ListItem>
-            ))}
+            {['User Toolbox', 'Product Toolbox', 'Order Management'].map(
+              (text, index) => (
+                <ListItem button key={text}>
+                  <Link to={LinkMap[text]}>
+                    <ListItemText primary={text} />
+                  </Link>
+                </ListItem>
+              )
+            )}
           </List>
         </div>
       </Paper>
@@ -259,7 +255,7 @@ function Navbar(props) {
             <IconButton
               aria-label="Go To Cart"
               color="inherit"
-              onClick={toggleCartDrawer(true)}
+              onClick={toggleCartDrawer(!state.cartDrawer)}
             >
               <Badge
                 badgeContent={Object.values(props.cart).reduce(

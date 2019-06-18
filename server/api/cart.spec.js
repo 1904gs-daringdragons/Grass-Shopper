@@ -54,7 +54,8 @@ describe('cart routes', () => {
         price: '550',
         imageUrl:
           'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
-        description: 'A specially made blend by Sunny'
+        description: 'A specially made blend by Sunny',
+        quantity: 1000
       })
       await authSession
         .post('/auth/login')

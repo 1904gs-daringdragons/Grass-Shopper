@@ -2,16 +2,19 @@ import React from 'react'
 import {connect} from 'react-redux'
 import MaterialTable from 'material-table'
 import {addProductThunk, updateProductThunk, deleteProductThunk} from '../store'
+import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
 class ProductManager extends React.Component {
   render() {
+    if (!this.props.isAdmin) return <Redirect to="/home" />
     return (
       <MaterialTable
         title="Product Manager"
         columns={[
           {title: 'Name', field: 'name'},
           {title: 'Price', field: 'price', type: 'numeric'},
+          {title: 'Quantity', field: 'quantity', type: 'numeric'},
           {title: 'Description', field: 'description'}
         ]}
         data={async query => {
@@ -24,7 +27,9 @@ class ProductManager extends React.Component {
             page * pageSize + pageSize
           )
           return {
-            data: renderData,
+            data: renderData.map(product => {
+              return {...product, price: (product.price / 100).toFixed(2)}
+            }),
             page: page,
             totalCount: tableRowCt
           }
@@ -32,10 +37,12 @@ class ProductManager extends React.Component {
         options={{search: false}}
         editable={{
           onRowAdd: async newData => {
+            newData.price = parseInt(newData.price * 100, 10)
             this.props.addProduct(newData)
           },
           onRowUpdate: async (newData, oldData) => {
             const {id} = oldData
+            newData.price = parseInt(newData.price * 100, 10)
             this.props.updateProduct(id, newData)
           },
           onRowDelete: async oldData => {
@@ -49,7 +56,8 @@ class ProductManager extends React.Component {
 }
 
 const mapState = state => ({
-  productList: state.products.allProducts
+  productList: state.products.allProducts,
+  isAdmin: state.user.isAdmin
 })
 
 const mapDispatch = dispatch => ({

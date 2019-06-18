@@ -47,7 +47,10 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getAllProducts: () => dispatch(getProductsThunk()),
-  addToCart: (id, qty, userId = 0) => dispatch(addProductThunk(id, qty, userId))
+  addToCart: (id, qty, userId = 0) => {
+    // console.log(qty);
+    dispatch(addProductThunk(id, qty, userId))
+  }
 })
 
 export default connect(mapState, mapDispatch)(DisconnectedProductList)
