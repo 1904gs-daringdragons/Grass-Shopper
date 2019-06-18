@@ -1,10 +1,31 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
+const {Product, Recommendation} = require('../db/models')
+const db = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
+    const userId = req.query.userId ? req.query.userId : 0
+    const [products] = await db.query(
+      String.raw`
+      SELECT avg.id, avg.name, avg.price, avg."imageUrl", avg.description, avg.quantity, avg."isFeatured", avg."featuredUrl", avg."createdAt", avg."updatedAt",
+      CAST(case when singleUser."userId" is null then avg.avg else singleUser.stars end AS INT) as stars
+    FROM
+      (
+        SELECT P.*, AVG(R.stars)
+FROM PRODUCTS P
+LEFT JOIN RECOMMENDATIONS R
+ON P.id = R."productId"
+GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl"
+      ) avg
+    LEFT JOIN
+      (
+        SELECT "productId" As pId, "userId", stars
+FROM RECOMMENDATIONS
+WHERE "userId" = ${userId}
+      ) singleUser
+    ON singleUser.pId = avg.id`
+    )
     products.sort((a, b) => a.id - b.id)
     res.json(products)
   } catch (err) {
@@ -66,5 +87,29 @@ router.delete('/:productId', async (req, res, next) => {
     }
   } catch (err) {
     next(err)
+  }
+})
+
+router.put('/rec/:productId', async (req, res, next) => {
+  try {
+    const productId = req.params.productId
+    const {uId, stars} = req.body
+
+    if (req.user.id === uId) {
+      const [userRec, created] = await Recommendation.findOrCreate({
+        where: {
+          userId: uId,
+          productId
+        },
+        defaults: {stars}
+      })
+      if (created) {
+        await userRec.setUser(uId)
+        await userRec.setProduct(productId)
+      } else await userRec.update({stars})
+    }
+    res.status(201).send()
+  } catch (error) {
+    next(error)
   }
 })

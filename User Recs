@@ -1,0 +1,7 @@
+SELECT P.*, AVG(R.stars), U.id
+FROM PRODUCTS P 
+LEFT JOIN RECOMMENDATIONS R
+ON P.id = R."productId" 
+LEFT JOIN USERS U
+ON U.id = 1 AND R."userId" = U.id 
+GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl", U.id

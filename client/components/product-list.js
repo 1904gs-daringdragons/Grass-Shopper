@@ -18,7 +18,7 @@ class DisconnectedProductList extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
-    this.props.getAllProducts()
+    this.props.getAllProducts(this.props.user.id)
   }
   handleClick(offset) {
     this.setState({offset})
@@ -33,7 +33,7 @@ class DisconnectedProductList extends Component {
         <div>
           <ProductCarousel />
           <div id="products" className="container">
-            <Grid container spacing={10} style={{padding: 24}}>
+            <Grid container spacing={3} style={{padding: 40}}>
               <Grid item xs={12} container justify="center" alignItems="center">
                 <Paper
                   style={{
@@ -113,7 +113,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getAllProducts: () => dispatch(getProductsThunk()),
   addToCart: (id, qty, userId = 0) => {
-    // console.log(qty);
     dispatch(addProductThunk(id, qty, userId))
   }
 })
