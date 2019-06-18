@@ -32,7 +32,6 @@ export const addProductThunk = (productId, qty = 1, userId) => {
       if (getState().cart[productId])
         qty = getState().cart[productId].quantity + qty
       qty = Math.min(product.data.quantity, qty)
-      console.log(qty)
       if (userId) {
         await axios({
           url: '/api/cart/',
@@ -49,12 +48,11 @@ export const addProductThunk = (productId, qty = 1, userId) => {
   }
 }
 
-export const submitOrderThunk = (order, history) => {
+export const submitOrderThunk = order => {
   return async dispatch => {
     try {
       await axios.post('/api/orders', order)
       dispatch(emptyCart())
-      history.push('/ordercompleted')
     } catch (error) {
       //Error Handling
       console.log(error)

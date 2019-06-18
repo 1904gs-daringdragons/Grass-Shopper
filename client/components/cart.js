@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 
 import {makeStyles} from '@material-ui/core/styles'
@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {PayPalButton} from 'react-paypal-button-v2'
+import OrderCompleted from './OrderCompleted'
 
 import {
   changeQuantityThunk as changeQuantity,
@@ -51,6 +52,8 @@ function subtotal(items) {
 
 function SpanningTable(props) {
   const classes = useStyles()
+  const [isPaid, setIsPaid] = useState('')
+  const [currentOrder, setCurrentOrder] = useState('')
 
   function handlePayment(orderId, payerDetails, purchaseDetails) {
     const newOrder = {
@@ -69,8 +72,60 @@ function SpanningTable(props) {
       payPalConfirmationNumber: orderId,
       cart: props.cart
     }
+    setCurrentOrder(props.cart)
     props.submitOrder(newOrder)
-    props.history.push('./ordercompleted')
+    setIsPaid(true)
+  }
+  if (isPaid) {
+    const invoiceSubtotal = subtotal(Object.values(currentOrder))
+    const invoiceTaxes = TAX_RATE * invoiceSubtotal
+    const invoiceTotal = invoiceTaxes + invoiceSubtotal
+    return (
+      <div style={{textAlign: 'center', marginTop: '10%'}}>
+        <h3>Thank you for your purchase!</h3>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Item</TableCell>
+              <TableCell />
+              <TableCell align="right">Qty.</TableCell>
+              <TableCell align="right">Total</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Object.values(currentOrder).map(row => {
+              return (
+                <TableRow key={row.id}>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell />
+                  <TableCell align="right">{row.quantity}</TableCell>
+                  <TableCell align="right">
+                    {ccyFormat(priceRow(row.quantity, row.price / 100))}
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+
+            <TableRow>
+              <TableCell rowSpan={3} />
+              <TableCell colSpan={2}>Subtotal</TableCell>
+              <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Tax</TableCell>
+              <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+                0
+              )} %`}</TableCell>
+              <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+    )
   }
 
   if (
@@ -83,7 +138,6 @@ function SpanningTable(props) {
     const handleChange = event => {
       props.changeQty(props.userId, +event.target.id, +event.target.value)
     }
-
     return (
       <Container maxWidth="md">
         <Paper className={classes.root}>
@@ -179,12 +233,8 @@ function SpanningTable(props) {
     )
   } else {
     return (
-      <div style={{textAlign: 'center', padding: '50px'}}>
+      <div style={{textAlign: 'center', padding: '5%', marginTop: '50px'}}>
         <h3>Your shopping cart is currently empty.</h3>
-        <h3>
-          Please click <Link to="/products">HERE</Link> to add item to your
-          shopping cart. Thanks
-        </h3>
         <MailingList />
       </div>
     )
