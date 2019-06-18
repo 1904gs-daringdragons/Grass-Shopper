@@ -1,0 +1,55 @@
+diff a/client/components/navbar.js b/client/components/navbar.js	(rejected hunks)
+@@ -80,6 +86,6 @@ function Navbar(props) {
+-	const LinkMap = {
+-		'User Toolbox': '/admin/allusers',
+-		'Product Toolbox': '/admin/products',
+-		'Order Management': '/admin/orders',
+-		'Inventory Management': '/home'
+-	};
++  const LinkMap = {
++    'User Toolbox': '/admin/allusers',
++    'Product Toolbox': '/admin/products',
++    'Order Management': '/admin/orders',
++    'Inventory Management': '/home'
++  }
+@@ -98,20 +104,20 @@ function Navbar(props) {
+-					<Divider />
+-					<List>
+-						{[
+-							'User Toolbox',
+-							'Product Toolbox',
+-							'Order Management',
+-							'Inventory Management'
+-						].map((text, index) => (
+-							<ListItem button key={text}>
+-								<Link to={LinkMap[text]}>
+-									<ListItemText primary={text} />
+-								</Link>
+-							</ListItem>
+-						))}
+-					</List>
+-				</div>
+-			</Paper>
+-			// </StylesProvider>
+-		);
+-	};
++          <Divider />
++          <List>
++            {[
++              'User Toolbox',
++              'Product Toolbox',
++              'Order Management',
++              'Inventory Management'
++            ].map((text, index) => (
++              <ListItem button key={text}>
++                <Link to={LinkMap[text]}>
++                  <ListItemText primary={text} />
++                </Link>
++              </ListItem>
++            ))}
++          </List>
++        </div>
++      </Paper>
++      // </StylesProvider>
++    )
++  }
