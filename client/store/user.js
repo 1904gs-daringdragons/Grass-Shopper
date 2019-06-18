@@ -77,6 +77,24 @@ export const editUserInfo = user => async dispatch => {
   }
 }
 
+export const changePassword = (
+  userId,
+  formerPassword,
+  newPassword
+) => async dispatch => {
+  try {
+    // const {id} = user
+    const res = await axios.put(`api/users/${userId}/password`, {
+      formerPassword,
+      newPassword
+    })
+    // const returnedUser = res.data
+    dispatch(updateUser(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 /**
  * REDUCER
  */

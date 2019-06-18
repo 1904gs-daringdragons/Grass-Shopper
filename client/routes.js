@@ -11,7 +11,8 @@ import {
   Checkout,
   ViewAllUsers,
   ViewOrders,
-  ProductManager
+  ProductManager,
+  ChangePassword
 } from './components'
 import {me, getCartThunk} from './store'
 import AccountDetails from './components/account-details'
@@ -57,6 +58,11 @@ class Routes extends Component {
             render={() => <ViewOrders adminView={true} />}
           />
           <Route exact path="/admin/products" component={ProductManager} />
+          <Route
+            exact
+            path="/profile/resetPassword"
+            component={ChangePassword}
+          />
           {accountDetailPath}
           <Route component={Products} />
         </Switch>

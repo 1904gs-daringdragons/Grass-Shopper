@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 router.put('/:id/userInfo', async (req, res, next) => {
   try {
     const {id} = req.params
-    if (req.user.id === id || req.user.isAdmin) {
+    if (+req.user.id === +id || req.user.isAdmin) {
       const {firstName, lastName, email} = req.body
 
       const [, editedUser] = await User.update(
@@ -37,6 +37,39 @@ router.put('/:id/userInfo', async (req, res, next) => {
       res.json(editedUser[0])
     } else {
       res.status(403).send('NO')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:id/password', async (req, res, next) => {
+  try {
+    // Take the id from the request parameters and
+    // the old/new passwords from the body, then
+    // find the user in the db that matches that id
+    const {id} = req.params
+    const {formerPassword, newPassword} = req.body
+    const user = await User.findOne({where: {id: id}})
+
+    // Use the correctPassword User model class method to check
+    // that the user has input the correct current password
+    if (user.correctPassword(formerPassword)) {
+      // Then update the user's password and
+      // return the user
+      const [, editedUser] = await User.update(
+        {
+          password: newPassword
+        },
+        {
+          returning: true,
+          where: {id},
+          individualHooks: true
+        }
+      )
+      res.json(editedUser[0])
+    } else {
+      res.status(401).send('Unauthorized')
     }
   } catch (error) {
     next(error)
