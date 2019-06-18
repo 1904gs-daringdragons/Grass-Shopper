@@ -52,6 +52,7 @@ export const auth = (
   try {
     const {id} = res.data
     let cart = localStorage.getItem('localCart')
+    console.log(cart)
     if (cart) {
       cart = JSON.parse(cart)
       for (let product in cart) {
@@ -64,7 +65,7 @@ export const auth = (
         }
       }
     }
-    localStorage.setItem('localCart', {})
+    localStorage.setItem('localCart', '')
     dispatch(getUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {

@@ -39,6 +39,12 @@ const Product = db.define('product', {
   featuredUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://i.redd.it/d5ddrvk3jex11.jpg'
+  },
+  catagory: {
+    type: Sequelize.ENUM,
+    values: ['Loose Leaf', 'Vacuum Packed', 'Paraphenalia', 'Edible', 'Other'],
+    defaultValue: 'Other',
+    allowNull: false
   }
 })
 

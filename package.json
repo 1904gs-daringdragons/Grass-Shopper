@@ -54,6 +54,7 @@
 		"express-session": "^1.15.1",
 		"history": "^4.9.0",
 		"material-table": "^1.39.2",
+		"material-ui-flat-pagination": "^3.2.0",
 		"morgan": "^1.9.1",
 		"nodemailer": "^6.2.1",
 		"nuka-carousel": "^4.5.8",
