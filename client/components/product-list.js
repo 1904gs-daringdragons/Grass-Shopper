@@ -1,25 +1,31 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getProductsThunk} from '../store/product'
-import Grid from '@material-ui/core/Grid'
 import ProductCard from './product-card'
 import {addProductThunk} from '../store/cart'
 import ProductCarousel from './product-carousel'
-import {Paper} from '@material-ui/core'
+import {Paper, Select, MenuItem, Grid} from '@material-ui/core'
 import Pagination from 'material-ui-flat-pagination'
+import Typography from '@material-ui/core/Typography'
 
 class DisconnectedProductList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      offset: 0
+      offset: 0,
+      filter: 'All'
     }
+    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     this.props.getAllProducts()
   }
   handleClick(offset) {
     this.setState({offset})
+  }
+  handleChange(e) {
+    const {value} = e.target
+    this.setState({filter: value})
   }
   render() {
     if (this.props.products[0]) {
@@ -28,7 +34,35 @@ class DisconnectedProductList extends Component {
           <ProductCarousel />
           <div id="products" className="container">
             <Grid container spacing={10} style={{padding: 24}}>
+              <Grid item xs={12} container justify="center" alignItems="center">
+                <Paper>
+                  <Typography>Filter Products By Catagory:</Typography>
+                  <Select
+                    value={this.state.filter}
+                    onChange={this.handleChange}
+                  >
+                    {[
+                      'All',
+                      'Loose Leaf',
+                      'Vacuum Packed',
+                      'Paraphenalia',
+                      'Edible',
+                      'Other'
+                    ].map((type, index) => (
+                      <MenuItem key={index} value={type}>
+                        {type}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Paper>
+              </Grid>
               {this.props.products
+                .filter(product => {
+                  return (
+                    this.state.filter === 'All' ||
+                    product.catagory === this.state.filter
+                  )
+                })
                 .slice(this.state.offset, this.state.offset + 6)
                 .map(product => {
                   return (
