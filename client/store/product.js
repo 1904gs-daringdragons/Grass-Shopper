@@ -6,11 +6,11 @@ import {awaitExpression} from '@babel/types'
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_ONE_PRODUCT = 'GET_ONE_PRODUCT'
-
+const GET_FEATURED = 'GET_FEATURED'
 /**
  * INITIAL STATE
  */
-const productList = {allProducts: {}, selectedProduct: {}}
+const productList = {allProducts: {}, selectedProduct: {}, featuredProducts: []}
 
 /**
  * ACTION CREATORS
@@ -18,6 +18,8 @@ const productList = {allProducts: {}, selectedProduct: {}}
 const getProducts = products => ({type: GET_PRODUCTS, products})
 
 const getOneProduct = product => ({type: GET_ONE_PRODUCT, product})
+
+const getFeatured = featuredProducts => ({type: GET_FEATURED, featuredProducts})
 
 /**
  * THUNK CREATORS
@@ -31,6 +33,15 @@ export const getProductsThunk = () => async dispatch => {
   }
 }
 
+export const getFeaturedThunk = () => async dispatch => {
+  try {
+    const res = await axios.get('api/products/featured')
+    dispatch(getFeatured(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const getOneProductThunk = pId => async dispatch => {
   try {
     const res = await axios.get(`/api/products/${pId}`)
@@ -41,7 +52,7 @@ export const getOneProductThunk = pId => async dispatch => {
   }
 }
 
-export const addProductThunk = newData => async dispatch => {
+export const newProductThunk = newData => async dispatch => {
   try {
     await axios({
       url: `/api/products`,
@@ -92,6 +103,10 @@ export default function(state = productList, action) {
       // return action.product
       newBatchOfProducts.selectedProduct = action.product
       return newBatchOfProducts
+    case GET_FEATURED:
+      newBatchOfProducts.featuredProducts = action.featuredProducts
+      return newBatchOfProducts
+
     default:
       return state
   }

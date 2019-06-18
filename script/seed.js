@@ -108,11 +108,43 @@ async function seed() {
       quantity: 123
     }),
     Product.create({
-      name: 'weed',
+      name: "Sunny's Choice",
       price: '550',
       imageUrl:
         'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
-      description: 'A specially made blend by Sunny',
+      description: 'A delicious strain made by Sunny',
+      quantity: 1000
+    }),
+    Product.create({
+      name: 'Purple Wizard',
+      price: '5050',
+      imageUrl:
+        'https://www.rubytreefilms.com/wp-content/themes/evermore/lib/utils/timthumb.php?src=http://www.rubytreefilms.com/wp-content/uploads/2017/10/HighHopes_04-Cannabis-Leaves-and-Buds-RES.jpg&h=500&w=920&zc=1&c=1&q=100&a=c',
+      featuredUrl:
+        'https://www.rubytreefilms.com/wp-content/themes/evermore/lib/utils/timthumb.php?src=http://www.rubytreefilms.com/wp-content/uploads/2017/10/HighHopes_04-Cannabis-Leaves-and-Buds-RES.jpg&h=500&w=920&zc=1&c=1&q=100&a=c',
+      isFeatured: true,
+      description: 'A specially made purple blend by Nick',
+      quantity: 1000
+    }),
+    Product.create({
+      name: 'Crystal Palace',
+      price: '3400',
+      imageUrl:
+        'https://media.npr.org/assets/img/2015/05/19/marijuana-promo_wide-3960c528d4a1a56cddb3d8602e7cd85da5a19bae-s900.jpg',
+      featuredUrl:
+        'https://media.npr.org/assets/img/2015/05/19/marijuana-promo_wide-3960c528d4a1a56cddb3d8602e7cd85da5a19bae-s900.jpg',
+      isFeatured: true,
+      description: 'Made with shards of real crystal',
+      quantity: 1000
+    }),
+    Product.create({
+      name: 'Space Weed',
+      price: '99999999',
+      imageUrl: 'https://i.redd.it/db4air5xx3gx.jpg',
+      featuredUrl: 'https://i.redd.it/db4air5xx3gx.jpg',
+      isFeatured: true,
+      description:
+        "Made in small batches in a space station in a 90's video game",
       quantity: 1000
     })
   ])

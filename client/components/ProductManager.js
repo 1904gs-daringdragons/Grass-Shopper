@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import MaterialTable from 'material-table'
-import {addProductThunk, updateProductThunk, deleteProductThunk} from '../store'
+import {newProductThunk, updateProductThunk, deleteProductThunk} from '../store'
 import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
@@ -15,7 +15,8 @@ class ProductManager extends React.Component {
           {title: 'Name', field: 'name'},
           {title: 'Price', field: 'price', type: 'numeric'},
           {title: 'Quantity', field: 'quantity', type: 'numeric'},
-          {title: 'Description', field: 'description'}
+          {title: 'Description', field: 'description'},
+          {title: 'Featured', field: 'isFeatured', type: 'boolean'}
         ]}
         data={async query => {
           const res = await axios.get('/api/products')
@@ -42,6 +43,8 @@ class ProductManager extends React.Component {
           },
           onRowUpdate: async (newData, oldData) => {
             const {id} = oldData
+            console.log(newData)
+
             newData.price = parseInt(newData.price * 100, 10)
             this.props.updateProduct(id, newData)
           },
@@ -61,7 +64,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  addProduct: newData => dispatch(addProductThunk(newData)),
+  addProduct: newData => dispatch(newProductThunk(newData)),
   updateProduct: (pId, newData) => dispatch(updateProductThunk(pId, newData)),
   deleteProduct: pId => dispatch(deleteProductThunk(pId))
 })

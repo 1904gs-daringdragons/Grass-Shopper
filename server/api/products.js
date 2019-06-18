@@ -12,6 +12,15 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/featured', async (req, res, next) => {
+  try {
+    const products = await Product.findAll({where: {isFeatured: true}})
+    res.json(products)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:productId', async (req, res, next) => {
   try {
     const products = await Product.findByPk(req.params.productId)
@@ -39,8 +48,8 @@ router.put('/:productId', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
       const product = await Product.findByPk(req.params.productId)
-      const {name, price, imageUrl, description} = req.body
-      await product.update({name, price, imageUrl, description})
+      const {name, price, imageUrl, description, isFeatured} = req.body
+      await product.update({name, price, imageUrl, description, isFeatured})
       res.status(202).send()
     }
   } catch (err) {

@@ -26,8 +26,6 @@ router.put('/', async (req, res, next) => {
             quantity: qty,
             itemPrice: product.price
           })
-          const prodQuantity = product.quantity
-          await product.update({quantity: prodQuantity - qty})
           await lineItem.setOrder(order)
           await lineItem.setProduct(product)
         } else {

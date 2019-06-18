@@ -31,6 +31,14 @@ const Product = db.define('product', {
     validate: {
       min: 0
     }
+  },
+  isFeatured: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  featuredUrl: {
+    type: Sequelize.STRING,
+    defaultValue: 'https://i.redd.it/d5ddrvk3jex11.jpg'
   }
 })
 

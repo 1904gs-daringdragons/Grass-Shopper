@@ -1,86 +1,37 @@
 import React from 'react'
-// import ReactDOM from 'react-dom'
+import MailchimpSubscribe from 'react-mailchimp-subscribe'
 
-export default class MailingList extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: ''
-    }
-  }
+const url =
+  '//bestdev.us20.list-manage.com/subscribe/post?u=7521574872d7866bcaed65b75&amp;id=66dd997910'
 
-  onChange(e) {
-    var email = e.target.value
-    this.setState({email})
-  }
+// simplest form (only email)
+const SimpleForm = () => <MailchimpSubscribe url={url} />
 
-  render() {
-    return (
-      <div>
-        <div>
-          <form
-            action="https://bestdev.us20.list-manage.com/subscribe/post?u=7521574872d7866bcaed65b75&amp;id=66dd997910"
-            method="post"
-            id="mc-embedded-subscribe-form"
-            name="mc-embedded-subscribe-form"
-            className="validate"
-            target="_blank"
-            noValidate
-          >
-            <div>
-              <label htmlFor="mce-EMAIL" className="subHeader">
-                <h3>Subscribe to our mailing list to receive up to 20% OFF!</h3>
-              </label>
-              <br />
-              <div>
-                <input
-                  type="input"
-                  value={this.state.firstName}
-                  onChange={this.onChange}
-                  name="firstName"
-                  id="firstName"
-                  placeholder="First Name"
-                  required
-                />
-                <p />
-
-                <input
-                  type="input"
-                  value={this.state.lastName}
-                  onChange={this.onChange}
-                  name="lastName"
-                  id="lastName"
-                  placeholder="Last Name"
-                  required
-                />
-                <p />
-                <input
-                  type="input"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  name="EMAIL"
-                  className="email"
-                  id="mce-EMAIL"
-                  placeholder="email address"
-                  required
-                />
-              </div>
-              <p />
-              <div className="clear">
-                <input
-                  type="submit"
-                  value="Subscribe"
-                  name="subscribe"
-                  id="mc-embedded-subscribe"
-                  className="button"
-                />
-              </div>
-            </div>
-          </form>
+// use the render prop and your custom form
+const MailingList = () => (
+  <div>
+    <h2>Please subscribe to our mailing list to get up to 20% OFF!</h2>
+    <MailchimpSubscribe
+      url={url}
+      render={({subscribe, status, message}) => (
+        <div className="maillist">
+          <SimpleForm onSubmitted={formData => subscribe(formData)} />
+          {status === 'sending' && (
+            <div style={{color: 'blue'}}>sending...</div>
+          )}
+          {status === 'error' && (
+            <div
+              style={{color: 'red'}}
+              dangerouslySetInnerHTML={{__html: message}}
+            />
+          )}
+          {status === 'success' && (
+            <div style={{color: 'green'}}>Subscribed !</div>
+          )}
         </div>
-      </div>
-    )
-  }
-}
+      )}
+    />
+  </div>
+)
+
+export default MailingList
