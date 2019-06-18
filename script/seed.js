@@ -106,6 +106,14 @@ async function seed() {
       description:
         'This little pal snacks on cannabis leaves all day and thus will be a super chill buddy for you.',
       quantity: 123
+    }),
+    Product.create({
+      name: 'weed',
+      price: '550',
+      imageUrl:
+        'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
+      description: 'A specially made blend by Sunny',
+      quantity: 1000
     })
   ])
 
