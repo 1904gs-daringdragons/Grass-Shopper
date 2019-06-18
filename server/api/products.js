@@ -12,6 +12,15 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/featured', async (req, res, next) => {
+  try {
+    const products = await Product.findAll({where: {isFeatured: true}})
+    res.json(products)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:productId', async (req, res, next) => {
   try {
     const products = await Product.findByPk(req.params.productId)
