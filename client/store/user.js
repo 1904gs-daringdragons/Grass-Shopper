@@ -50,6 +50,21 @@ export const auth = (
   }
 
   try {
+    const {id} = res.data
+    let cart = localStorage.getItem('localCart')
+    if (cart) {
+      cart = JSON.parse(cart)
+      for (let product in cart) {
+        if (cart[product].id) {
+          await axios({
+            url: '/api/cart/',
+            method: 'PUT',
+            data: {userId: id, productId: product, qty: cart[product].quantity}
+          })
+        }
+      }
+    }
+    localStorage.setItem('localCart', {})
     dispatch(getUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
