@@ -133,7 +133,7 @@ export default function(cart = initCart, action) {
       localStorage.setItem('localCart', JSON.stringify(newCart))
       break
     case EMPTY_CART:
-      localStorage.setItem('localCart', {})
+      localStorage.setItem('localCart', '')
       return initCart
     case CHANGE_QUANTITY:
       newCart[action.productId] = {
