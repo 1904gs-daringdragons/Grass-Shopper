@@ -36,17 +36,6 @@ const ProductCard = props => {
           Add to Cart
         </Button>
       </CardContent>
-      {/* <CardActions style={{ display: 'flex', flexDirection: 'column' }}>
-				<TextField
-					label="Quantity"
-					id={`qty-${props.product.id}`}
-					type="number"
-					margin="normal"
-					defaultValue="1"
-					inputProps={{ min: '1', step: '1' }}
-				/>
-
-			</CardActions> */}
     </Card>
   )
 }
