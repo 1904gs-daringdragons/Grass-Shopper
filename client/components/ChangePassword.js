@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {changePassword} from './store/user'
+import {changePassword} from '../store/user'
 import TextField from '@material-ui/core/TextField'
 import FormGroup from '@material-ui/core/FormGroup'
 import Button from '@material-ui/core/Button'
@@ -49,7 +49,7 @@ class ChangePassword extends Component {
               id="formerPassword"
               // value={formerPassword}
               label="Current Password"
-              type="text"
+              type="password"
               name="formerPassword"
               onChange={this.props.handleChange}
               margin="normal"
@@ -60,7 +60,7 @@ class ChangePassword extends Component {
               id="newPassword"
               // value={newPassword}
               label="New Password"
-              type="text"
+              type="password"
               name="newPassword"
               onChange={this.props.handleChange}
               margin="normal"
@@ -71,7 +71,7 @@ class ChangePassword extends Component {
               id="confirmPassword"
               // value={confirmPassword}
               label="Confirm New Password"
-              type="text"
+              type="password"
               name="confirmPassword"
               onChange={this.props.handleChange}
               margin="normal"
