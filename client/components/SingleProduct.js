@@ -18,7 +18,7 @@ class SingleProduct extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop: '7%', display: 'flex', justifyContent: 'center'}}>
         <Card className="SinglePage">
           <CardMedia
             style={{height: 0, paddingTop: '56.25%'}}
@@ -48,7 +48,7 @@ class SingleProduct extends Component {
               }
               variant="contained"
             >
-              Add to Cart ;)
+              Add to Cart
             </Button>
             <TextField
               label="Quantity"
