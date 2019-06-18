@@ -19,41 +19,34 @@ const ProductCard = props => {
           title={props.product.name}
         />
       </Link>
-      <CardContent>
+      <CardContent
+        style={{display: 'flex', flexDirection: 'column', flexWrap: 'wrap'}}
+      >
         <Typography gutterBottom variant="h5" component="h2">
           {props.product.name}
         </Typography>
         <Typography component="p">$ {props.product.price / 100}</Typography>
-      </CardContent>
-      <CardActions>
-        <Link to={`/products/${props.product.id}`}>
-          <Button size="small" color="primary" variant="contained">
-            Product Details
-          </Button>
-        </Link>
         <Button
           size="small"
           color="primary"
-          onClick={() =>
-            addToCart(
-              props.product.id,
-              +document.getElementById(`qty-${props.product.id}`).value,
-              props.userId
-            )
-          }
+          onClick={() => addToCart(props.product.id, 1, props.userId)}
           variant="contained"
+          style={{alignSelf: 'flex-end'}}
         >
           Add to Cart
         </Button>
-        <TextField
-          label="Quantity"
-          id={`qty-${props.product.id}`}
-          type="number"
-          margin="normal"
-          defaultValue="1"
-          inputProps={{min: '1', step: '1'}}
-        />
-      </CardActions>
+      </CardContent>
+      {/* <CardActions style={{ display: 'flex', flexDirection: 'column' }}>
+				<TextField
+					label="Quantity"
+					id={`qty-${props.product.id}`}
+					type="number"
+					margin="normal"
+					defaultValue="1"
+					inputProps={{ min: '1', step: '1' }}
+				/>
+
+			</CardActions> */}
     </Card>
   )
 }
