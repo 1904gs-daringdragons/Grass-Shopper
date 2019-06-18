@@ -35,9 +35,17 @@ class DisconnectedProductList extends Component {
           <div id="products" className="container">
             <Grid container spacing={10} style={{padding: 24}}>
               <Grid item xs={12} container justify="center" alignItems="center">
-                <Paper>
+                <Paper
+                  style={{
+                    padding: 12,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
                   <Typography>Filter Products By Catagory:</Typography>
                   <Select
+                    style={{marginLeft: 12}}
                     value={this.state.filter}
                     onChange={this.handleChange}
                   >
