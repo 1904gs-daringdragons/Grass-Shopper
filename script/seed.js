@@ -114,6 +114,37 @@ async function seed() {
         'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
       description: 'A specially made blend by Sunny',
       quantity: 1000
+    }),
+    Product.create({
+      name: 'Purple Wizard',
+      price: '5050',
+      imageUrl:
+        'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
+      featuredUrl: '/toomuchpurple.jpeg',
+      isFeatured: true,
+      description: 'A specially made purple blend by Sunny',
+      quantity: 1000
+    }),
+    Product.create({
+      name: 'Crystal Palace',
+      price: '3400',
+      imageUrl:
+        'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
+      featuredUrl:
+        'https://media.npr.org/assets/img/2015/05/19/marijuana-promo_wide-3960c528d4a1a56cddb3d8602e7cd85da5a19bae-s900.jpg',
+      isFeatured: true,
+      description: 'A specially made purple blend by Sunny',
+      quantity: 1000
+    }),
+    Product.create({
+      name: 'Space Weed',
+      price: '99999999',
+      imageUrl:
+        'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
+      featuredUrl: 'https://i.redd.it/db4air5xx3gx.jpg',
+      isFeatured: true,
+      description: 'A specially made purple blend by Sunny',
+      quantity: 1000
     })
   ])
 
