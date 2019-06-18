@@ -48,8 +48,8 @@ router.put('/:productId', async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
       const product = await Product.findByPk(req.params.productId)
-      const {name, price, imageUrl, description} = req.body
-      await product.update({name, price, imageUrl, description})
+      const {name, price, imageUrl, description, isFeatured} = req.body
+      await product.update({name, price, imageUrl, description, isFeatured})
       res.status(202).send()
     }
   } catch (err) {

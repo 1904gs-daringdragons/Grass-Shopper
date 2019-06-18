@@ -37,7 +37,8 @@ const Product = db.define('product', {
     defaultValue: false
   },
   featuredUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'https://i.redd.it/d5ddrvk3jex11.jpg'
   }
 })
 

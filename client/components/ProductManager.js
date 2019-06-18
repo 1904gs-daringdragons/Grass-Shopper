@@ -15,7 +15,8 @@ class ProductManager extends React.Component {
           {title: 'Name', field: 'name'},
           {title: 'Price', field: 'price', type: 'numeric'},
           {title: 'Quantity', field: 'quantity', type: 'numeric'},
-          {title: 'Description', field: 'description'}
+          {title: 'Description', field: 'description'},
+          {title: 'Featured', field: 'isFeatured', type: 'boolean'}
         ]}
         data={async query => {
           const res = await axios.get('/api/products')
@@ -42,6 +43,8 @@ class ProductManager extends React.Component {
           },
           onRowUpdate: async (newData, oldData) => {
             const {id} = oldData
+            console.log(newData)
+
             newData.price = parseInt(newData.price * 100, 10)
             this.props.updateProduct(id, newData)
           },
