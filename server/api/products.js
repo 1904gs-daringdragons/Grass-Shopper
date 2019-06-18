@@ -104,7 +104,6 @@ router.put('/rec/:productId', async (req, res, next) => {
         defaults: {stars}
       })
       if (created) {
-        console.log(userRec)
         await userRec.setUser(uId)
         await userRec.setProduct(productId)
       } else await userRec.update({stars})

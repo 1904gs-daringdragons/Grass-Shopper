@@ -14,6 +14,7 @@ const ProductCard = props => {
   const {addToCart} = props
 
   const handleStarClick = nextValue => {
+    console.log('im here')
     props.updateRec(props.product.id, props.userId, nextValue)
   }
   return (
@@ -49,7 +50,7 @@ const ProductCard = props => {
         </Typography>
 
         <StarRatingComponent
-          name="stars"
+          name={props.product.stars + '-stars'}
           value={props.product.stars}
           style={{alignSelf: 'flex-end', width: '50%'}}
           editing={!!props.userId}
