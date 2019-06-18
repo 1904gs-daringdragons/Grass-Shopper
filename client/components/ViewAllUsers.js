@@ -22,10 +22,10 @@ class AllUsers extends React.Component {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">First Name</TableCell>
-                <TableCell align="right">Last Name</TableCell>
-                <TableCell align="right">User Level</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>First Name</TableCell>
+                <TableCell>Last Name</TableCell>
+                <TableCell>User Level</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -33,12 +33,10 @@ class AllUsers extends React.Component {
                 this.props.userList.map(user => {
                   return (
                     <TableRow key={user.id}>
-                      <TableCell align="right">{user.email}</TableCell>
-                      <TableCell align="right">{user.firstName}</TableCell>
-                      <TableCell align="right">{user.lastName}</TableCell>
-                      <TableCell align="right">
-                        {user.isAdmin ? 'Admin' : 'User'}
-                      </TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.firstName}</TableCell>
+                      <TableCell>{user.lastName}</TableCell>
+                      <TableCell>{user.isAdmin ? 'Admin' : 'User'}</TableCell>
                     </TableRow>
                   )
                 })

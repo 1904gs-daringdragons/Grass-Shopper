@@ -8,15 +8,16 @@ import ProductCarousel from './product-carousel'
 
 class DisconnectedProductList extends Component {
   componentDidMount() {
-    this.props.getAllProducts()
+    this.props.getAllProducts(this.props.user.id)
   }
+
   render() {
     if (this.props.products[0]) {
       return (
         <div>
           <ProductCarousel />
           <div id="products" className="container">
-            <Grid container spacing={10} style={{padding: 24}}>
+            <Grid container spacing={3} style={{padding: 40}}>
               {this.props.products.map(product => {
                 return (
                   <Grid key={product.id} item xs={12} sm={6} lg={4} xl={3}>
@@ -25,6 +26,7 @@ class DisconnectedProductList extends Component {
                         product={product}
                         addToCart={this.props.addToCart}
                         userId={this.props.user.id}
+                        handleClick={this.handleStarClick}
                       />
                     }
                   </Grid>
@@ -48,7 +50,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getAllProducts: () => dispatch(getProductsThunk()),
   addToCart: (id, qty, userId = 0) => {
-    // console.log(qty);
     dispatch(addProductThunk(id, qty, userId))
   }
 })
