@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import MaterialTable from 'material-table'
-import {addProductThunk, updateProductThunk, deleteProductThunk} from '../store'
+import {newProductThunk, updateProductThunk, deleteProductThunk} from '../store'
 import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
@@ -64,7 +64,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  addProduct: newData => dispatch(addProductThunk(newData)),
+  addProduct: newData => dispatch(newProductThunk(newData)),
   updateProduct: (pId, newData) => dispatch(updateProductThunk(pId, newData)),
   deleteProduct: pId => dispatch(deleteProductThunk(pId))
 })

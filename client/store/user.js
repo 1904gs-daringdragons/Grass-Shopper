@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-
+import {userListThunk} from './userList'
 /**
  * ACTION TYPES
  */
@@ -50,6 +50,22 @@ export const auth = (
   }
 
   try {
+    const {id} = res.data
+    let cart = localStorage.getItem('localCart')
+    console.log(cart)
+    if (cart) {
+      cart = JSON.parse(cart)
+      for (let product in cart) {
+        if (cart[product].id) {
+          await axios({
+            url: '/api/cart/',
+            method: 'PUT',
+            data: {userId: id, productId: product, qty: cart[product].quantity}
+          })
+        }
+      }
+    }
+    localStorage.setItem('localCart', '')
     dispatch(getUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
@@ -72,6 +88,19 @@ export const editUserInfo = user => async dispatch => {
     const res = await axios.put(`/api/users/${user.id}/userInfo`, user)
     const returnedUser = res.data
     dispatch(updateUser(returnedUser))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const editUserAdminStatus = (id, isAdmin) => async dispatch => {
+  try {
+    const res = await axios({
+      url: `/api/users/${id}/admin`,
+      method: 'PUT',
+      data: {isAdmin}
+    })
+    dispatch(userListThunk())
   } catch (err) {
     console.error(err)
   }
