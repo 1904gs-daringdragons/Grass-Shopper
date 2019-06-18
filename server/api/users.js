@@ -43,7 +43,7 @@ router.put('/:id/userInfo', async (req, res, next) => {
   }
 })
 
-router.put('/:id/pc', async (req, res, next) => {
+router.put('/:id/password', async (req, res, next) => {
   try {
     // Take the id from the request parameters and
     // the old/new passwords from the body, then

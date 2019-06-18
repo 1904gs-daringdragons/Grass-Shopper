@@ -8,30 +8,32 @@ import Button from '@material-ui/core/Button'
 class ChangePassword extends Component {
   constructor(props) {
     super(props)
-    const userId = this.props.user.id
+    const user = this.props.user
     this.state = {
-      userId,
+      user,
       formerPassword: '',
-      newPassword: '',
-      confirmPassword: ''
+      newPassword: ''
     }
   }
 
   componentDidMount = async () => {
     const user = await this.props.user
-    const userId = user.id
-    this.setState({userId})
+    // const userId = user.id
+    this.setState({...user})
   }
 
   handleChange = event => {
+    console.log('handleChange was triggered')
     this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit = async event => {
     event.preventDefault()
+    console.log('handleSubmit was triggered')
     if (this.state.newPassword === this.state.confirmPassword) {
+      console.log('the two new passwords input match')
       await this.props.changePassword(
-        this.state.userId,
+        this.state.user,
         this.state.formerPassword,
         this.state.newPassword
       )
@@ -42,7 +44,7 @@ class ChangePassword extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <FormGroup>
             <TextField
               required
@@ -51,7 +53,7 @@ class ChangePassword extends Component {
               label="Current Password"
               type="password"
               name="formerPassword"
-              onChange={this.props.handleChange}
+              onChange={this.handleChange}
               margin="normal"
               variant="outlined"
             />
@@ -62,7 +64,7 @@ class ChangePassword extends Component {
               label="New Password"
               type="password"
               name="newPassword"
-              onChange={this.props.handleChange}
+              onChange={this.handleChange}
               margin="normal"
               variant="outlined"
             />
@@ -73,7 +75,7 @@ class ChangePassword extends Component {
               label="Confirm New Password"
               type="password"
               name="confirmPassword"
-              onChange={this.props.handleChange}
+              onChange={this.handleChange}
               margin="normal"
               variant="outlined"
             />
