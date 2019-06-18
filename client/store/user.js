@@ -83,10 +83,10 @@ export const changePassword = (
   newPassword
 ) => async dispatch => {
   try {
-    const res = await axios.put(
-      `api/users/${user.id}/pc`,
-      (formerPassword, newPassword)
-    )
+    const res = await axios.put(`api/users/${user.id}/pc`, {
+      formerPassword,
+      newPassword
+    })
     const returnedUser = res.data
     dispatch(updateUser(returnedUser))
   } catch (error) {
