@@ -39,7 +39,7 @@ export const addProductThunk = (productId, qty = 1, userId) => {
           data: {userId, productId, qty}
         })
       }
-      await dispatch(addProduct(product.data, qty))
+      dispatch(addProduct(product.data, qty))
       dispatch(getCartThunk(userId))
     } catch (error) {
       //Error Handling
@@ -125,13 +125,7 @@ export default function(cart = initCart, action) {
   const newCart = JSON.parse(JSON.stringify(cart)) // this a deep clone in the CURRENT CASE --- refactor if we add depth!!!
   switch (action.type) {
     case ADD_TO_CART:
-      if (newCart[action.product.id]) {
-        newCart[action.product.id].quantity += action.qty
-      } else {
-        const {price} = action.product
-        action.product.price = price
-        newCart[action.product.id] = {...action.product, quantity: action.qty}
-      }
+      newCart[action.product.id] = {...action.product, quantity: action.qty}
       localStorage.setItem('localCart', JSON.stringify(newCart))
       break
     case DELETE_FROM_CART:
