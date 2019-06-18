@@ -8,18 +8,15 @@ import Button from '@material-ui/core/Button'
 class ChangePassword extends Component {
   constructor(props) {
     super(props)
-    const user = this.props.user
     this.state = {
-      user,
+      userId: '',
       formerPassword: '',
       newPassword: ''
     }
   }
 
-  componentDidMount = async () => {
-    const user = await this.props.user
-    // const userId = user.id
-    this.setState({...user})
+  componentDidMount = () => {
+    this.setState({userId: this.props.userId})
   }
 
   handleChange = event => {
@@ -27,13 +24,13 @@ class ChangePassword extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  handleSubmit = async event => {
+  handleSubmit = event => {
     event.preventDefault()
     console.log('handleSubmit was triggered')
     if (this.state.newPassword === this.state.confirmPassword) {
       console.log('the two new passwords input match')
-      await this.props.changePassword(
-        this.state.user,
+      this.props.changePassword(
+        this.state.userId,
         this.state.formerPassword,
         this.state.newPassword
       )
@@ -49,7 +46,7 @@ class ChangePassword extends Component {
             <TextField
               required
               id="formerPassword"
-              // value={formerPassword}
+              value={this.state.formerPassword}
               label="Current Password"
               type="password"
               name="formerPassword"
@@ -60,7 +57,7 @@ class ChangePassword extends Component {
             <TextField
               required
               id="newPassword"
-              // value={newPassword}
+              value={this.state.newPassword}
               label="New Password"
               type="password"
               name="newPassword"
@@ -71,7 +68,7 @@ class ChangePassword extends Component {
             <TextField
               required
               id="confirmPassword"
-              // value={confirmPassword}
+              value={this.state.confirmPassword}
               label="Confirm New Password"
               type="password"
               name="confirmPassword"
@@ -89,11 +86,11 @@ class ChangePassword extends Component {
   }
 }
 
-const mapStateToProps = state => ({user: state.user})
+const mapStateToProps = state => ({userId: state.user.id})
 
 const mapDispatchToProps = dispatch => ({
-  changePassword: (user, formerPassword, newPassword) =>
-    dispatch(changePassword(user, formerPassword, newPassword))
+  changePassword: (userId, formerPassword, newPassword) =>
+    dispatch(changePassword(userId, formerPassword, newPassword))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword)
