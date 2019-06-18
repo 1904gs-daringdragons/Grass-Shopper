@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import {userListThunk} from './'
+import {userListThunk} from './userList'
 /**
  * ACTION TYPES
  */

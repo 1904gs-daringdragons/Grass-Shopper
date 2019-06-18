@@ -52,7 +52,7 @@ export const getOneProductThunk = pId => async dispatch => {
   }
 }
 
-export const addProductThunk = newData => async dispatch => {
+export const newProductThunk = newData => async dispatch => {
   try {
     await axios({
       url: `/api/products`,
