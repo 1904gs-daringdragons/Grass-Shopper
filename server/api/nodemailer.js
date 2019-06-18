@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer')
 
 const transporter = nodemailer.createTransport({
   host: 'email.com',
+  maxConnections: 1,
   port: 587,
   secure: false, // true for 465, false for other ports
   auth: {
