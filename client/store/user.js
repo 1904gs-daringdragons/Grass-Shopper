@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-
+import {userListThunk} from './'
 /**
  * ACTION TYPES
  */
@@ -72,6 +72,19 @@ export const editUserInfo = user => async dispatch => {
     const res = await axios.put(`/api/users/${user.id}/userInfo`, user)
     const returnedUser = res.data
     dispatch(updateUser(returnedUser))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const editUserAdminStatus = (id, isAdmin) => async dispatch => {
+  try {
+    const res = await axios({
+      url: `/api/users/${id}/admin`,
+      method: 'PUT',
+      data: {isAdmin}
+    })
+    dispatch(userListThunk())
   } catch (err) {
     console.error(err)
   }
