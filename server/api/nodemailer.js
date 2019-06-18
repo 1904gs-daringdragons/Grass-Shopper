@@ -1,18 +1,18 @@
 'use strict'
 const nodemailer = require('nodemailer')
 
+const transporter = nodemailer.createTransport({
+  host: 'email.com',
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASSWORD
+  }
+})
 // async..await is not allowed in global scope, must use a wrapper
 async function main(recipientEmail, message) {
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: 'email',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.EMAIL_ADDRESS,
-      pass: process.env.EMAIL_PASSWORD
-    }
-  })
 
   let templates = {
     welcome: {
