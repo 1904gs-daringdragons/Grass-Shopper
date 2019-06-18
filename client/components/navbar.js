@@ -259,7 +259,7 @@ function Navbar(props) {
             <IconButton
               aria-label="Go To Cart"
               color="inherit"
-              onClick={toggleCartDrawer(true)}
+              onClick={toggleCartDrawer(!state.cartDrawer)}
             >
               <Badge
                 badgeContent={Object.values(props.cart).reduce(

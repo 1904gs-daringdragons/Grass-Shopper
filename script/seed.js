@@ -35,7 +35,8 @@ async function seed() {
       price: 6525,
       imageUrl:
         'https://cdn.psychologytoday.com/sites/default/files/styles/thumbnail/public/field_blog_entry_images/Cannabis_Plant%20052216%20033117.jpg?itok=Jxlt9yKX&cache=oi7cwb',
-      description: 'It has a great smell and is known all around the world.'
+      description: 'It has a great smell and is known all around the world.',
+      quantity: 239
     }),
     Product.create({
       name: 'Sour Diesel',
@@ -43,7 +44,8 @@ async function seed() {
       imageUrl:
         'https://zenpype.com/wp-content/uploads/2018/10/recreational-cannabis1-192x192.jpg',
       description:
-        'Favorite of hollywood heart-throb Vin Diesel, this herb does have a somewhat sour taste, but it is not intended to be eaten as is.'
+        'Favorite of hollywood heart-throb Vin Diesel, this herb does have a somewhat sour taste, but it is not intended to be eaten as is.',
+      quantity: 123
     }),
     Product.create({
       name: 'Cannabis Seeds',
@@ -51,7 +53,8 @@ async function seed() {
       imageUrl:
         'https://blog.seedsman.com/wp-content/uploads/2016/08/cannabis-seeds-150x150.jpg',
       description:
-        'Grow your own stuff (where legal) with this uncurated baggie of seeds. Name your own strain and hope for females!'
+        'Grow your own stuff (where legal) with this uncurated baggie of seeds. Name your own strain and hope for females!',
+      quantity: 2383
     }),
     Product.create({
       name: "Chong's Choice THC Strips",
@@ -59,28 +62,32 @@ async function seed() {
       imageUrl:
         'http://chongschoice.com/wp-content/uploads/2016/04/WEB_PRODUCTS_THC_STRIP_SQUARE-300x300.jpg',
       description:
-        'Brought to us by legendary stoner, entertainer, and activist Tommy Chong, these strips are taken orally and dissolve to deliver 40mg of THC quickly.'
+        'Brought to us by legendary stoner, entertainer, and activist Tommy Chong, these strips are taken orally and dissolve to deliver 40mg of THC quickly.',
+      quantity: 12342
     }),
     Product.create({
       name: 'Weed Pills',
       price: 99,
       imageUrl:
         'https://honestmarijuana.com/wp-content/uploads/2015/11/THC-Pills_7.jpg',
-      description: 'The modern triumph of Big Pharma.'
+      description: 'The modern triumph of Big Pharma.',
+      quantity: 10
     }),
     Product.create({
       name: 'Glass Bowl',
       price: 125,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/31XQeDNFlOL._SL500_AC_SS350_.jpg',
-      description: "This bowl is perfect for tokin' buds."
+      description: "This bowl is perfect for tokin' buds.",
+      quantity: 90
     }),
     Product.create({
       name: 'Ditch Weed',
       price: 1,
       imageUrl:
         'http://3dsmolier.com/media/cache/27/67/27675a2e615569f7cbf50b5d263d753f.jpg',
-      description: 'A very affordable cannabis product. Worth every penny.'
+      description: 'A very affordable cannabis product. Worth every penny.',
+      quantity: 1543
     }),
     Product.create({
       name: 'Cosmic Brownies 12-pack',
@@ -88,7 +95,8 @@ async function seed() {
       imageUrl:
         'https://lifemadesimplebakes.com/wp-content/uploads/2014/03/cosmic-brownies-150x150.jpg',
       description:
-        'These brownies are out of this world! They are not psychoactive; please stop asking.'
+        'These brownies are out of this world! They are not psychoactive; please stop asking.',
+      quantity: 123
     }),
     Product.create({
       name: 'Pet Caterpillar',
@@ -96,7 +104,8 @@ async function seed() {
       imageUrl:
         'https://s3-us-west-2.amazonaws.com/maven-user-photos/theweedblog/growing/j42BVlIoHUKAYygyplotlQ/RVlG9C2GV0eaUijtrdNymA',
       description:
-        'This little pal snacks on cannabis leaves all day and thus will be a super chill buddy for you.'
+        'This little pal snacks on cannabis leaves all day and thus will be a super chill buddy for you.',
+      quantity: 123
     })
   ])
 

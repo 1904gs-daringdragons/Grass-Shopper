@@ -118,7 +118,7 @@ function SpanningTable(props) {
                         id={`${row.id}`}
                         type="number"
                         margin="normal"
-                        defaultValue={`${row.quantity}`}
+                        value={`${row.quantity}`}
                         inputProps={{min: '1', step: '1'}}
                         onChange={handleChange}
                       />

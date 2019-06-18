@@ -25,21 +25,23 @@ export const getCart = cart => {
   return {type: GET_CART, cart}
 }
 
-export const addProductThunk = (productId, qty, userId) => {
+export const addProductThunk = (productId, qty = 1, userId) => {
   return async (dispatch, getState) => {
     try {
       const product = await axios.get(`/api/products/${productId}`)
-      let quantity = 1
       if (getState().cart[productId])
-        quantity = getState().cart[productId].quantity + qty
+        qty = getState().cart[productId].quantity + qty
+      qty = Math.min(product.data.quantity, qty)
+      console.log(qty)
       if (userId) {
         await axios({
           url: '/api/cart/',
           method: 'PUT',
-          data: {userId, productId, quantity}
+          data: {userId, productId, qty}
         })
       }
-      dispatch(addProduct(product.data, qty))
+      await dispatch(addProduct(product.data, qty))
+      dispatch(getCartThunk(userId))
     } catch (error) {
       //Error Handling
       console.log(error)
@@ -100,6 +102,12 @@ export const removeProductThunk = (userId, productId) => {
 export const changeQuantityThunk = (userId, productId, qty) => {
   return async dispatch => {
     try {
+      const product = await axios({
+        url: `/api/products/${productId}`,
+        method: 'GET'
+      })
+      qty = Math.min(product.data.quantity, qty)
+      console.log(qty)
       if (userId) {
         await axios({
           url: `/api/cart/${productId}`,
@@ -108,6 +116,7 @@ export const changeQuantityThunk = (userId, productId, qty) => {
         })
       }
       dispatch(changeQuantity(productId, qty))
+      dispatch(getCartThunk(userId))
     } catch (error) {
       console.log(error)
     }
