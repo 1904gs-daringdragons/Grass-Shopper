@@ -59,11 +59,6 @@ const Order = db.define('order', {
     // validate: {
     // 	notEmpty: true
     // }
-  },
-  isGuest: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true,
-    allowNull: false
   }
 })
 
