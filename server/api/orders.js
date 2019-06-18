@@ -62,7 +62,11 @@ router.post('/', async (req, res, next) => {
           orderStatus: 'CREATED',
           ...shippingAndBilling
         })
-        await mailer(req.user.email, 'order').catch(console.error)
+        try {
+          await mailer(req.user.email, 'order')
+        } catch (error) {
+          console.error(error)
+        }
         res.status(204).send()
       } else {
         res.status(403).send('ACCESS DENIED')
@@ -72,6 +76,12 @@ router.post('/', async (req, res, next) => {
         ...shippingAndBilling
       })
       await generateLineItems(newOrder, cart)
+      try {
+        await mailer(confirmationEmail, 'order')
+      } catch (error) {
+        console.error(error)
+      }
+
       res.status(204).send()
     }
   } catch (error) {
