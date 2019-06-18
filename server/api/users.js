@@ -75,3 +75,26 @@ router.put('/:id/password', async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:id/admin', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    if (+req.user.id === +id || req.user.isAdmin) {
+      const {isAdmin} = req.body
+
+      const [, editedUser] = await User.update(
+        {isAdmin},
+        {
+          returning: true,
+          where: {id},
+          individualHooks: true
+        }
+      )
+      res.status(200).send()
+    } else {
+      res.status(403).send('NO')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
