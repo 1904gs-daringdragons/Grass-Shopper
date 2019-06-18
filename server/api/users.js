@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 router.put('/:id/userInfo', async (req, res, next) => {
   try {
     const {id} = req.params
-    if (req.user.id === id || req.user.isAdmin) {
+    if (+req.user.id === +id || req.user.isAdmin) {
       const {firstName, lastName, email} = req.body
 
       const [, editedUser] = await User.update(
@@ -57,7 +57,7 @@ router.put('/:id/password', async (req, res, next) => {
     if (user.correctPassword(formerPassword)) {
       // Then update the user's password and
       // return the user
-      const editedUser = await User.update(
+      const [, editedUser] = await User.update(
         {
           password: newPassword
         },
@@ -67,7 +67,7 @@ router.put('/:id/password', async (req, res, next) => {
           individualHooks: true
         }
       )
-      res.json(editedUser[1][0])
+      res.json(editedUser[0])
     } else {
       res.status(401).send('Unauthorized')
     }

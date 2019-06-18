@@ -89,7 +89,7 @@ export const changePassword = (
       newPassword
     })
     // const returnedUser = res.data
-    dispatch(updateUser(res))
+    dispatch(updateUser(res.data))
   } catch (error) {
     console.error(error)
   }

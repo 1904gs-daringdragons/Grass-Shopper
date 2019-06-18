@@ -34,7 +34,7 @@ class ChangePassword extends Component {
         this.state.formerPassword,
         this.state.newPassword
       )
-      this.props.history.push(`/accounts`)
+      this.props.history.push(`/home`)
     }
   }
 
