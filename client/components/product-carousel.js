@@ -21,7 +21,7 @@ class ProductCarousel extends React.Component {
           wrapAround={true}
         >
           {featured[0]
-            ? featured.map(p => <FeaturedCard product={p} />)
+            ? featured.map(p => <FeaturedCard key={p.id} product={p} />)
             : [].map(p => <FeaturedCard product={p} />)}
         </Carousel>
       </div>
