@@ -84,7 +84,7 @@ export const changePassword = (
 ) => async dispatch => {
   try {
     const res = await axios.put(
-      `api/users/${user.id}/userInfo/pc`,
+      `api/users/${user.id}/pc`,
       (formerPassword, newPassword)
     )
     const returnedUser = res.data
