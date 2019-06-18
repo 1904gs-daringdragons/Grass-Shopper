@@ -36,7 +36,8 @@ async function seed() {
       imageUrl:
         'https://cdn.psychologytoday.com/sites/default/files/styles/thumbnail/public/field_blog_entry_images/Cannabis_Plant%20052216%20033117.jpg?itok=Jxlt9yKX&cache=oi7cwb',
       description: 'It has a great smell and is known all around the world.',
-      quantity: 239
+      quantity: 239,
+      catagory: 'Loose Leaf'
     }),
     Product.create({
       name: 'Sour Diesel',
@@ -45,7 +46,8 @@ async function seed() {
         'https://zenpype.com/wp-content/uploads/2018/10/recreational-cannabis1-192x192.jpg',
       description:
         'Favorite of hollywood heart-throb Vin Diesel, this herb does have a somewhat sour taste, but it is not intended to be eaten as is.',
-      quantity: 123
+      quantity: 123,
+      catagory: 'Loose Leaf'
     }),
     Product.create({
       name: 'Cannabis Seeds',
@@ -79,7 +81,8 @@ async function seed() {
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/31XQeDNFlOL._SL500_AC_SS350_.jpg',
       description: "This bowl is perfect for tokin' buds.",
-      quantity: 90
+      quantity: 90,
+      catagory: 'Paraphenalia'
     }),
     Product.create({
       name: 'Ditch Weed',
@@ -87,7 +90,8 @@ async function seed() {
       imageUrl:
         'http://3dsmolier.com/media/cache/27/67/27675a2e615569f7cbf50b5d263d753f.jpg',
       description: 'A very affordable cannabis product. Worth every penny.',
-      quantity: 1543
+      quantity: 1543,
+      catagory: 'Vacuum Packed'
     }),
     Product.create({
       name: 'Cosmic Brownies 12-pack',
@@ -96,7 +100,8 @@ async function seed() {
         'https://lifemadesimplebakes.com/wp-content/uploads/2014/03/cosmic-brownies-150x150.jpg',
       description:
         'These brownies are out of this world! They are not psychoactive; please stop asking.',
-      quantity: 123
+      quantity: 123,
+      catagory: 'Edible'
     }),
     Product.create({
       name: 'Pet Caterpillar',
@@ -113,7 +118,8 @@ async function seed() {
       imageUrl:
         'https://hightimes.com/wp-content/uploads/2018/07/how-grind-weed-without-grinder-featured.jpg',
       description: 'A delicious strain made by Sunny',
-      quantity: 1000
+      quantity: 1000,
+      catagory: 'Loose Leaf'
     }),
     Product.create({
       name: 'Purple Wizard',
@@ -124,7 +130,8 @@ async function seed() {
         'https://www.rubytreefilms.com/wp-content/themes/evermore/lib/utils/timthumb.php?src=http://www.rubytreefilms.com/wp-content/uploads/2017/10/HighHopes_04-Cannabis-Leaves-and-Buds-RES.jpg&h=500&w=920&zc=1&c=1&q=100&a=c',
       isFeatured: true,
       description: 'A specially made purple blend by Nick',
-      quantity: 1000
+      quantity: 1000,
+      catagory: 'Loose Leaf'
     }),
     Product.create({
       name: 'Crystal Palace',
@@ -135,7 +142,8 @@ async function seed() {
         'https://media.npr.org/assets/img/2015/05/19/marijuana-promo_wide-3960c528d4a1a56cddb3d8602e7cd85da5a19bae-s900.jpg',
       isFeatured: true,
       description: 'Made with shards of real crystal',
-      quantity: 1000
+      quantity: 1000,
+      catagory: 'Vacuum Packed'
     }),
     Product.create({
       name: 'Space Weed',
@@ -145,7 +153,8 @@ async function seed() {
       isFeatured: true,
       description:
         "Made in small batches in a space station in a 90's video game",
-      quantity: 1000
+      quantity: 1000,
+      catagory: 'Vacuum Packed'
     })
   ])
 
