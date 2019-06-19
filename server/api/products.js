@@ -44,7 +44,31 @@ router.get('/featured', async (req, res, next) => {
 
 router.get('/:productId', async (req, res, next) => {
   try {
-    const products = await Product.findByPk(req.params.productId)
+    const userId = req.query.userId ? req.query.userId : 0
+    const productObj = await db.query(
+      String.raw`
+      SELECT avg.id, avg.name, avg.price, avg."imageUrl", avg.description, avg.quantity, avg."isFeatured", avg."featuredUrl",
+      avg."createdAt", avg."updatedAt",
+      CAST(case when singleUser."userId" is null then avg.avg else singleUser.stars end AS INT) as stars
+      FROM
+      (
+      SELECT P.*, AVG(R.stars)
+      FROM PRODUCTS P
+      LEFT JOIN RECOMMENDATIONS R
+      ON P.id = R."productId"
+      WHERE P.id = ${req.params.productId}
+      GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl"
+      ) avg
+      LEFT JOIN
+      (
+      SELECT "productId" As pId, "userId", stars
+      FROM RECOMMENDATIONS
+      WHERE "userId" = ${userId}
+      ) singleUser
+      ON singleUser.pId = avg.id`
+    )
+    const products = productObj[0][0]
+    console.log(products)
     res.json(products)
   } catch (err) {
     next(err)

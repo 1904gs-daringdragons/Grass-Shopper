@@ -1,22 +1,15 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {Link} from 'react-router-dom'
 import StarRatingComponent from 'react-star-rating-component'
-import {updateRatingThunk} from '../store/product'
 
 const ProductCard = props => {
   const {addToCart} = props
 
-  const handleStarClick = nextValue => {
-    console.log('im here')
-    props.updateRec(props.product.id, props.userId, nextValue)
-  }
   return (
     <Card>
       <Link to={`/products/${props.product.id}`}>
@@ -53,18 +46,11 @@ const ProductCard = props => {
           name={props.product.stars + '-stars'}
           value={props.product.stars}
           style={{alignSelf: 'flex-end', width: '50%'}}
-          editing={!!props.userId}
-          onStarClick={handleStarClick}
+          editing={false}
         />
       </CardContent>
     </Card>
   )
 }
 
-const mapDispatch = dispatch => ({
-  updateRec: (pId, uId, stars) => {
-    dispatch(updateRatingThunk(pId, uId, stars))
-  }
-})
-
-export default connect(null, mapDispatch)(ProductCard)
+export default ProductCard

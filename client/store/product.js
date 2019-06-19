@@ -48,9 +48,11 @@ export const getFeaturedThunk = () => async dispatch => {
 
 export const getOneProductThunk = pId => async dispatch => {
   try {
-    const res = await axios.get(`/api/products/${pId}`)
-    console.log('thunk' + res.data)
-    dispatch(getOneProduct(res.data))
+    const res = await axios.get('/auth/me')
+    let userId = res.data.id || 0
+    if (!userId) userId = 0
+    const prodRes = await axios.get(`/api/products/${pId}/?userId=${userId}`)
+    dispatch(getOneProduct(prodRes.data))
   } catch (error) {
     console.error(error)
   }
@@ -103,6 +105,8 @@ export const updateRatingThunk = (pId, uId, stars) => async dispatch => {
     })
     const res = await axios.get(`/api/products/?userId=${uId}`)
     dispatch(getProducts(res.data))
+    const prodRes = await axios.get(`/api/products/${pId}/?userId=${uId}`)
+    dispatch(getOneProduct(prodRes.data))
   } catch (error) {
     console.log(error)
   }
