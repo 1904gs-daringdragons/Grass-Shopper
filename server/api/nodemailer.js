@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer')
 
 // async..await is not allowed in global scope, must use a wrapper
-async function main(recipientEmail, message) {
+async function main(recipientEmail, message, customerName, someData = null) {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     // maxConnections: 1,
@@ -16,14 +16,14 @@ async function main(recipientEmail, message) {
   })
   let templates = {
     welcome: {
-      emailSubject: 'Welcome to Grass Shopper!',
+      emailSubject: `Welcome to Grass Shopper, ${customerName}!`,
       emailBody:
         "Thank you for logging into Grass Shopper: The world's most complete cannabis purchasing application! Have a look around and prepare to recieve this message often!"
     },
     order: {
       emailSubject: 'An Order has been Placed',
-      emailBody:
-        'Hi! An order has been placed on Grass Shopper. No funds have been charged.'
+      emailBody: `Hi ${customerName}! An order has been placed on Grass Shopper. Congratulations!
+        No funds have been charged, but your order contains ${someData}.`
     }
   }
 
@@ -38,7 +38,14 @@ async function main(recipientEmail, message) {
     text: emailBody // plain text body
   })
 
-  console.log(info)
+  console.log(
+    'Email: ',
+    message,
+    'sent to: ',
+    info.accepted,
+    'result: ',
+    info.response
+  )
 }
 
 module.exports = main

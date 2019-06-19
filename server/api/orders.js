@@ -63,7 +63,12 @@ router.post('/', async (req, res, next) => {
           ...shippingAndBilling
         })
         try {
-          await mailer(req.user.email, 'order')
+          await mailer(
+            req.user.email,
+            'order',
+            recipientName,
+            JSON.stringify(cart)
+          )
         } catch (error) {
           console.error(error)
         }
@@ -77,7 +82,12 @@ router.post('/', async (req, res, next) => {
       })
       await generateLineItems(newOrder, cart)
       try {
-        await mailer(confirmationEmail, 'order')
+        await mailer(
+          confirmationEmail,
+          'order',
+          recipientName,
+          JSON.stringify(cart)
+        )
       } catch (error) {
         console.error(error)
       }

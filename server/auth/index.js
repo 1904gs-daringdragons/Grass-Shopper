@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const mailer = require('../api/nodemailer')
+
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -28,6 +30,7 @@ router.post('/signup', async (req, res, next) => {
       lastName: req.body.lastName
     })
     req.login(user, err => (err ? next(err) : res.json(user)))
+    await mailer(req.body.email, 'welcome', req.body.firstName)
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       res.status(401).send('User already exists')
