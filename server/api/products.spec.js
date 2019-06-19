@@ -36,7 +36,7 @@ describe('Product routes', () => {
       expect(res.body).to.be.an('array')
       expect(res.body[0].name).to.be.equal(sunnyName)
     })
-    xit(`GET /api/products/1`, async () => {
+    it(`GET /api/products/1`, async () => {
       const res = await request(app)
         .get(`/api/products/1/?userId=${0}`)
         .expect(200)

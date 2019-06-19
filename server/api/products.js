@@ -48,7 +48,7 @@ router.get('/:productId', async (req, res, next) => {
     const productObj = await db.query(
       String.raw`
       SELECT avg.id, avg.name, avg.price, avg."imageUrl", avg.description, avg.quantity, avg."isFeatured", avg."featuredUrl",
-      avg."createdAt", avg."updatedAt", avg.catagory
+      avg."createdAt", avg."updatedAt", avg.catagory,
       CAST(case when singleUser."userId" is null then avg.avg else singleUser.stars end AS INT) as stars
       FROM
       (
