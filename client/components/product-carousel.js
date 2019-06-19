@@ -11,7 +11,6 @@ class ProductCarousel extends React.Component {
 
   render() {
     const {featured} = this.props
-    console.log(featured)
     return (
       <div style={{width: '80%', margin: 'auto'}}>
         <Carousel

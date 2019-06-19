@@ -7,6 +7,7 @@ import {awaitExpression} from '@babel/types'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_ONE_PRODUCT = 'GET_ONE_PRODUCT'
 const GET_FEATURED = 'GET_FEATURED'
+const UPDATE_RATING = 'UPDATE_RATING'
 /**
  * INITIAL STATE
  */
@@ -26,8 +27,11 @@ const getFeatured = featuredProducts => ({type: GET_FEATURED, featuredProducts})
  */
 export const getProductsThunk = () => async dispatch => {
   try {
-    const res = await axios.get('/api/products')
-    dispatch(getProducts(res.data))
+    const res = await axios.get('/auth/me')
+    let userId = res.data.id || 0
+    if (!userId) userId = 0
+    const prodRes = await axios.get(`/api/products/?userId=${userId}`)
+    dispatch(getProducts(prodRes.data))
   } catch (err) {
     console.error(err)
   }
@@ -44,9 +48,11 @@ export const getFeaturedThunk = () => async dispatch => {
 
 export const getOneProductThunk = pId => async dispatch => {
   try {
-    const res = await axios.get(`/api/products/${pId}`)
-    console.log('thunk' + res.data)
-    dispatch(getOneProduct(res.data))
+    const res = await axios.get('/auth/me')
+    let userId = res.data.id || 0
+    if (!userId) userId = 0
+    const prodRes = await axios.get(`/api/products/${pId}/?userId=${userId}`)
+    dispatch(getOneProduct(prodRes.data))
   } catch (error) {
     console.error(error)
   }
@@ -85,6 +91,22 @@ export const deleteProductThunk = pId => async dispatch => {
     await axios.delete(`/api/products/${pId}`)
     const res = await axios.get('/api/products')
     dispatch(getProducts(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateRatingThunk = (pId, uId, stars) => async dispatch => {
+  try {
+    await axios({
+      url: `/api/products/rec/${pId}`,
+      method: 'PUT',
+      data: {uId, stars}
+    })
+    const res = await axios.get(`/api/products/?userId=${uId}`)
+    dispatch(getProducts(res.data))
+    const prodRes = await axios.get(`/api/products/${pId}/?userId=${uId}`)
+    dispatch(getOneProduct(prodRes.data))
   } catch (error) {
     console.log(error)
   }
