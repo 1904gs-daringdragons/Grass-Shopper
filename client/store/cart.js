@@ -25,29 +25,6 @@ export const getCart = cart => {
   return {type: GET_CART, cart}
 }
 
-export const addProductThunk = (productId, qty = 1, userId) => {
-  return async (dispatch, getState) => {
-    try {
-      const product = await axios.get(`/api/products/${productId}`)
-      if (getState().cart[productId])
-        qty = getState().cart[productId].quantity + qty
-      qty = Math.min(product.data.quantity, qty)
-      if (userId) {
-        await axios({
-          url: '/api/cart/',
-          method: 'PUT',
-          data: {userId, productId, qty}
-        })
-      }
-      dispatch(addProduct(product.data, qty))
-      dispatch(getCartThunk(userId))
-    } catch (error) {
-      //Error Handling
-      console.log(error)
-    }
-  }
-}
-
 export const submitOrderThunk = order => {
   return async dispatch => {
     try {
@@ -71,6 +48,29 @@ export const getCartThunk = userId => {
       }
       dispatch(getCart(cart))
     } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addProductThunk = (productId, qty = 1, userId) => {
+  return async (dispatch, getState) => {
+    try {
+      const product = await axios.get(`/api/products/${productId}`)
+      if (getState().cart[productId])
+        qty = getState().cart[productId].quantity + qty
+      qty = Math.min(product.data.quantity, qty)
+      if (userId) {
+        await axios({
+          url: '/api/cart/',
+          method: 'PUT',
+          data: {userId, productId, qty}
+        })
+      }
+      dispatch(addProduct(product.data, qty))
+      dispatch(getCartThunk(userId))
+    } catch (error) {
+      //Error Handling
       console.log(error)
     }
   }

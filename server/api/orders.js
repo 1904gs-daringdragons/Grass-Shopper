@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User, Order, LineItem, Product} = require('../db/models')
+const mailer = require('./nodemailer')
 
 const generateLineItems = async (newOrder, cart) => {
   let totalPrice = 0
@@ -61,6 +62,16 @@ router.post('/', async (req, res, next) => {
           orderStatus: 'CREATED',
           ...shippingAndBilling
         })
+        try {
+          await mailer(
+            req.user.email,
+            'order',
+            recipientName,
+            JSON.stringify(cart)
+          )
+        } catch (error) {
+          console.error(error)
+        }
         res.status(204).send()
       } else {
         res.status(403).send('ACCESS DENIED')
@@ -70,6 +81,17 @@ router.post('/', async (req, res, next) => {
         ...shippingAndBilling
       })
       await generateLineItems(newOrder, cart)
+      try {
+        await mailer(
+          confirmationEmail,
+          'order',
+          recipientName,
+          JSON.stringify(cart)
+        )
+      } catch (error) {
+        console.error(error)
+      }
+
       res.status(204).send()
     }
   } catch (error) {
