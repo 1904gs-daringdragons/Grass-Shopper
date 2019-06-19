@@ -43,7 +43,7 @@ class DisconnectedProductList extends Component {
                     alignItems: 'center'
                   }}
                 >
-                  <Typography>Filter Products By Catagory:</Typography>
+                  <Typography>Filter Products By Category:</Typography>
                   <Select
                     style={{marginLeft: 12}}
                     value={this.state.filter}

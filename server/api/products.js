@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
     const userId = req.query.userId ? req.query.userId : 0
     const [products] = await db.query(
       String.raw`
-      SELECT avg.id, avg.name, avg.price, avg."imageUrl", avg.description, avg.quantity, avg."isFeatured", avg."featuredUrl", avg."createdAt", avg."updatedAt",
+      SELECT avg.id, avg.name, avg.price, avg."imageUrl", avg.description, avg.quantity, avg."isFeatured", avg."featuredUrl", avg."createdAt", avg."updatedAt", avg.catagory,
       CAST(case when singleUser."userId" is null then avg.avg else singleUser.stars end AS INT) as stars
     FROM
       (
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 FROM PRODUCTS P
 LEFT JOIN RECOMMENDATIONS R
 ON P.id = R."productId"
-GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl"
+GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl", P.catagory
       ) avg
     LEFT JOIN
       (
@@ -48,7 +48,7 @@ router.get('/:productId', async (req, res, next) => {
     const productObj = await db.query(
       String.raw`
       SELECT avg.id, avg.name, avg.price, avg."imageUrl", avg.description, avg.quantity, avg."isFeatured", avg."featuredUrl",
-      avg."createdAt", avg."updatedAt",
+      avg."createdAt", avg."updatedAt", avg.catagory
       CAST(case when singleUser."userId" is null then avg.avg else singleUser.stars end AS INT) as stars
       FROM
       (
@@ -57,7 +57,7 @@ router.get('/:productId', async (req, res, next) => {
       LEFT JOIN RECOMMENDATIONS R
       ON P.id = R."productId"
       WHERE P.id = ${req.params.productId}
-      GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl"
+      GROUP BY P.id, P.price, P."imageUrl", P.description, P.quantity, P."isFeatured", P."featuredUrl", P.catagory
       ) avg
       LEFT JOIN
       (
