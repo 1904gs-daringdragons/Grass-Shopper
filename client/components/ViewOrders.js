@@ -10,10 +10,11 @@ import {
   TableRow,
   Select,
   MenuItem,
-  Fab
+  IconButton
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Delete'
 import {getOwnOrdersThunk, getAllOrdersThunk, updateOrderThunk} from '../store'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 
 class ViewOrders extends React.Component {
   constructor(props) {
@@ -58,55 +59,60 @@ class ViewOrders extends React.Component {
             </TableHead>
             <TableBody>
               {this.props.orderList[0] ? (
-                this.props.orderList.map(order => {
-                  const upDate = new Date(order.updatedAt)
-                  const createDate = new Date(order.createdAt)
-                  return (
-                    <TableRow key={order.id}>
-                      <TableCell align="right">{order.id}</TableCell>
-                      {adminView ? (
-                        <TableCell align="right">{order.userId}</TableCell>
-                      ) : null}
-                      {adminView &&
-                      order.orderStatus &&
-                      order.orderStatus !== 'CANCELLED' &&
-                      order.orderStatus !== 'CART' ? (
+                this.props.orderList
+                  .filter(order => {
+                    return !(order.orderStatus === 'CART')
+                  })
+                  .map(order => {
+                    const upDate = new Date(order.updatedAt)
+                    const createDate = new Date(order.createdAt)
+                    return (
+                      <TableRow key={order.id}>
+                        <TableCell align="right">{order.id}</TableCell>
+                        {adminView ? (
+                          <TableCell align="right">{order.userId}</TableCell>
+                        ) : null}
+                        {adminView &&
+                        order.orderStatus &&
+                        order.orderStatus !== 'CANCELLED' &&
+                        order.orderStatus !== 'CART' ? (
+                          <TableCell align="right">
+                            <Select
+                              value={order.orderStatus}
+                              onChange={this.handleChange}
+                              inputProps={{
+                                name: `${order.id}`,
+                                id: order.id
+                              }}
+                            >
+                              <MenuItem value="CREATED">CREATED</MenuItem>
+                              <MenuItem value="PROCESSING">PROCESSING</MenuItem>
+                              <MenuItem value="SHIPPED">SHIPPED</MenuItem>
+                              <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+                            </Select>
+                          </TableCell>
+                        ) : (
+                          <TableCell align="right">
+                            {order.orderStatus}
+                          </TableCell>
+                        )}
+                        <TableCell align="right">{order.totalPrice}</TableCell>
                         <TableCell align="right">
-                          <Select
-                            value={order.orderStatus}
-                            onChange={this.handleChange}
-                            inputProps={{
-                              name: `${order.id}`,
-                              id: order.id
-                            }}
-                          >
-                            <MenuItem value="CREATED">CREATED</MenuItem>
-                            <MenuItem value="PROCESSING">PROCESSING</MenuItem>
-                            <MenuItem value="SHIPPED">SHIPPED</MenuItem>
-                            <MenuItem value="COMPLETED">COMPLETED</MenuItem>
-                          </Select>
+                          {upDate.toLocaleString('default')}
                         </TableCell>
-                      ) : (
-                        <TableCell align="right">{order.orderStatus}</TableCell>
-                      )}
-                      <TableCell align="right">{order.totalPrice}</TableCell>
-                      <TableCell align="right">
-                        {upDate.toLocaleString('default')}
-                      </TableCell>
-                      <TableCell align="right">
-                        {createDate.toLocaleString('default')}
-                      </TableCell>
-                      <TableCell>
-                        <Fab
-                          onClick={() => this.handleDelete(order.id)}
-                          size="small"
-                        >
-                          X
-                        </Fab>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })
+                        <TableCell align="right">
+                          {createDate.toLocaleString('default')}
+                        </TableCell>
+                        <TableCell>
+                          <IconButton
+                            onClick={() => this.handleDelete(order.id)}
+                          >
+                            <DeleteForeverIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })
               ) : (
                 <TableRow />
               )}
